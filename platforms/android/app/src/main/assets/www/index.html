@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF)
+-->
+<html>
+  <head>
+    <!-- Required meta tags-->
+<!--
+    <meta charset="utf-8">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+-->
+      
+  <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+    <!-- End meta tags -->
+      
+    <title>TAIDi</title>
+    
+    <!-- Path to Framework7 Library CSS, Material Theme -->
+    <link rel="stylesheet" type="text/css" href="css/framework7.min.css">
+    <!-- CSS links -->
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <link rel="stylesheet" type="text/css" href="css/icons.css">
+    <!-- End CSS links -->
+  </head>
+  <body>
+    <!-- App root element -->
+    <div id="app">
+        <!-- Your main view, should have "view-main" class -->
+        <div class="view view-main">
+            <!-- Statusbar overlay -->
+            <div class="statusbar"></div>
+            <!-- Left panel -->
+            <div class="panel panel-left panel-cover">
+                <div class="view view-smartie">
+                <div class="page">
+                  <div class="navbar taidi">
+                    <div class="navbar-inner">
+                      <div class="title">Account</div>
+                    </div>
+                  </div>
+                  <div class="page-content">
+                      <div class="block-title" id="myUserName">Not logged</div>
+                      <!-- Group selector -->
+                      <div class="list">
+                        <ul>
+                            <li style="display: none;" id="groupSelector">
+                                <a class="item-link smart-select smart-select-init popup-close">
+                                    <select class="popup-close" name="groups" id="connectedGroups">
+                                        <option value="first" selected>first</option>
+                                        <option value="second">second</option>
+                                    </select>
+                                    <div class="item-content">
+                                        <div class="item-inner">
+                                            <div class="item-title">Group</div>
+                                        </div>
+                                    </div>
+                                  </a>
+                            </li>  
+                        </ul>
+                      </div>
+                      <!-- Login button -->
+                      <div class="row" id="loginButton-row">
+                          <div class="col-50" style="margin-left: 25%;">
+                              <a href="#" class="button button-outline panel-close login-screen-open" data-login-screen="#my-login-screen">Log in</a>
+                          </div>
+                      </div>
+                      <!-- Logout button -->
+                      <div class="row" id="logoutButton-row" style="display: none;">
+                          <div class="col-50" style="margin-left: 25%;">
+                              <a href="#" class="col button button-outline color-red panel-close" id="logoutButton">Log out</a>
+                          </div>
+                      </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Right panel -->
+            <div class="panel panel-right panel-cover">
+                <div class="view">
+                <div class="page">
+                  <div class="navbar taidi">
+                    <div class="navbar-inner">
+                      <div class="title">Cordova status</div>
+                    </div>
+                  </div>
+                  <div class="page-content">
+                    <div class="app">
+                        <div id="deviceready" class="blink">
+                            <p class="event listening">Connecting to Device</p>
+                            <p class="event received">Device is Ready</p>
+                        </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <!-- Initial Page, "data-name" contains page name -->
+            <div data-name="home" class="page">
+                  <!-- Top Navbar -->
+                  <div class="navbar taidi">
+                    <div class="navbar-inner ">
+                        <div class="left">
+                            <a href="#" class="link icon-only fab-close panel-open" data-panel="left">
+                                <i class="icon material-icons md-only">menu</i>
+                            </a>
+                        </div>
+                        <div class="title" id="myAppTitle"></div>
+                        <div class="right">
+                            <a href="#" class="link icon-only panel-open" data-panel="right">
+                                <i class="icon material-icons md-only">build</i>
+                            </a>
+                        </div>
+                    </div>
+                  </div>
+                  <!-- Tabbar Navbar -->
+                  <div class="toolbar tabbar taidi">
+                    <div class="toolbar-inner">
+                        <a href="#tab-1" class="tab-link tab-link-active">
+                            <i class="icon material-icons md-only">home</i>
+                            Home tasks
+                        </a>
+                        <a href="#tab-2" class="tab-link">
+                            <i class="icon material-icons md-only">shopping_cart</i>
+                            Shopping list
+                        </a>
+                    </div>
+                  </div>
+                  <!-- Swipeable Tabs -->
+                  <div class="tabs-swipeable-wrap">
+                    <div class="tabs">
+                        <!-- Tab 1 -->
+                        <div id="tab-1" class="page-content tab tab-active">
+                            <!-- Cards -->
+                            <div class="card">
+                                <div class="card-header">
+                                    Alex
+                                </div>    
+                                <div class="card-content card-content-padding">
+                                    Tidy the fucking room.
+                                </div>
+                                <div class="card-footer">
+                                    "From"
+                                    <i class="icon material-icons md-only">assignment_ind</i>
+                                    29/01
+                                </div>
+                            </div>
+                            <!-- Extra links -->
+                            <div class="list">
+                            <ul>
+                              <li>
+                                <a href="/about/" class="item-content item-link">
+                                  <div class="item-inner">
+                                    <div class="item-title">Help</div>
+                                  </div>
+                                </a>
+                              </li>
+                              <!--
+                              <li>
+                                <a href="/swiper-parallax/" class="item-content item-link">
+                                  <div class="item-inner">
+                                    <div class="item-title">Test swip</div>
+                                  </div>
+                                </a>
+                              </li>
+                              -->
+                            </ul>
+                          </div>
+                        </div>
+                        <!-- Tab 2 -->
+                        <div id="tab-2" class="page-content tab ">
+                          <div class="card">
+                                <div class="card-header">
+                                    2
+                                </div>    
+                                <div class="card-content card-content-padding">
+                                    Pineapple
+                                </div>
+                                <div class="card-footer">29/01</div>
+                          </div>
+                          <!-- Extra links -->
+                          <div class="list">
+                            <ul>
+                              <li>
+                                <a href="/about/" class="item-content item-link">
+                                  <div class="item-inner">
+                                    <div class="item-title">Help</div>
+                                  </div>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>  
+                        </div>
+                    </div>
+                  </div>
+                  <!-- FAB -->
+                  <div class="fab fab-right-bottom">
+                    <a href="#" class="taidi">
+                        <i class="icon material-icons md-only">more_vert</i>
+                        <i class="icon material-icons md-only">close</i>
+                    </a>
+                    <div class="fab-buttons fab-buttons-left">
+                        <a href="/form-list/" class="taidi">
+                            <i class="icon material-icons md-only">add_shopping_cart</i>
+                        </a>
+                        <a href="/form-task/" class="taidi">
+                            <i class="icon material-icons md-only">note_add</i>
+                        </a>
+                    </div>
+                  </div>
+            </div>
+            <!-- Login Screen -->
+            <div class="login-screen" id="my-login-screen">
+                <div class="view">
+                    <div class="page" style="background: none">
+                      <div class="page-content login-screen-content" style="background: none">
+                        <img class="login-screen-title" id="logo-login-screen" src="img/taidi.png">
+                        <div class="list">
+                          <ul>
+                            <li class="item-content item-input">
+                              <div class="item-inner">
+                                <div class="item-title item-label">Username</div>
+                                <div class="item-input-wrap">
+                                  <input type="text" name="username" placeholder="Your username" value="alex@gmail.com">
+                                </div>
+                              </div>
+                            </li>
+                            <li class="item-content item-input">
+                              <div class="item-inner">
+                                <div class="item-title item-label">Password</div>
+                                <div class="item-input-wrap">
+                                  <input type="password" name="password" placeholder="Your password" value="federico">
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="list">
+                          <ul>
+                            <li>
+                                <a class="item-link list-button login-button panel-close">Sign in</a>
+                                <a class="item-link list-button logup-button panel-close">Sign Up</a>
+                                <a class="item-link list-button no-login-button panel-close">Cancel</a>
+                            </li>
+                          </ul>
+                          <div class="block-footer">Sign up to join cooperativity.<br> Create your online groups and invite your home-members!</div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+    </div>
+    <!-- Path to Framework7 Library JS-->
+    <script type="text/javascript" src="js/framework7.min.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
+    <script type="text/javascript" src="cordova.js"></script>
+    <script type="text/javascript" src="js/routes.js"></script>
+    <script>
+      // Initialize Firebase
+      var config = {
+        apiKey: "AIzaSyAioO2J91J9TQQHERQp3dH2zTCaKt6J_3I",
+        authDomain: "taidi-d6eb6.firebaseapp.com",
+        databaseURL: "https://taidi-d6eb6.firebaseio.com",
+        projectId: "taidi-d6eb6",
+        storageBucket: "taidi-d6eb6.appspot.com",
+        messagingSenderId: "676193549094"
+      };
+      firebase.initializeApp(config);
+    </script>
+    <script type="text/javascript" src="js/index.js"></script>
+  </body>
+</html>
