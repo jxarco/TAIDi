@@ -47,13 +47,12 @@
                   <div class="page-content">
                       <div class="block-title" id="myUserName">Not logged</div>
                       <!-- Group selector -->
-                      <div class="list">
+                      <div class="list" id="setSelector">
                         <ul>
                             <li style="display: none;" id="groupSelector">
                                 <a class="item-link smart-select smart-select-init popup-close">
                                     <select class="popup-close" name="groups" id="connectedGroups">
-                                        <option value="first" selected>first</option>
-                                        <option value="second">second</option>
+                                        <option id="sfo" selected value=""></option>
                                     </select>
                                     <div class="item-content">
                                         <div class="item-inner">
@@ -273,6 +272,7 @@
       };
       firebase.initializeApp(config);
     </script>
+    <script type="text/javascript" src="js/utils.js"></script>  
     <script type="text/javascript" src="js/index.js"></script>
   </body>
 </html>

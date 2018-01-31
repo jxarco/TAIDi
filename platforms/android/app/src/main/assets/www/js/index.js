@@ -2,17 +2,32 @@
 var $$ = Dom7;
 var globals = {
     mainView: null,
-    smartSelect: null,
+    smartSelectView: null,
+    ss: null,
 
-    currentUser: null
+    currentUser: null,
+    db: null
 }
 
 var app = {
     // Application Constructor
     initialize: function() {
+        // init cordova
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
+        
+        // init rest
         globals.mainView = fw7.views.create('.view-main');
-        globals.smartSelect = fw7.views.create('.view-smartie');
+        globals.smartSelectView = fw7.views.create('.view-smartie');
+        globals.ss = fw7.smartSelect.get();
+        
+        globals.ss.onClose = function(){
+            $$('#myAppTitle').html(globals.ss.selectEl.value);
+        }
+        
+        // init DB
+        getFromDB("sets", "/", function(data){
+            globals.db = data;
+        });
     },
 
     // deviceready Event Handler
@@ -57,7 +72,6 @@ var fw7 = new Framework7({
 
 app.initialize();
 
-
 // Login Screen Demo
 $$('#my-login-screen .logup-button').on('click', function () {
   
@@ -90,36 +104,57 @@ $$('#my-login-screen .login-button').on('click', function () {
     firebase.auth().onAuthStateChanged(function(user){
         if(user){
             globals.currentUser = {
+                uid: user.uid,
                 name: user.displayName,
-                email: user.email,
-                groups: ["first", "second"]
+                email: user.email
             };
+            
             // Alert username and password
-            fw7.dialog.alert('User found in firebase');
+            // fw7.dialog.alert('User found in firebase');
             
             if(user.displayName)
                 $$('#myUserName').html(user.displayName);
-            
-            if(globals.currentUser.groups.length)
-                $$('#myAppTitle').html(globals.currentUser.groups[0]);
 
-            // set possible user groups
-            /*for(var i = 0; i < globals.currentUser.groups.length; i++)
-            {
-                var text = globals.currentUser.groups[i];
-                var selected = i === 0 ? "selected" : "";
-                var text_block = "<option " + selected + " value='" + text + "'>" + text + "</option>";
-                $$("#connectedGroups").append(text_block);
-            }*/
-            
             // enable group selector
             $$("#groupSelector").css("display", "block");
             // display logout button
             $$("#logoutButton-row").css("display", "block");
             // remove login button
             $$("#loginButton-row").css("display", "none");
-
-        }else{
+            
+            // user sets
+            var user_sets = [];
+            
+            for(var i = 0; i < globals.db.length; i++)
+                if(isInArray( globals.db[i].members, globals.currentUser.uid ))
+                    user_sets.push( globals.db[i] );
+            
+            var optionsText = "";
+            for(var i = 0; i < user_sets.length; i++)
+            {
+                var text_block, name = user_sets[i].name;
+                
+                if(i === 0)
+                {
+                    $$("#sfo").html( name );
+                    $$("#sfo").attr( "value", name );
+                    globals.ss.valueEl.innerHTML = name;
+                }
+                else
+                {
+                    text_block = "<option value='" + name + "'>" + name + "</option>";
+                    optionsText += text_block;    
+                }
+            }
+            
+            $$("#connectedGroups").append( optionsText );
+            
+            if(user_sets[0])
+                $$('#myAppTitle').html(user_sets[0].name);
+            
+            globals.currentUser.user_sets = user_sets;
+        }
+        else{
             // user signed out
         }
     })
