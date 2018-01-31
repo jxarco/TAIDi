@@ -186,3 +186,13 @@ $$("#logoutButton").on('click', function () {
     // display login button
     $$(".connected-row").css("display", "block");
 });
+
+
+$$(".task-done").on('click', function(){
+
+  var target = $$(this).data("target");
+  $$("#" + target).remove();
+
+  fw7.dialog.alert('Task completed!');
+
+});
