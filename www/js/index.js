@@ -14,16 +14,16 @@ var app = {
     initialize: function() {
         // init cordova
         document.addEventListener('deviceready', this.onDeviceReady.bind(this), false);
-        
+
         // init rest
         globals.mainView = fw7.views.create('.view-main');
         globals.smartSelectView = fw7.views.create('.view-smartie');
         globals.ss = fw7.smartSelect.get();
-        
+
         globals.ss.onClose = function(){
             $$('#myAppTitle').html(globals.ss.selectEl.value);
         }
-        
+
         // init DB
         getFromDB("sets", "/", function(data){
             globals.db = data;
@@ -74,15 +74,15 @@ app.initialize();
 
 // Login Screen Demo
 $$('#my-login-screen .logup-button').on('click', function () {
-  
+
     var username = $$('#my-login-screen [name="username"]').val();
     var password = $$('#my-login-screen [name="password"]').val();
-    
+
     firebase.auth().createUserWithEmailAndPassword(username, password).catch(function(error){
         // handle errors here
         console.error( "Error " + error.code + ": " + error.message );
     })
-    
+
     fw7.loginScreen.close('#my-login-screen');
 
     // Alert username and password
@@ -90,17 +90,17 @@ $$('#my-login-screen .logup-button').on('click', function () {
 });
 
 $$('#my-login-screen .login-button').on('click', function () {
-  
+
     var username = $$('#my-login-screen [name="username"]').val();
     var password = $$('#my-login-screen [name="password"]').val();
-    
+
     firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error){
         // handle errors here
         console.error( "Error " + error.code + ": " + error.message );
     });
-    
+
     fw7.loginScreen.close('#my-login-screen');
-    
+
     firebase.auth().onAuthStateChanged(function(user){
         if(user){
             globals.currentUser = {
@@ -108,10 +108,10 @@ $$('#my-login-screen .login-button').on('click', function () {
                 name: user.displayName,
                 email: user.email
             };
-            
+
             // Alert username and password
             // fw7.dialog.alert('User found in firebase');
-            
+
             if(user.displayName)
                 $$('#myUserName').html(user.displayName);
 
@@ -121,19 +121,19 @@ $$('#my-login-screen .login-button').on('click', function () {
             $$("#logoutButton-row").css("display", "block");
             // remove login button
             $$("#loginButton-row").css("display", "none");
-            
+
             // user sets
             var user_sets = [];
-            
+
             for(var i = 0; i < globals.db.length; i++)
                 if(isInArray( globals.db[i].members, globals.currentUser.uid ))
                     user_sets.push( globals.db[i] );
-            
+
             var optionsText = "";
             for(var i = 0; i < user_sets.length; i++)
             {
                 var text_block, name = user_sets[i].name;
-                
+
                 if(i === 0)
                 {
                     $$("#sfo").html( name );
@@ -143,37 +143,42 @@ $$('#my-login-screen .login-button').on('click', function () {
                 else
                 {
                     text_block = "<option value='" + name + "'>" + name + "</option>";
-                    optionsText += text_block;    
+                    optionsText += text_block;
                 }
             }
-            
+
             $$("#connectedGroups").append( optionsText );
-            
+
             if(user_sets[0])
                 $$('#myAppTitle').html(user_sets[0].name);
-            
+
             globals.currentUser.user_sets = user_sets;
         }
         else{
             // user signed out
         }
     })
-    
+
 });
 
 
 $$('#my-login-screen .no-login-button').on('click', function () {
-  
+
     fw7.loginScreen.close('#my-login-screen');
 });
 
+$$('#my-signup-screen .no-login-button').on('click', function () {
+
+    fw7.loginScreen.close('#my-signup-screen');
+});
+
 $$("#logoutButton").on('click', function () {
-  
+
     firebase.auth().signOut();
-    
+
     $$('#myUserName').html("Not logged");
     $$('#myAppTitle').html("");
-    
+
     // Disable group selector
     $$("#groupSelector").css("display", "none");
     // display logout button

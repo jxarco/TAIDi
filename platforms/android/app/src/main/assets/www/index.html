@@ -5,22 +5,14 @@
 <html>
   <head>
     <!-- Required meta tags-->
-<!--
-    <meta charset="utf-8">
-    <meta http-equiv="Content-Security-Policy" content="default-src 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval'; style-src 'self' 'unsafe-inline'; media-src *; img-src 'self' data: content:;">
-    <meta name="format-detection" content="telephone=no">
-    <meta name="msapplication-tap-highlight" content="no">
-    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
--->
-      
   <meta http-equiv="Content-Security-Policy" content="default-src * 'self' 'unsafe-inline' 'unsafe-eval' data: gap: content:">
   <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no, minimal-ui">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
     <!-- End meta tags -->
-      
+
     <title>TAIDi</title>
-    
+
     <!-- Path to Framework7 Library CSS, Material Theme -->
     <link rel="stylesheet" type="text/css" href="css/framework7.min.css">
     <!-- CSS links -->
@@ -60,11 +52,17 @@
                                         </div>
                                     </div>
                                   </a>
-                            </li>  
+                            </li>
                         </ul>
                       </div>
+                      <!-- Signup button -->
+                      <div class="row" id="signupButton-row">
+                          <div class="col-50" style="margin-left: 25%;">
+                              <a href="#" class="col button button-fill panel-close login-screen-open" data-login-screen="#my-signup-screen">Sign up</a>
+                          </div>
+                      </div>
                       <!-- Login button -->
-                      <div class="row" id="loginButton-row">
+                      <div class="row" style="margin-top: 5px;" id="loginButton-row">
                           <div class="col-50" style="margin-left: 25%;">
                               <a href="#" class="button button-outline panel-close login-screen-open" data-login-screen="#my-login-screen">Log in</a>
                           </div>
@@ -122,11 +120,9 @@
                     <div class="toolbar-inner">
                         <a href="#tab-1" class="tab-link tab-link-active">
                             <i class="icon material-icons md-only">home</i>
-                            Home tasks
                         </a>
                         <a href="#tab-2" class="tab-link">
                             <i class="icon material-icons md-only">shopping_cart</i>
-                            Shopping list
                         </a>
                     </div>
                   </div>
@@ -139,7 +135,7 @@
                             <div class="card">
                                 <div class="card-header">
                                     Alex
-                                </div>    
+                                </div>
                                 <div class="card-content card-content-padding">
                                     Tidy the fucking room.
                                 </div>
@@ -176,7 +172,7 @@
                           <div class="card">
                                 <div class="card-header">
                                     2
-                                </div>    
+                                </div>
                                 <div class="card-content card-content-padding">
                                     Pineapple
                                 </div>
@@ -193,7 +189,7 @@
                                 </a>
                               </li>
                             </ul>
-                          </div>  
+                          </div>
                         </div>
                     </div>
                   </div>
@@ -243,6 +239,52 @@
                           <ul>
                             <li>
                                 <a class="item-link list-button login-button panel-close">Sign in</a>
+                                <a class="item-link list-button no-login-button panel-close">Cancel</a>
+                            </li>
+                          </ul>
+                          <div class="block-footer">Sign up to join cooperativity.<br> Create your online groups and invite your home-members!</div>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+            </div>
+            <!-- Signup Screen -->
+            <div class="login-screen" id="my-signup-screen">
+                <div class="view">
+                    <div class="page" style="background: none">
+                      <div class="page-content login-screen-content" style="background: none">
+                        <img class="login-screen-title" id="logo-signup-screen" src="img/taidi.png">
+                        <div class="list">
+                          <ul>
+                            <li class="item-content item-input">
+                              <div class="item-inner">
+                                <div class="item-title item-label">Name</div>
+                                <div class="item-input-wrap">
+                                  <input type="text" name="name" placeholder="Your name">
+                                </div>
+                              </div>
+                            </li>
+                            <li class="item-content item-input">
+                              <div class="item-inner">
+                                <div class="item-title item-label">Username</div>
+                                <div class="item-input-wrap">
+                                  <input type="text" name="username" placeholder="Your username">
+                                </div>
+                              </div>
+                            </li>
+                            <li class="item-content item-input">
+                              <div class="item-inner">
+                                <div class="item-title item-label">Password</div>
+                                <div class="item-input-wrap">
+                                  <input type="password" name="password" placeholder="Your password">
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
+                        </div>
+                        <div class="list">
+                          <ul>
+                            <li>
                                 <a class="item-link list-button logup-button panel-close">Sign Up</a>
                                 <a class="item-link list-button no-login-button panel-close">Cancel</a>
                             </li>
@@ -253,7 +295,7 @@
                     </div>
                 </div>
             </div>
-        </div>    
+        </div>
     </div>
     <!-- Path to Framework7 Library JS-->
     <script type="text/javascript" src="js/framework7.min.js"></script>
@@ -272,7 +314,7 @@
       };
       firebase.initializeApp(config);
     </script>
-    <script type="text/javascript" src="js/utils.js"></script>  
+    <script type="text/javascript" src="js/utils.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
   </body>
 </html>
