@@ -3,6 +3,7 @@ var $$ = Dom7;
 var globals = {
     mainView: null,
     smartSelectView: null,
+    toast: null,
     ss: null,
 
     currentUser: null,
@@ -23,6 +24,12 @@ var app = {
         globals.ss.onClose = function(){
             $$('#myAppTitle').html(globals.ss.selectEl.value);
         }
+
+        globals.toast = fw7.toast.create({
+          closeTimeout: 3000,
+          closeButton: true,
+          text: 'Item completed',
+        });
 
         // init DB
         getFromDB("sets", "/", function(data){
@@ -191,8 +198,13 @@ $$("#logoutButton").on('click', function () {
 $$(".task-done").on('click', function(){
 
   var target = $$(this).data("target");
-  $$("#" + target).remove();
 
-  fw7.dialog.alert('Task completed!');
+  fw7.dialog.confirm(null, "Delete item?", function(){
+
+    $$("#" + target).remove();
+    globals.toast.open();
+  }, function(){
+    console.log("aborted");
+  });
 
 });
