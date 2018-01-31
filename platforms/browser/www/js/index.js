@@ -120,7 +120,7 @@ $$('#my-login-screen .login-button').on('click', function () {
             // display logout button
             $$("#logoutButton-row").css("display", "block");
             // remove login button
-            $$("#loginButton-row").css("display", "none");
+            $$(".connected-row").css("display", "none");
 
             // user sets
             var user_sets = [];
@@ -184,5 +184,5 @@ $$("#logoutButton").on('click', function () {
     // display logout button
     $$("#logoutButton-row").css("display", "none");
     // display login button
-    $$("#loginButton-row").css("display", "block");
+    $$(".connected-row").css("display", "block");
 });
