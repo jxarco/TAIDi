@@ -6,28 +6,28 @@ function setAppTitle(text)
 function setUserCurrentGroup(name)
 {
     setAppTitle( name );
-    
+
     var gr = globals.user.groups;
     for(var i = 0; i < gr.length; i++)
         if(gr[i].name === name) globals.user.currentGroup = gr[i];
-    
+
     updateMain();
 }
 
 var updateMain = function(){
-    
+
     console.log("updating lists");
     $$(".card").remove();
-    
+
     if(!globals.user.currentGroup)
         return;
-    
+
     var tasks = globals.user.currentGroup.tasks,
         items = globals.user.currentGroup.items;
     // target: tab-1
     for(var i = 0; i < tasks.length; i++)
         createCard(TD.Task, tasks[i]);
-    
+
     for(var i = 0; i < items.length; i++)
         createCard(TD.Item, items[i]);
 };
@@ -68,15 +68,19 @@ var login = function(){
 
     firebase.auth().onAuthStateChanged(function(user){
         if(user){
-            
+
             globals.user = new TD.User({
                 uid: user.uid,
                 name: user.displayName,
                 email: user.email
             });
-            
+
+            // init db!!!!
+            globals.db = TD.Setup();
+            // ****************
+
             var user_name = globals.user.name;
-            
+
             if(user_name)
             {
                 // welcome
@@ -86,9 +90,9 @@ var login = function(){
                     text: "Welcome " + user_name + "!",
                 }).open();
                 // display user's name
-                $$('#myUserName').html( user_name );    
+                $$('#myUserName').html( user_name );
             }
-            
+
             // enable group selector
             $$("#groupSelector").css("display", "block");
             // display logout button
@@ -100,18 +104,18 @@ var login = function(){
                 throw("not available db yet");
             else
                 console.log(globals.db);
-            
-            var groups = globals.db.groups, 
+
+            var groups = globals.db.groups,
                 n_groups = globals.db.n_groups,
                 user_groups = [],
                 optionsText = "";
-            
+
             for(var i = 0; i < n_groups; i++)
                 if(isInArray( groups[i].members, globals.user.getUid() ))
                     user_groups.push( groups[i] );
-            
+
             globals.user.setGroups( user_groups );
-            
+
             for(var i = 0; i < user_groups.length; i++)
             {
                 var text_block, name = user_groups[i].name;
@@ -120,7 +124,7 @@ var login = function(){
                 {
                     setAppTitle( user_groups[0].name );
                     globals.user.currentGroup = user_groups[0];
-                    
+
                     $$("#sfo").html( name );
                     $$("#sfo").attr( "value", name );
                     globals.smartSelect.valueEl.innerHTML = name;
@@ -149,12 +153,12 @@ $$('#my-signup-screen .logup-button').on('click', function () {
         console.error( "Error " + error.code + ": " + error.message );
         throw("registering error!");
     });
-    
+
     // login(username, password);
     // firebase.auth().currentUser.updateProfile({
     //   displayName: name,
     // });
-    
+
     closeSignInScreen();
 
     fw7.toast.create({

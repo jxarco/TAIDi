@@ -1,5 +1,5 @@
 // Dom7
-var $$ = Dom7;
+var $$ = Dom7, fw7;
 var globals = {
     mainView: null,
     smartSelectView: null,
@@ -39,8 +39,4 @@ var app = {
 
 // cordova here!!!!
 app.initialize();
-// ****************
-
-// the rest here!!!!
-globals.db = TD.Setup();
 // ****************

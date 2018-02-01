@@ -1,9 +1,9 @@
 var tOut = TD.PreloadTimeOut;
 
-function loadUI(){
-        
+setTimeout(function loadUI(){
+
         $$("#logo-preloader").css("display", "none");
-        
+
         fw7 = new Framework7({
           // App root element
           root: '#app',
@@ -22,13 +22,13 @@ function loadUI(){
               openIn: 'popover'
           }
         });
-        
+
+        //$(".view.view-main").fadeIn();
+
         globals.mainView = fw7.views.create('.view-main');
         globals.smartSelectView = fw7.views.create('.view-smartie');
         globals.smartSelect = fw7.smartSelect.get();
         globals.smartSelect.onClose = function(){
             setUserCurrentGroup( globals.smartSelect.selectEl.value );
         }
-        
-        $(".view.view-main").fadeIn();
-}
+}, tOut);

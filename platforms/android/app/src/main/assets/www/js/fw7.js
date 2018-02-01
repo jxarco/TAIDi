@@ -1,6 +1,6 @@
 var tOut = TD.PreloadTimeOut;
 
-function loadUI(){
+setTimeout(function loadUI(){
 
         $$("#logo-preloader").css("display", "none");
 
@@ -31,4 +31,4 @@ function loadUI(){
         globals.smartSelect.onClose = function(){
             setUserCurrentGroup( globals.smartSelect.selectEl.value );
         }
-}
+}, tOut);

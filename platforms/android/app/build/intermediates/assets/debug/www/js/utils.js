@@ -4,7 +4,7 @@ function isInArray(array, element)
     {
         if(element.constructor != String && element.constructor != Number)
             throw("element type not supported");
-        
+
         if(array[i] === element)
             return true;
     }
@@ -13,7 +13,7 @@ function isInArray(array, element)
 
 function writeToDB(params)
 {
-  
+
 }
 
 function getFromDB(unit, path, callback, on_error)
@@ -36,19 +36,19 @@ function createCard(type, element)
 {
     // console.log("creating card");
     var target, text = "";
-    
+
     if(type === TD.Task){
         target = $$("#tab-1");
-        
+
         var to = element.to,
             from = element.from,
             name = element.name,
             time = element.timestamp;
-        
+
         text += `
             <div class="card" id="card-0">
                 <div class="card-header">` +
-                    to + 
+                    to +
                 `</div>
                 <div class="card-content card-content-padding">` +
                     name +
@@ -66,15 +66,15 @@ function createCard(type, element)
     else
     {
         target = $$("#tab-2");
-        
+
         var qnt = element.qnt,
             from = element.from,
             name = element.name;
-        
+
         text += `
             <div class="card" id="card-0">
                 <div class="card-header">` +
-                    qnt + 
+                    qnt +
                 `</div>
                 <div class="card-content card-content-padding">` +
                     name +
@@ -85,7 +85,7 @@ function createCard(type, element)
             </div>
         `;
     }
-    
+
     target.prepend( text );
-        
+
 }

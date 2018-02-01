@@ -10,31 +10,31 @@
  * the global namespace, access it using TD.
  * @class .
  */
-    
+
 var TD = global.TD = {
 	version: 1.0
 };
-    
+
 TD.Task = 001;
 TD.Item = 002;
-TD.PreloadTimeOut = 2500;
-    
+TD.PreloadTimeOut = 2000;
+
 TD.Setup = function(callback)
 {
     var db = new TD.DataBase();
     db.init();
-    
+
     if(callback)
         callback();
-    
+
     return db;
 }
-    
+
 /**
 * @class User
 * @methods
 */
-    
+
 function User(o)
 {
     if(this.constructor !== TD.User)
@@ -43,9 +43,9 @@ function User(o)
 	if(o)
 		this.configure( o );
 }
-    
+
 TD.User = User;
-    
+
 User.prototype._ctor = function()
 {
     this.uid = null;
@@ -53,7 +53,7 @@ User.prototype._ctor = function()
     this.email = "No mail";
     // list of connected groups (only its uid)
     this.gs = [];
-    
+
     this.storage = {};
 }
 
@@ -75,7 +75,7 @@ User.prototype.configure = function(o)
 
 		if( v && v.constructor === Float32Array )
 			v.set( o[i] );
-		else 
+		else
 			this[i] = o[i];
 	}
 }
@@ -96,14 +96,14 @@ User.prototype.setGroups = function(groups)
 
 User.prototype.addGroup = function(params)
 {
-    
+
 }
 
 /**
 * @class Set
 * @methods
 */
-    
+
 function Group(o)
 {
     if(this.constructor !== TD.Group)
@@ -112,9 +112,9 @@ function Group(o)
 	if(o)
 		this.configure( o );
 }
-    
+
 TD.Group = Group;
-    
+
 Group.prototype._ctor = function()
 {
     this.uid = null;
@@ -145,26 +145,26 @@ Group.prototype.configure = function(o)
 
 		if( v && v.constructor === Float32Array )
 			v.set( o[i] );
-		else 
+		else
 			this[i] = o[i];
 	}
 }
 
 Group.prototype.addTask = function(params)
 {
-    
+
 }
 
 Group.prototype.addItem = function(params)
 {
-    
+
 }
 
 /**
 * @class DataBase
 * @methods
 */
-    
+
 function DataBase(o)
 {
     if(this.constructor !== TD.DataBase)
@@ -173,9 +173,9 @@ function DataBase(o)
 	if(o)
 		this.configure( o );
 }
-    
+
 TD.DataBase = DataBase;
-    
+
 DataBase.prototype._ctor = function()
 {
     this.n_groups = 0;
@@ -200,7 +200,7 @@ DataBase.prototype.configure = function(o)
 
 		if( v && v.constructor === Float32Array )
 			v.set( o[i] );
-		else 
+		else
 			this[i] = o[i];
 	}
 }
@@ -209,14 +209,13 @@ DataBase.prototype.init = function()
 {
     console.warn("Filling DataBase, please wait");
     var that = this;
-    
+
     getFromDB("groups", "/", function(data){
         that.groups = data;
         getFromDB("n_groups", "/", function(data){
             that.n_groups = data;
             // console.log( that );
             console.warn("DataBase loaded successfully");
-            loadUI();
         });
     }, function(error){
         console.error(error);
@@ -227,7 +226,7 @@ DataBase.prototype.refresh = function()
 {
     this.n_groups = null;
     this.groups = null;
-    
+
     this.init();
 }
 
