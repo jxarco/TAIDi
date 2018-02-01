@@ -29,4 +29,6 @@ function loadUI(){
         globals.smartSelect.onClose = function(){
             setUserCurrentGroup( globals.smartSelect.selectEl.value );
         }
+        
+        $(".view.view-main").fadeIn();
 }

@@ -216,7 +216,7 @@ DataBase.prototype.init = function()
             that.n_groups = data;
             // console.log( that );
             console.warn("DataBase loaded successfully");
-//            loadUI();
+            loadUI();
         });
     }, function(error){
         console.error(error);
