@@ -21,6 +21,7 @@
     <!-- End CSS links -->
   </head>
   <body>
+    <img class="login-screen-title" id="logo-preloader" src="img/pretaidi.png">
     <!-- App root element -->
     <div id="app">
         <!-- Your main view, should have "view-main" class -->
@@ -267,13 +268,23 @@
                     </div>
                 </div>
             </div>
+            <!-- Preload page -->
+            <div class="login-screen" id="preload-screen">
+                <div class="view">
+                    <div class="page">
+                      <div class="page-content login-screen-content" style="background: none">
+                        <img class="login-screen-title" id="logo-signup-screen" src="img/taidi.png">
+                      </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Path to Framework7 Library JS-->
     <script type="text/javascript" src="js/framework7.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
-<!--    <script type="text/javascript" src="cordova.js"></script>-->
+    <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/routes.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
     <script>
       // Initialize Firebase
       var config = {

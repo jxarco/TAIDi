@@ -6,19 +6,7 @@ body {
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
-    background-color:#2ce39b;
-    background-image:linear-gradient(top, #E9E9E9 0%, #2ce39b 51%);
-    background-image:-webkit-linear-gradient(top, #E9E9E9 0%, #2ce39b 51%);
-    background-image:-ms-linear-gradient(top, #E9E9E9 0%, #2ce39b 51%);
-    background-image:-webkit-gradient(
-        linear,
-        left top,
-        left bottom,
-
-        color-stop(0, #E9E9E9),
-        color-stop(0.51, #2ce39b)
-    );
-    background-attachment:fixed;
+    background-color:#37cc9a;
     font-size:12px;
     height:100%;
     margin:0px;
@@ -103,7 +91,29 @@ h1 {
     border-radius: 50%;
 }
 
-#my-login-screen, #my-signup-screen{
+@keyframes example {
+    0%   {background-color:red; left:0px !important; top:0px !important;}
+    25%  {background-color:yellow; left:200px !important; top:0px !important;}
+    50%  {background-color:blue; left:200px !important; top:200px !important;}
+    75%  {background-color:green; left:0px !important; top:200px !important;}
+    100% {background-color:red; left:0px !important; top:0px !important;}
+}
+
+#logo-preloader{
+    width: 40%;
+    margin-left: 31%;
+    margin-top: 35vh;
+    opacity: 0.9;
+    position: relative;
+    -webkit-animation-name: example; /* Safari 4.0 - 8.0 */
+    -webkit-animation-duration: 4s; /* Safari 4.0 - 8.0 */
+    -webkit-animation-delay: 2s; /* Safari 4.0 - 8.0 */
+    animation-name: example;
+    animation-duration: 4s;
+    animation-delay: -2s;
+}
+
+.login-screen{
     -webkit-touch-callout: none;                /* prevent callout to copy image, etc when tap to hold */
     -webkit-text-size-adjust: none;             /* prevent webkit from resizing text to fit */
     -webkit-user-select: none;                  /* prevent copy paste, to allow, change 'none' to 'text' */
@@ -122,6 +132,10 @@ h1 {
         color-stop(0.89, #37cc9a)
     );
     background-attachment:fixed;
+}
+
+#preload-screen{
+    display: block !important;
 }
 
 .task-done .material-icons{

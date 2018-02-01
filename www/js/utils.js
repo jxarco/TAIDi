@@ -16,13 +16,19 @@ function writeToDB(params)
   
 }
 
-function getFromDB(unit, path, callback)
+function getFromDB(unit, path, callback, on_error)
 {
-    var root_ref = firebase.database().ref().child(unit), data = null;
-    root_ref.on("value", function(snap){
-        data = snap.child(path).val();
+    // Get a database reference to our posts
+    var db = firebase.database();
+    var ref = db.ref(unit + "/" + path);
+
+    // Attach an asynchronous callback to read the data at our posts reference
+    ref.on("value", function(snapshot) {
+        data = snapshot.val();
         if(callback)
             callback(data);
+    }, function (errorObject) {
+      console.log("The read failed: " + errorObject.code);
     });
 }
 

@@ -21,6 +21,7 @@
     <!-- End CSS links -->
   </head>
   <body>
+    <img class="login-screen-title" id="logo-preloader" src="img/pretaidi.png">
     <!-- App root element -->
     <div id="app">
         <!-- Your main view, should have "view-main" class -->
@@ -131,40 +132,8 @@
                     <div class="tabs">
                         <!-- Tab 1 -->
                         <div id="tab-1" class="page-content tab tab-active">
-                            <!-- Cards -->
-                            <div class="card" id="card-0">
-
-                                <div class="card-header">
-                                    Alex
-                                    <!-- <i class="icon material-icons md-only">assignment_ind</i> -->
-                                </div>
-                                <div class="card-content card-content-padding">
-                                    Tidy the fucking room.
-                                </div>
-                                <div class="card-footer">
-                                    "From"
-                                    <i data-target="card-0" class="button button-round task-done">
-                                      <i class="icon material-icons md-only">more_horiz</i>
-                                    </i>
-                                    29/01
-                                </div>
-                            </div>
-                            <div class="card" id="card-1">
-                                <div class="card-header">
-                                    Alex
-                                </div>
-                                <div class="card-content card-content-padding">
-                                    Tidy the fucking room.
-                                </div>
-                                <div class="card-footer">
-                                    "From"
-                                    <!-- <i class="icon material-icons md-only">assignment_ind</i> -->
-                                    <i data-target="card-1" class="button button-round task-done">
-                                      <i class="icon material-icons md-only">more_horiz</i>
-                                    </i>
-                                    29/01
-                                </div>
-                            </div>
+                            <!-- Cards go below-->
+                            <!-- Cards finish here-->
                             <!-- Extra links -->
                             <div class="list">
                             <ul>
@@ -175,29 +144,13 @@
                                   </div>
                                 </a>
                               </li>
-                              <!--
-                              <li>
-                                <a href="/swiper-parallax/" class="item-content item-link">
-                                  <div class="item-inner">
-                                    <div class="item-title">Test swip</div>
-                                  </div>
-                                </a>
-                              </li>
-                              -->
                             </ul>
                           </div>
                         </div>
                         <!-- Tab 2 -->
                         <div id="tab-2" class="page-content tab ">
-                          <div class="card">
-                                <div class="card-header">
-                                    2
-                                </div>
-                                <div class="card-content card-content-padding">
-                                    Pineapple
-                                </div>
-                                <div class="card-footer">29/01</div>
-                          </div>
+                          <!-- Cards go below-->
+                          <!-- Cards finish here-->
                           <!-- Extra links -->
                           <div class="list">
                             <ul>
@@ -315,13 +268,23 @@
                     </div>
                 </div>
             </div>
+            <!-- Preload page -->
+            <div class="login-screen" id="preload-screen">
+                <div class="view">
+                    <div class="page">
+                      <div class="page-content login-screen-content" style="background: none">
+                        <img class="login-screen-title" id="logo-signup-screen" src="img/taidi.png">
+                      </div>
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
     <!-- Path to Framework7 Library JS-->
     <script type="text/javascript" src="js/framework7.min.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
     <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/routes.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
     <script>
       // Initialize Firebase
       var config = {
@@ -334,7 +297,16 @@
       };
       firebase.initializeApp(config);
     </script>
+      
+    <!--  Utils and Useful JS classes  -->
     <script type="text/javascript" src="js/utils.js"></script>
+    <script type="text/javascript" src="js/Taidi.js"></script>
+    <!--  initialize cordova  -->
     <script type="text/javascript" src="js/index.js"></script>
+    <!--  initialize fw7  -->
+    <script type="text/javascript" src="js/fw7.js"></script>
+    <!--  App actions  -->
+    <script type="text/javascript" src="js/user_actions.js"></script>
+    <script type="text/javascript" src="js/ui_actions.js"></script>
   </body>
 </html>
