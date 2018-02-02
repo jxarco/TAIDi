@@ -17,10 +17,7 @@ var TD = global.TD = {
 
 TD.Task = 001;
 TD.Item = 002;
-TD.PreloadTimeOut = 2000;
-
-TD.ON = 003;
-TD.ONCE = 004;
+TD.PreloadTimeOut = 1750;
 
 TD.Setup = function(callback)
 {

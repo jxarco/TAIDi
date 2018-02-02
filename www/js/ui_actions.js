@@ -31,29 +31,30 @@ function createCard(type, element)
 {
     // console.log("creating card");
     var target, text = "";
+    
+        var urg_icon = `<div class="chip">
+    <div class="chip-media bg-color-red">
+      <i class="icon material-icons md-only">alarm</i>
+    </div>
+    <div class="chip-label">Urgent</div>
+  </div>`;
 
+    element.urgency = JSON.parse(element.urgency);
+    
     if(type === TD.Task){
         target = $$("#tab-1");
-
-        var to = element.to,
-            from = element.from,
-            name = element.name,
-            time = element.timestamp;
-
+        
         text += `
             <div class="card" id="card-0">
-                <div class="card-header">` +
-                    to +
+                <div class="card-header align-items-flex-end">` + element.to + 
+                    (element.urgency === true ? urg_icon : "") +
                 `</div>
-                <div class="card-content card-content-padding">` +
-                    name +
-                `</div>
-                <div class="card-footer">` +
-                    from +
-                    `<i data-target="card-0" class="button button-round task-done">
-                      <i class="icon material-icons md-only">more_horiz</i>
-                    </i>`+
-                    time +
+                <div class="card-content card-content-padding">
+                <p class="date">`+ element.timestamp + `</p><p>`+ 
+                    element.name +
+                `</p></div>
+                <div class="card-footer"><a href="#" class="link">Complete</a>` + 
+                // `<a href="#" class="link">Complete</a>` + 
                 `</div>
             </div>
         `;
@@ -62,21 +63,20 @@ function createCard(type, element)
     {
         target = $$("#tab-2");
 
-        var qnt = element.qnt,
-            from = element.from,
-            name = element.name;
-
         text += `
             <div class="card" id="card-0">
-                <div class="card-header">` +
-                    qnt +
+                <div class="card-header">` + element.qnt + 
+                    (element.urgency === true ? urg_icon : "") +
                 `</div>
                 <div class="card-content card-content-padding">` +
-                    name +
+                    element.name +
                 `</div>
                 <div class="card-footer">` +
-                    from +
-                `</div>
+                    element.from +
+                    `<i data-target="card-0" class="button button-round task-done">
+                      <i class="icon material-icons md-only">more_horiz</i>
+                    </i>
+                </div>
             </div>
         `;
     }

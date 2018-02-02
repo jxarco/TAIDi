@@ -1,4 +1,4 @@
-var tOut = 1 || TD.PreloadTimeOut;
+var tOut = 0 || TD.PreloadTimeOut;
 
 setTimeout(function loadUI(){
 

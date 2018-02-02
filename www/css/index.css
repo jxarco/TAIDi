@@ -129,20 +129,13 @@ h1 {
 }
 
 .task-done .material-icons{
-  color: #37cc9a;
-  border: 2px solid #37cc9a;
+  color: dodgerblue;
+  border: 2px solid dodgerblue;
   border-radius: 50%;
-  padding: 2px;
+  padding: 1px;
 }
 
-.custom-fab > a{
-  width: 25px !important;
-  height: 25px !important;
-}
-
-.custom-fab > a > i{
-  font-size: 15px !important;
-}
+/* fw7 mods */
 
 .md .navbar + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .page-content, .md .navbar + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .page-content {
   padding-top: 60px !important;
@@ -150,6 +143,10 @@ h1 {
 
 .md .list{
   margin: 20px 0px !important;
+}
+
+.card-content-padding .date{
+  color: #8e8e93;
 }
 
 /* COLORS */
