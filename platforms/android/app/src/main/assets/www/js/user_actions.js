@@ -11,61 +11,75 @@ function setUserCurrentGroup(name)
     for(var i = 0; i < gr.length; i++)
         if(gr[i].name === name) globals.user.currentGroup = gr[i];
 
-    updateMain();
-    fw7.toast.create({
-        closeTimeout: 2500,
-        text: "Connected to: " + globals.user.currentGroup.name,
-    }).open();
+    UI.refreshMain();
+    createToast( "Connected to: " + globals.user.currentGroup.name, 2500 );
 }
 
-var updateMain = function(){
+var onUserLogged = function()
+{
 
-    console.log("updating lists");
-    $$(".card").remove();
+    var user_name = globals.user.name;
 
-    if(!globals.user.currentGroup)
-        return;
+    if(user_name)
+    {
+      console.warn("Login: " + user_name);
+      createToast( "Welcome " + user_name + "!", 3000, true );
+      $$('#myUserName').html( user_name );
+    }
+
+    // enable group selector
+    $$("#groupSelector").css("display", "block");
+    // display logout button
+    $$("#logoutButton-row").css("display", "block");
+    // remove login button
+    $$(".connected-row").css("display", "none");
 
     if(!globals.db)
-        throw("not available db yet");
+        throw("DB is not available yet");
     else
-        console.log(globals.db);
+        console.log("Using DB: ", globals.db);
 
     var groups = globals.db.groups,
-        n_groups = globals.db.n_groups,
-        user_groups = [],
-        optionsText = "";
+      n_groups = globals.db.n_groups,
+      user_groups = [],
+      optionsText = "";
 
     for(var i = 0; i < n_groups; i++)
-        if(isInArray( groups[i].members, globals.user.getUid() ))
-            user_groups.push( groups[i] );
+      if(isInArray( groups[i].members, globals.user.getUid() ))
+          user_groups.push( groups[i] );
 
     globals.user.setGroups( user_groups );
 
-    var gr = globals.user.groups;
-    for(var i = 0; i < gr.length; i++)
-        if(gr[i].name === name) globals.user.currentGroup = gr[i];
+    for(var i = 0; i < user_groups.length; i++)
+    {
+      var text_block, name = user_groups[i].name;
 
-    var tasks = globals.user.currentGroup.tasks,
-        items = globals.user.currentGroup.items;
-    // target: tab-1
-    for(var i = 0; i < tasks.length; i++)
-        createCard(TD.Task, tasks[i]);
+      if(i === 0)
+      {
+          setAppTitle( user_groups[0].name );
+          globals.user.currentGroup = user_groups[0];
 
-    for(var i = 0; i < items.length; i++)
-        createCard(TD.Item, items[i]);
-};
+          $$("#sfo").html( name );
+          $$("#sfo").attr( "value", name );
+          globals.smartSelect.valueEl.innerHTML = name;
+      }
+      else
+      {
+          text_block = "<option value='" + name + "'>" + name + "</option>";
+          optionsText += text_block;
+      }
+    }
 
-var closeSignInScreen = function(){
-    fw7.loginScreen.close('#my-login-screen');
-};
-
-var closeSignUpScreen = function(){
-    fw7.loginScreen.close('#my-signup-screen');
-};
+    $$("#connectedGroups").append( optionsText );
+    UI.refreshMain();
+    fw7.dialog.close();
+}
 
 var logout = function(){
+    
     firebase.auth().signOut();
+    globals.user = null;
+    globals.db = null;
 
     $$('#myUserName').html("Not logged");
     $$('#myAppTitle').html("");
@@ -78,134 +92,48 @@ var logout = function(){
     $$(".connected-row").css("display", "block");
 }
 
-var login = function(){
-
-    // loading DIALOG!!!
-    fw7.dialog.preloader('Please wait');
-    // ************
+var login = function()
+{
+    // UI EVENTS
+    closeSignInScreen();
+    createLoadDialog( "Please wait" );
+    // 
 
     var username = $$('#my-login-screen [name="username"]').val();
     var password = $$('#my-login-screen [name="password"]').val();
 
-    firebase.auth().signInWithEmailAndPassword(username, password).catch(function(error){
-        console.error( "Error " + error.code + ": " + error.message );
-        throw("login error!");
-    });
-
-    closeSignInScreen();
-
-    firebase.auth().onAuthStateChanged(function(user){
-        if(user){
-
-            globals.user = new TD.User({
-                uid: user.uid,
-                name: user.displayName,
-                email: user.email
-            });
-
-            var login_process = function()
-            {
-
-              var user_name = globals.user.name;
-
-              if(user_name)
-              {
-                console.log("logging");
-                  // welcome
-                  fw7.toast.create({
-                      closeTimeout: 3000,
-                      closeButton: true,
-                      text: "Welcome " + user_name + "!",
-                  }).open();
-                  // display user's name
-                  $$('#myUserName').html( user_name );
-              }
-
-              // enable group selector
-              $$("#groupSelector").css("display", "block");
-              // display logout button
-              $$("#logoutButton-row").css("display", "block");
-              // remove login button
-              $$(".connected-row").css("display", "none");
-
-              if(!globals.db)
-                  throw("not available db yet");
-              else
-                  console.log(globals.db);
-
-              var groups = globals.db.groups,
-                  n_groups = globals.db.n_groups,
-                  user_groups = [],
-                  optionsText = "";
-
-              for(var i = 0; i < n_groups; i++)
-                  if(isInArray( groups[i].members, globals.user.getUid() ))
-                      user_groups.push( groups[i] );
-
-              globals.user.setGroups( user_groups );
-
-              for(var i = 0; i < user_groups.length; i++)
-              {
-                  var text_block, name = user_groups[i].name;
-
-                  if(i === 0)
-                  {
-                      setAppTitle( user_groups[0].name );
-                      globals.user.currentGroup = user_groups[0];
-
-                      $$("#sfo").html( name );
-                      $$("#sfo").attr( "value", name );
-                      globals.smartSelect.valueEl.innerHTML = name;
-                  }
-                  else
-                  {
-                      text_block = "<option value='" + name + "'>" + name + "</option>";
-                      optionsText += text_block;
-                  }
-              }
-
-              $$("#connectedGroups").append( optionsText );
-              updateMain();
-              globals.logged = true;
-              fw7.dialog.close();
-            }
-
-            // init db!!!!
-            globals.db = TD.Setup( login_process );
-            // ****************
-        }
-    });
+    signIn_FB(username, password);
 };
 
-// Login Screen Demo
-$$('#my-signup-screen .logup-button').on('click', function () {
-
+var sign_up = function()
+{
+    // UI EVENTS
+    closeSignInScreen();
+    createToast( "User created successfully", 2000, false );
+    // 
+    
     var name        = $$('#my-signup-screen [name="name"]').val();
     var username    = $$('#my-signup-screen [name="username"]').val();
     var password    = $$('#my-signup-screen [name="password"]').val();
 
-    firebase.auth().createUserWithEmailAndPassword(username, password).catch(function(error){
-        console.error( "Error " + error.code + ": " + error.message );
-        throw("registering error!");
-    });
+    signUp_FB(username, password);
+};
 
-    // login(username, password);
-    // firebase.auth().currentUser.updateProfile({
-    //   displayName: name,
-    // });
+var closeSignInScreen = function(){
+    fw7.loginScreen.close('#my-login-screen');
+};
 
-    closeSignInScreen();
+var closeSignUpScreen = function(){
+    fw7.loginScreen.close('#my-signup-screen');
+};
 
-    fw7.toast.create({
-        closeTimeout: 3000,
-        closeButton: true,
-        text: "User created successfully",
-    }).open();
-});
+// BUTTON EVENTS
 
 $$('#my-login-screen .no-login-button').on('click', closeSignInScreen);
 $$('#my-signup-screen .no-login-button').on('click', closeSignUpScreen);
+$$('#my-signup-screen .logup-button').on('click', sign_up);
+$$("#logoutButton").on('click', logout);
 $$('#my-login-screen .login-button').on('click', function(){
     login(null, null);
 });
-$$("#logoutButton").on('click', logout);
+

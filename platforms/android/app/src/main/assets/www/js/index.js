@@ -3,12 +3,10 @@ var $$ = Dom7, fw7;
 var globals = {
     mainView: null,
     smartSelectView: null,
-    toast: null,
     smartSelect: null,
 
     user: null,
-    db: null,
-    logged: false
+    db: null
 }
 
 var app = {

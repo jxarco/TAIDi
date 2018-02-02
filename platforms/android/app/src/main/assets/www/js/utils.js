@@ -46,60 +46,19 @@ function getFromDB(read_mode, unit, path, callback, on_error)
     }
 }
 
-function createCard(type, element)
+
+// ******** FW7 ********
+
+function createLoadDialog( text )
 {
-    // console.log("creating card");
-    var target, text = "";
+    fw7.dialog.preloader( text );
+}
 
-    if(type === TD.Task){
-        target = $$("#tab-1");
-
-        var to = element.to,
-            from = element.from,
-            name = element.name,
-            time = element.timestamp;
-
-        text += `
-            <div class="card" id="card-0">
-                <div class="card-header">` +
-                    to +
-                `</div>
-                <div class="card-content card-content-padding">` +
-                    name +
-                `</div>
-                <div class="card-footer">` +
-                    from +
-                    `<i data-target="card-0" class="button button-round task-done">
-                      <i class="icon material-icons md-only">more_horiz</i>
-                    </i>`+
-                    time +
-                `</div>
-            </div>
-        `;
-    }
-    else
-    {
-        target = $$("#tab-2");
-
-        var qnt = element.qnt,
-            from = element.from,
-            name = element.name;
-
-        text += `
-            <div class="card" id="card-0">
-                <div class="card-header">` +
-                    qnt +
-                `</div>
-                <div class="card-content card-content-padding">` +
-                    name +
-                `</div>
-                <div class="card-footer">` +
-                    from +
-                `</div>
-            </div>
-        `;
-    }
-
-    target.prepend( text );
-
+function createToast( text, duration, closeButton )
+{
+    fw7.toast.create({
+        closeTimeout: duration,
+        closeButton: closeButton ? false : true,
+        text: text,
+    }).open();
 }

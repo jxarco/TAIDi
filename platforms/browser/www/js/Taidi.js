@@ -24,10 +24,7 @@ TD.ONCE = 004;
 
 TD.Setup = function(callback)
 {
-    var db = new TD.DataBase();
-    db.init(callback);
-
-    return db;
+    
 }
 
 /**
@@ -245,13 +242,27 @@ DataBase.prototype.update = function(callback)
     });
 }
 
+DataBase.prototype.updateGroups = function()
+{
+    if(!globals.user)
+        throw( "No user connected" );
+    
+    var currentUID = globals.user.currentGroup.uid;
+    var gr = globals.db.groups;
+    
+    for(var i = 0; i < gr.length; i++)
+        if(gr[i].uid === currentUID) globals.user.currentGroup = gr[i];
+}
+
 DataBase.prototype.refresh = function()
 {
     this.n_groups = null;
     this.groups = null;
+    var that = this;
 
     this.update(function(){
-			updateMain();
+            that.updateGroups();
+			UI.refreshMain();
 			fw7.ptr.done();
 		});
 }

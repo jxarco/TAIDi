@@ -1,8 +1,6 @@
-var tOut = 0 || TD.PreloadTimeOut;
+var tOut = 1 || TD.PreloadTimeOut;
 
 setTimeout(function loadUI(){
-
-        $$("#logo-preloader").css("display", "none");
 
         fw7 = new Framework7({
           // App root element
@@ -32,6 +30,7 @@ setTimeout(function loadUI(){
             setUserCurrentGroup( globals.smartSelect.selectEl.value );
         }
 
+        // close smart selector on change current group
         $$(document.body).on('change', 'select[id="connectedGroups"]', function(e){
           globals.smartSelect.close();
         });
@@ -44,10 +43,15 @@ setTimeout(function loadUI(){
             if(globals.db)
               globals.db.refresh();
             else {
-                fw7.ptr.done();
+                setTimeout( fw7.ptr.done, 500 );
               }
         });
+    
+        var $auto_refresh = $$(".toggle");
+        $auto_refresh.on('toggle:change', function (e) {
+            globals.auto_refresh = e.detail.inputEl.checked;
+        });
 
-        // adjust some css things from fw7
-        // $$(".tab").css("padding-bottom", "60px !important");
+        // adjust some css things
+        $$("#logo-preloader").css("display", "none");
 }, tOut);

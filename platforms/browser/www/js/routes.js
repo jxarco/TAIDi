@@ -12,6 +12,10 @@ var routes = [
     url: './pages/about.html',
   },
   {
+    path: '/preferences/',
+    url: './pages/preferences.html',
+  },
+  {
     path: '/form-task/',
     url: './pages/form-task.html',
   },
