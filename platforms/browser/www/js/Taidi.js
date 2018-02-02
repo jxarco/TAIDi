@@ -19,6 +19,9 @@ TD.Task = 001;
 TD.Item = 002;
 TD.PreloadTimeOut = 2000;
 
+TD.ON = 003;
+TD.ONCE = 004;
+
 TD.Setup = function(callback)
 {
     var db = new TD.DataBase();
@@ -207,15 +210,35 @@ DataBase.prototype.init = function(callback)
     console.warn("Filling DataBase, please wait");
     var that = this;
 
-    getFromDB("groups", "/", function(data){
+    getFromDB(TD.ONCE, "groups", "/", function(data){
         that.groups = data;
-        getFromDB("n_groups", "/", function(data){
+        getFromDB(TD.ONCE, "n_groups", "/", function(data){
             that.n_groups = data;
             // console.log( that );
             console.warn("DataBase loaded successfully");
 
             if(callback)
-              callback();
+              	callback();
+        });
+    }, function(error){
+        console.error(error);
+    });
+}
+
+DataBase.prototype.update = function(callback)
+{
+    console.warn("Refilling DataBase, please wait");
+    var that = this;
+
+    getFromDB(TD.ON, "groups", "/", function(data){
+        that.groups = data;
+        getFromDB(TD.ON, "n_groups", "/", function(data){
+            that.n_groups = data;
+            // console.log( that );
+            console.warn("DataBase reloaded successfully");
+
+            if(callback)
+              	callback();
         });
     }, function(error){
         console.error(error);
@@ -227,7 +250,7 @@ DataBase.prototype.refresh = function()
     this.n_groups = null;
     this.groups = null;
 
-    this.init(function(){
+    this.update(function(){
 			updateMain();
 			fw7.ptr.done();
 		});

@@ -16,20 +16,34 @@ function writeToDB(params)
 
 }
 
-function getFromDB(unit, path, callback, on_error)
+function getFromDB(read_mode, unit, path, callback, on_error)
 {
     // Get a database reference to our posts
     var db = firebase.database();
     var ref = db.ref(unit + "/" + path);
 
     // Attach an asynchronous callback to read the data at our posts reference
-    ref.on("value", function(snapshot) {
-        data = snapshot.val();
-        if(callback)
-            callback(data);
-    }, function (errorObject) {
-      console.log("The read failed: " + errorObject.code);
-    });
+    switch(read_mode)
+    {
+      case TD.ON:
+        ref.on("value", function(snapshot) {
+            data = snapshot.val();
+            if(callback)
+                callback(data);
+        }, function (errorObject) {
+          console.log("The read failed: " + errorObject.code);
+        });
+      break;
+      case TD.ONCE:
+        ref.once("value", function(snapshot) {
+            data = snapshot.val();
+            if(callback)
+                callback(data);
+        }, function (errorObject) {
+          console.log("The read failed: " + errorObject.code);
+        });
+      break;
+    }
 }
 
 function createCard(type, element)

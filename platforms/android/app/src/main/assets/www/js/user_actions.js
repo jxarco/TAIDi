@@ -26,6 +26,26 @@ var updateMain = function(){
     if(!globals.user.currentGroup)
         return;
 
+    if(!globals.db)
+        throw("not available db yet");
+    else
+        console.log(globals.db);
+
+    var groups = globals.db.groups,
+        n_groups = globals.db.n_groups,
+        user_groups = [],
+        optionsText = "";
+
+    for(var i = 0; i < n_groups; i++)
+        if(isInArray( groups[i].members, globals.user.getUid() ))
+            user_groups.push( groups[i] );
+
+    globals.user.setGroups( user_groups );
+
+    var gr = globals.user.groups;
+    for(var i = 0; i < gr.length; i++)
+        if(gr[i].name === name) globals.user.currentGroup = gr[i];
+
     var tasks = globals.user.currentGroup.tasks,
         items = globals.user.currentGroup.items;
     // target: tab-1
@@ -90,6 +110,7 @@ var login = function(){
 
               if(user_name)
               {
+                console.log("logging");
                   // welcome
                   fw7.toast.create({
                       closeTimeout: 3000,
@@ -145,6 +166,7 @@ var login = function(){
 
               $$("#connectedGroups").append( optionsText );
               updateMain();
+              globals.logged = true;
               fw7.dialog.close();
             }
 

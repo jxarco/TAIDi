@@ -7,7 +7,8 @@ var globals = {
     smartSelect: null,
 
     user: null,
-    db: null
+    db: null,
+    logged: false
 }
 
 var app = {
