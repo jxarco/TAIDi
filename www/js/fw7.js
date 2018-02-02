@@ -32,7 +32,8 @@ setTimeout(function loadUI(){
 
         // close smart selector on change current group
         $$(document.body).on('change', 'select[id="connectedGroups"]', function(e){
-          globals.smartSelect.close();
+            globals.smartSelect.close();
+            fw7.panel.close();
         });
 
         // Pull to refresh content
