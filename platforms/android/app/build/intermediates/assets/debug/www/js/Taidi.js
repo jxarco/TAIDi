@@ -22,10 +22,7 @@ TD.PreloadTimeOut = 2000;
 TD.Setup = function(callback)
 {
     var db = new TD.DataBase();
-    db.init();
-
-    if(callback)
-        callback();
+    db.init(callback);
 
     return db;
 }
@@ -205,7 +202,7 @@ DataBase.prototype.configure = function(o)
 	}
 }
 
-DataBase.prototype.init = function()
+DataBase.prototype.init = function(callback)
 {
     console.warn("Filling DataBase, please wait");
     var that = this;
@@ -216,6 +213,9 @@ DataBase.prototype.init = function()
             that.n_groups = data;
             // console.log( that );
             console.warn("DataBase loaded successfully");
+
+            if(callback)
+              callback();
         });
     }, function(error){
         console.error(error);

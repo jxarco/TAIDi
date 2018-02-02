@@ -9,7 +9,7 @@ INJECTED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidM
 INJECTED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidManifest.xml:2:1-14:12
 INJECTED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidManifest.xml:2:1-14:12
 	package
-		ADDED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidManifest.xml:2:102-135
+		ADDED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidManifest.xml:2:102-128
 		INJECTED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidManifest.xml
 		INJECTED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidManifest.xml
 	android:versionName
@@ -19,7 +19,7 @@ INJECTED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidM
 	android:hardwareAccelerated
 		ADDED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidManifest.xml:2:11-45
 	xmlns:android
-		ADDED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidManifest.xml:2:136-194
+		ADDED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidManifest.xml:2:129-187
 	android:versionCode
 		ADDED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidManifest.xml:2:46-73
 		INJECTED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidManifest.xml
@@ -52,7 +52,7 @@ ADDED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidMani
 		ADDED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidManifest.xml:5:18-52
 	android:icon
 		ADDED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidManifest.xml:5:53-80
-activity#io.cordova.hellocordova.MainActivity
+activity#io.cordova.taidi.MainActivity
 ADDED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidManifest.xml:6:9-11:20
 	android:label
 		ADDED from C:\Users\GTI\Desktop\TAIDi\platforms\android\app\src\main\AndroidManifest.xml:6:97-134

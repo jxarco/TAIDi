@@ -12,7 +12,7 @@ body {
 }
 
 .view.view-main{
-  /*display: none;*/
+  display: none;
 }
 
 /* Portrait layout (default) */

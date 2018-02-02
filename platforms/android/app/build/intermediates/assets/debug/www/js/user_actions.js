@@ -75,71 +75,75 @@ var login = function(){
                 email: user.email
             });
 
+            var login_process = function()
+            {
+
+              var user_name = globals.user.name;
+
+              if(user_name)
+              {
+                  // welcome
+                  fw7.toast.create({
+                      closeTimeout: 3000,
+                      closeButton: true,
+                      text: "Welcome " + user_name + "!",
+                  }).open();
+                  // display user's name
+                  $$('#myUserName').html( user_name );
+              }
+
+              // enable group selector
+              $$("#groupSelector").css("display", "block");
+              // display logout button
+              $$("#logoutButton-row").css("display", "block");
+              // remove login button
+              $$(".connected-row").css("display", "none");
+
+              if(!globals.db)
+                  throw("not available db yet");
+              else
+                  console.log(globals.db);
+
+              var groups = globals.db.groups,
+                  n_groups = globals.db.n_groups,
+                  user_groups = [],
+                  optionsText = "";
+
+              for(var i = 0; i < n_groups; i++)
+                  if(isInArray( groups[i].members, globals.user.getUid() ))
+                      user_groups.push( groups[i] );
+
+              globals.user.setGroups( user_groups );
+
+              for(var i = 0; i < user_groups.length; i++)
+              {
+                  var text_block, name = user_groups[i].name;
+
+                  if(i === 0)
+                  {
+                      setAppTitle( user_groups[0].name );
+                      globals.user.currentGroup = user_groups[0];
+
+                      $$("#sfo").html( name );
+                      $$("#sfo").attr( "value", name );
+                      globals.smartSelect.valueEl.innerHTML = name;
+                  }
+                  else
+                  {
+                      text_block = "<option value='" + name + "'>" + name + "</option>";
+                      optionsText += text_block;
+                  }
+              }
+
+              $$("#connectedGroups").append( optionsText );
+              updateMain();
+            }
+
             // init db!!!!
-            globals.db = TD.Setup();
+            globals.db = TD.Setup( login_process );
             // ****************
-
-            var user_name = globals.user.name;
-
-            if(user_name)
-            {
-                // welcome
-                fw7.toast.create({
-                    closeTimeout: 3000,
-                    closeButton: true,
-                    text: "Welcome " + user_name + "!",
-                }).open();
-                // display user's name
-                $$('#myUserName').html( user_name );
-            }
-
-            // enable group selector
-            $$("#groupSelector").css("display", "block");
-            // display logout button
-            $$("#logoutButton-row").css("display", "block");
-            // remove login button
-            $$(".connected-row").css("display", "none");
-
-            if(!globals.db)
-                throw("not available db yet");
-            else
-                console.log(globals.db);
-
-            var groups = globals.db.groups,
-                n_groups = globals.db.n_groups,
-                user_groups = [],
-                optionsText = "";
-
-            for(var i = 0; i < n_groups; i++)
-                if(isInArray( groups[i].members, globals.user.getUid() ))
-                    user_groups.push( groups[i] );
-
-            globals.user.setGroups( user_groups );
-
-            for(var i = 0; i < user_groups.length; i++)
-            {
-                var text_block, name = user_groups[i].name;
-
-                if(i === 0)
-                {
-                    setAppTitle( user_groups[0].name );
-                    globals.user.currentGroup = user_groups[0];
-
-                    $$("#sfo").html( name );
-                    $$("#sfo").attr( "value", name );
-                    globals.smartSelect.valueEl.innerHTML = name;
-                }
-                else
-                {
-                    text_block = "<option value='" + name + "'>" + name + "</option>";
-                    optionsText += text_block;
-                }
-            }
-
-            $$("#connectedGroups").append( optionsText );
-            updateMain();
         }
-    })
+    });
 };
 
 // Login Screen Demo

@@ -23,7 +23,7 @@ setTimeout(function loadUI(){
           }
         });
 
-        //$(".view.view-main").fadeIn();
+        $(".view.view-main").fadeIn();
 
         globals.mainView = fw7.views.create('.view-main');
         globals.smartSelectView = fw7.views.create('.view-smartie');

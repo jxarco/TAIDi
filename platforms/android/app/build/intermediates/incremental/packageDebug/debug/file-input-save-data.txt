@@ -1,5 +1,5 @@
 #Internal package file, do not edit.
-#Thu Feb 01 16:46:01 CET 2018
+#Thu Feb 01 16:57:37 CET 2018
 5.base=C\:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\build\\intermediates\\assets\\debug
 42.base=C\:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\build\\intermediates\\res\\debug\\resources-debug.ap_
 32.set=ASSET
