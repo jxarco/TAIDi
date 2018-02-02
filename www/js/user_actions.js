@@ -12,6 +12,10 @@ function setUserCurrentGroup(name)
         if(gr[i].name === name) globals.user.currentGroup = gr[i];
 
     updateMain();
+    fw7.toast.create({
+        closeTimeout: 2500,
+        text: "Connected to: " + globals.user.currentGroup.name,
+    }).open();
 }
 
 var updateMain = function(){
@@ -55,6 +59,10 @@ var logout = function(){
 }
 
 var login = function(){
+
+    // loading DIALOG!!!
+    fw7.dialog.preloader('Please wait');
+    // ************
 
     var username = $$('#my-login-screen [name="username"]').val();
     var password = $$('#my-login-screen [name="password"]').val();
@@ -137,6 +145,7 @@ var login = function(){
 
               $$("#connectedGroups").append( optionsText );
               updateMain();
+              fw7.dialog.close();
             }
 
             // init db!!!!

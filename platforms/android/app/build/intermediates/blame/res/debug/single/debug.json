@@ -20,10 +20,6 @@
         "source": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\src\\main\\res\\drawable-land-xhdpi\\screen.png"
     },
     {
-        "merged": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-hdpi_icon.png.flat",
-        "source": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\src\\main\\res\\mipmap-hdpi\\icon.png"
-    },
-    {
         "merged": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-port-hdpi_screen.png.flat",
         "source": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\src\\main\\res\\drawable-port-hdpi\\screen.png"
     },
@@ -48,10 +44,6 @@
         "source": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\src\\main\\res\\mipmap-mdpi\\icon.png"
     },
     {
-        "merged": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxxhdpi_icon.png.flat",
-        "source": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\src\\main\\res\\mipmap-xxxhdpi\\icon.png"
-    },
-    {
         "merged": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xhdpi_icon.png.flat",
         "source": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\src\\main\\res\\mipmap-xhdpi\\icon.png"
     },
@@ -68,11 +60,11 @@
         "source": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\src\\main\\res\\drawable-land-hdpi\\screen.png"
     },
     {
-        "merged": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_icon.png.flat",
-        "source": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\icon.png"
-    },
-    {
         "merged": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\drawable-port-xxhdpi_screen.png.flat",
         "source": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\src\\main\\res\\drawable-port-xxhdpi\\screen.png"
+    },
+    {
+        "merged": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\build\\intermediates\\res\\merged\\debug\\mipmap-xxhdpi_icon.png.flat",
+        "source": "C:\\Users\\GTI\\Desktop\\TAIDi\\platforms\\android\\app\\src\\main\\res\\mipmap-xxhdpi\\icon.png"
     }
 ]

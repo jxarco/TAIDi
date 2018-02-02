@@ -87,7 +87,7 @@ User.prototype.setGroups = function(groups)
     if(groups.length)
         {
             this.groups = groups;
-            console.log("groups added");
+            console.log("Groups added to current user");
         }
 }
 
@@ -227,7 +227,10 @@ DataBase.prototype.refresh = function()
     this.n_groups = null;
     this.groups = null;
 
-    this.init();
+    this.init(function(){
+			updateMain();
+			fw7.ptr.done();
+		});
 }
 
 // Footer

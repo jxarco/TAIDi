@@ -56,6 +56,10 @@ var logout = function(){
 
 var login = function(){
 
+    // loading DIALOG!!!
+    app.dialog.preloader('Please wait');
+    // ************
+
     var username = $$('#my-login-screen [name="username"]').val();
     var password = $$('#my-login-screen [name="password"]').val();
 
@@ -137,6 +141,7 @@ var login = function(){
 
               $$("#connectedGroups").append( optionsText );
               updateMain();
+              app.dialog.close();
             }
 
             // init db!!!!

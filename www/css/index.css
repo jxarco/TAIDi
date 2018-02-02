@@ -96,26 +96,11 @@ h1 {
     width: 40%;
     margin-left: 31%;
     margin-top: 35vh;
-    animation-duration: 1.5s;
-    animation-name: example;
-}
-
-@keyframes example {
-    from{
-        opacity: 0;
-    }
-    to{
-        opacity: 1;
-    }
-}
-
-@-webkit-keyframes example {
-    from{
-        opacity: 0;
-    }
-    to{
-        opacity: 1;
-    }
+    animation-duration: 2000ms;
+    /* animation-delay: 1800ms; */
+    /* animation-name: example2;
+    animation:fade 3000ms infinite;
+    -webkit-animation:fade 3000ms infinite; */
 }
 
 .login-screen{
@@ -159,6 +144,13 @@ h1 {
   font-size: 15px !important;
 }
 
+.md .navbar + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ * .page-content, .md .navbar + .toolbar:not(.toolbar-bottom-md):not(.messagebar) ~ .page-content {
+  padding-top: 60px !important;
+}
+
+.md .list{
+  margin: 20px 0px !important;
+}
 
 /* COLORS */
 .dodger{ background-color: red !important; }

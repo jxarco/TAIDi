@@ -1,4 +1,4 @@
-var tOut = TD.PreloadTimeOut;
+var tOut = 0 || TD.PreloadTimeOut;
 
 setTimeout(function loadUI(){
 
@@ -31,4 +31,23 @@ setTimeout(function loadUI(){
         globals.smartSelect.onClose = function(){
             setUserCurrentGroup( globals.smartSelect.selectEl.value );
         }
+
+        $$(document.body).on('change', 'select[id="connectedGroups"]', function(e){
+          globals.smartSelect.close();
+        });
+
+        // Pull to refresh content
+        var $ptrContent = $$('.ptr-content');
+        $ptrContent.css("top", "50px");
+        // Add 'refresh' listener on it
+        $ptrContent.on('ptr:refresh', function (e) {
+            if(globals.db)
+              globals.db.refresh();
+            else {
+                fw7.ptr.done();
+              }
+        });
+
+        // adjust some css things from fw7
+        // $$(".tab").css("padding-bottom", "60px !important");
 }, tOut);
