@@ -51,6 +51,15 @@ setTimeout(function loadUI(){
         var $auto_refresh = $$(".toggle");
         $auto_refresh.on('toggle:change', function (e) {
             globals.auto_refresh = e.detail.inputEl.checked;
+            fw7.panel.close();
+            if(globals.auto_refresh)
+                globals.db.update( function(){
+                    globals.db.updateGroups();
+                    UI.refreshMain();
+                });
+            else 
+                globals.db.update();
+            
         });
 
         // adjust some css things

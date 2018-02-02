@@ -18,6 +18,9 @@ var TD = global.TD = {
 TD.Task = 001;
 TD.Item = 002;
 TD.PreloadTimeOut = 1750;
+    
+TD.ONCE = 003;
+TD.ON = 004;
 
 TD.Setup = function(callback)
 {
@@ -222,11 +225,14 @@ DataBase.prototype.init = function(callback)
 DataBase.prototype.update = function(callback)
 {
     console.warn("Refilling DataBase, please wait");
-    var that = this;
+    var that = this, read_mode = TD.ONCE;
 
-    getFromDB(TD.ON, "groups", "/", function(data){
+    if(globals.auto_refresh)
+        read_mode = TD.ON;
+    
+    getFromDB(read_mode, "groups", "/", function(data){
         that.groups = data;
-        getFromDB(TD.ON, "n_groups", "/", function(data){
+        getFromDB(read_mode, "n_groups", "/", function(data){
             that.n_groups = data;
             // console.log( that );
             console.warn("DataBase reloaded successfully");

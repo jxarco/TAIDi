@@ -35,6 +35,7 @@ function getFromDB(read_mode, unit, path, callback, on_error)
         });
       break;
       case TD.ONCE:
+        ref.off();
         ref.once("value", function(snapshot) {
             data = snapshot.val();
             if(callback)
