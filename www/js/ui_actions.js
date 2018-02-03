@@ -4,6 +4,8 @@ var UI = {
         console.log("Refreshing homepage");
         $$(".card").remove();
 
+        $$("#tab-2").append(base_table);
+
         if(!globals.db || !globals.user.currentGroup){
             console.error("No DB or group selected");
             return;
@@ -60,30 +62,26 @@ function createCard(type, element)
                 `</div>
             </div>
         `;
+      TD.LastCardID += 1;
     }
     else
     {
-        target = $$("#tab-2");
-
+        target = $$("#shop-list-content");
         text += `
-            <div class="card" id="card-` + nCard + `">
-                <div class="card-header">` + element.qnt +
-                    (element.urgency === true ? urg_icon : "") +
-                `</div>
-                <div class="card-content card-content-padding">` +
-                    element.name +
-                `</div>
-                <div class="card-footer"><a class="button complete-item" data-target="` +
-                    "card-" + nCard +
-                `">Complete</a>` +
-                `</div>
-            </div>
-        `;
+          <tr>
+            <td class="checkbox-cell">
+              <label class="checkbox">
+                <input type="checkbox">
+                <i class="icon-checkbox"></i>
+              </label>
+            </td>
+            <td class="label-cell">` + element.name + `</td>
+            <td class="numeric-cell">` + element.qnt + `</td>
+          </tr>
+          `;
     }
 
     target.prepend( text );
-    TD.LastCardID += 1;
-
     bindTaskCardEvents();
 }
 
@@ -157,3 +155,59 @@ var bindListCardEvents = function()
 // bind in example cards
 bindTaskCardEvents();
 bindListCardEvents();
+
+
+
+
+
+
+
+// reconstruct card for shopping_list
+var base_table = `
+  <div class="data-table data-table-init card">
+    <!-- Card header -->
+    <div class="card-header">
+      <!-- Default table header -->
+      <div class="data-table-header">
+        <!-- Default table title -->
+        <div class="data-table-title">Shopping List</div>
+        <!-- Default table actions -->
+        <div class="data-table-actions">
+          <a class="link icon-only">
+            <i class="icon material-icons md-only">sort</i>
+          </a>
+        </div>
+      </div>
+      <!-- Selected table header -->
+      <div class="data-table-header-selected">
+        <!-- Selected table title -->
+        <div class="data-table-title-selected"><span class="data-table-selected-count"></span> items selected</div>
+        <!-- Selected table actions -->
+        <div class="data-table-actions">
+          <a class="link icon-only" id="delete-selection">
+            <i class="icon material-icons md-only">delete</i>
+          </a>
+        </div>
+      </div>
+    </div>
+    <div class="card-content">
+      <table>
+        <thead>
+          <tr id="head-checkbox">
+            <th class="checkbox-cell">
+              <label class="checkbox">
+                <input type="checkbox">
+                <i class="icon-checkbox"></i>
+              </label>
+            </th>
+            <th class="label-cell">Full list</th>
+            <th class="numeric-cell">Quantity</th>
+          </tr>
+        </thead>
+        <tbody id="shop-list-content">
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+`;
