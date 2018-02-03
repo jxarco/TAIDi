@@ -44,7 +44,7 @@ setTimeout(function loadUI(){
             if(globals.db)
               globals.db.refresh();
             else {
-                setTimeout( fw7.ptr.done, 500 );
+                setTimeout( ptr_done, 500 );
               }
         });
     

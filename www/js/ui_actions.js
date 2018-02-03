@@ -2,9 +2,15 @@ var UI = {
     refreshMain: function()
     {
         console.log("Refreshing homepage");
-        $$(".card").remove();
-
-        $$("#tab-2").append(base_table);
+        
+        // remove old cards/table
+        $(".card").remove();
+        $("#tab-2 .ptr-preloader").after(base_table);
+        
+        // inicializar tabla fw7 
+        fw7.dataTable.create({
+            el: ".data-table"
+        });
 
         if(!globals.db || !globals.user.currentGroup){
             console.error("No DB or group selected");
@@ -32,20 +38,12 @@ var UI = {
 function createCard(type, element)
 {
     // console.log("creating card");
-    var target, text = "";
-
-        var urg_icon = `<div class="chip">
-    <div class="chip-media bg-color-red">
-      <i class="icon material-icons md-only">alarm</i>
-    </div>
-    <div class="chip-label">Urgent</div>
-  </div>`;
+    var text = "";
 
     element.urgency = JSON.parse(element.urgency);
     var nCard = TD.LastCardID;
 
     if(type === TD.Task){
-        target = $$("#tab-1");
 
         text += `
             <div class="card" id="card-` + nCard + `">
@@ -62,13 +60,14 @@ function createCard(type, element)
                 `</div>
             </div>
         `;
-      TD.LastCardID += 1;
+        
+        TD.LastCardID += 1;
+        $("#tab-1 .ptr-preloader").after( text );
     }
     else
     {
-        target = $$("#shop-list-content");
+        var table_row = document.createElement("tr");
         text += `
-          <tr>
             <td class="checkbox-cell">
               <label class="checkbox">
                 <input type="checkbox">
@@ -77,11 +76,12 @@ function createCard(type, element)
             </td>
             <td class="label-cell">` + element.name + `</td>
             <td class="numeric-cell">` + element.qnt + `</td>
-          </tr>
           `;
+        table_row.innerHTML = text;
+        $$("#shop-list-content").append( table_row );
     }
 
-    target.prepend( text );
+    bindListCardEvents();
     bindTaskCardEvents();
 }
 
@@ -157,10 +157,14 @@ bindTaskCardEvents();
 bindListCardEvents();
 
 
+// HTML structures
 
-
-
-
+var urg_icon = `<div class="chip">
+    <div class="chip-media bg-color-red">
+      <i class="icon material-icons md-only">alarm</i>
+    </div>
+    <div class="chip-label">Urgent</div>
+  </div>`;
 
 // reconstruct card for shopping_list
 var base_table = `
@@ -193,14 +197,14 @@ var base_table = `
     <div class="card-content">
       <table>
         <thead>
-          <tr id="head-checkbox">
+          <tr>
             <th class="checkbox-cell">
               <label class="checkbox">
                 <input type="checkbox">
                 <i class="icon-checkbox"></i>
               </label>
             </th>
-            <th class="label-cell">Full list</th>
+            <th class="label-cell">Select all</th>
             <th class="numeric-cell">Quantity</th>
           </tr>
         </thead>

@@ -26,13 +26,15 @@ var onUserLogged = function()
       createToast( "Welcome " + user_name + "!", 3000, true );
       $$('#myUserName').html( user_name );
     }
-
+    $$(".auto-refresh-hidden").css("display", "block"); 
     // enable group selector
     $$("#groupSelector").css("display", "block");
     // display logout button
     $$("#logoutButton-row").css("display", "block");
     // remove login button
     $$(".connected-row").css("display", "none");
+
+
 
     if(!globals.db)
         throw("DB is not available yet");
@@ -76,7 +78,7 @@ var onUserLogged = function()
 }
 
 var logout = function(){
-    
+
     firebase.auth().signOut();
     globals.user = null;
     globals.db = null;
@@ -97,7 +99,7 @@ var login = function()
     // UI EVENTS
     closeSignInScreen();
     createLoadDialog( "Please wait" );
-    // 
+    //
 
     var username = $$('#my-login-screen [name="username"]').val();
     var password = $$('#my-login-screen [name="password"]').val();
@@ -110,8 +112,8 @@ var sign_up = function()
     // UI EVENTS
     closeSignInScreen();
     createToast( "User created successfully", 2000, false );
-    // 
-    
+    //
+
     var name        = $$('#my-signup-screen [name="name"]').val();
     var username    = $$('#my-signup-screen [name="username"]').val();
     var password    = $$('#my-signup-screen [name="password"]').val();
@@ -136,4 +138,3 @@ $$("#logoutButton").on('click', logout);
 $$('#my-login-screen .login-button').on('click', function(){
     login(null, null);
 });
-

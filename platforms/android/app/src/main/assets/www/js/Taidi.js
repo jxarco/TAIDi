@@ -268,7 +268,7 @@ DataBase.prototype.refresh = function()
     this.update(function(){
             that.updateGroups();
 			UI.refreshMain();
-			fw7.ptr.done();
+            ptr_done();
 		});
 }
 

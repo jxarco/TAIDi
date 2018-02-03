@@ -52,6 +52,12 @@ function getFromDB(read_mode, unit, path, callback, on_error)
 
 // ******** FW7 ********
 
+function ptr_done()
+{
+    fw7.ptr.get($$("#tab-1.ptr-content")).done();
+    fw7.ptr.get($$("#tab-2.ptr-content")).done();
+}
+
 function createLoadDialog( text )
 {
     fw7.dialog.preloader( text );
