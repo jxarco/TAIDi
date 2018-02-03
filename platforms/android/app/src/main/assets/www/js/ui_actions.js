@@ -40,12 +40,13 @@ function createCard(type, element)
   </div>`;
 
     element.urgency = JSON.parse(element.urgency);
+    var nCard = TD.LastCardID;
     
     if(type === TD.Task){
         target = $$("#tab-1");
         
         text += `
-            <div class="card" id="card-0">
+            <div class="card" id="card-` + nCard + `">
                 <div class="card-header align-items-flex-end">` + element.to + 
                     (element.urgency === true ? urg_icon : "") +
                 `</div>
@@ -53,8 +54,9 @@ function createCard(type, element)
                 <p class="date">`+ element.timestamp + `</p><p>`+ 
                     element.name +
                 `</p></div>
-                <div class="card-footer"><a href="#" class="link">Complete</a>` + 
-                // `<a href="#" class="link">Complete</a>` + 
+                <div class="card-footer"><a class="button complete-task" data-target="` +
+                    "card-" + nCard +
+                `">Complete</a>` + 
                 `</div>
             </div>
         `;
@@ -64,41 +66,94 @@ function createCard(type, element)
         target = $$("#tab-2");
 
         text += `
-            <div class="card" id="card-0">
+            <div class="card" id="card-` + nCard + `">
                 <div class="card-header">` + element.qnt + 
                     (element.urgency === true ? urg_icon : "") +
                 `</div>
                 <div class="card-content card-content-padding">` +
                     element.name +
                 `</div>
-                <div class="card-footer">` +
-                    element.from +
-                    `<i data-target="card-0" class="button button-round task-done">
-                      <i class="icon material-icons md-only">more_horiz</i>
-                    </i>
-                </div>
+                <div class="card-footer"><a class="button complete-item" data-target="` +
+                    "card-" + nCard +
+                `">Complete</a>` + 
+                `</div>
             </div>
         `;
     }
 
     target.prepend( text );
-
+    TD.LastCardID += 1;
+    
+    bindTaskCardEvents();
+    bindListCardEvents();
 }
 
-//$$(".task-done").on('click', function(){
-//
-//  var target = $$(this).data("target");
-//
-//  fw7.dialog.confirm(null, "Delete item?", function(){
-//
-//    $$("#" + target).remove();
-//    fw7.toast.create({
-//        closeTimeout: 3000,
-//        closeButton: true,
-//        text: "Item Deleted",
-//    }).open();
-//  }, function(){
-//    console.log("aborted");
-//  });
-//
-//});
+var bindTaskCardEvents = function()
+{
+    // unbind last events to prevent double bindings
+    $$(".complete-task").prop('onclick',null).off('click');
+    // bind click event to new buttons
+    $$(".complete-task").on('click', function(e){
+
+        var target = $$(this).data("target");
+        fw7.dialog.confirm("Are you sure?", null, function(){
+
+            var pressed = false;
+            var onPressed = function(){ if(!pressed) $("#" + target).remove();}
+            
+            $("#" + target).slideUp();
+            createToast(null, null, null, {
+                text: 'Done! :)',
+                closeTimeout: 3500,
+                closeButton: true,
+                closeButtonText: 'Undo',
+                on: {
+                    closeButtonClick: function() {
+                        pressed = true;
+                        $("#" + target).slideDown();
+                    }
+                  }
+            });
+            
+            // delete card if no UNDO 
+            setTimeout(onPressed, 3000);
+        });
+    });
+};
+
+var bindListCardEvents = function()
+{
+    // unbind last events to prevent double bindings
+    $$(".complete-item").prop('onclick',null).off('click');
+    // bind click event to new buttons
+    $$(".complete-item").on('click', function(e){
+
+        var target = $$(this).data("target");
+        fw7.dialog.confirm("Are you sure?", null, function(){
+
+            var pressed = false;
+            var onPressed = function(){ if(!pressed) $("#" + target).remove();}
+            
+            $("#" + target).slideUp();
+            createToast(null, null, null, {
+                text: 'Got it!',
+                closeTimeout: 3500,
+                closeButton: true,
+                closeButtonText: 'Undo',
+                on: {
+                    closeButtonClick: function() {
+                        pressed = true;
+                        $("#" + target).slideDown();
+                    }
+                  }
+            });
+            
+            // delete card if no UNDO 
+            setTimeout(onPressed, 3000);
+        });
+    });
+};
+
+// bind in example cards
+bindTaskCardEvents();
+bindListCardEvents();

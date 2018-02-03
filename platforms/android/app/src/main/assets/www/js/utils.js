@@ -1,3 +1,5 @@
+function log(param){ console.log(param); }
+
 function isInArray(array, element)
 {
     for(var i = 0; i < array.length; i++)
@@ -55,8 +57,14 @@ function createLoadDialog( text )
     fw7.dialog.preloader( text );
 }
 
-function createToast( text, duration, closeButton )
+function createToast( text, duration, closeButton, params)
 {
+    if(params)
+    {
+        fw7.toast.create(params).open();    
+        return;
+    }
+    
     fw7.toast.create({
         closeTimeout: duration,
         closeButton: closeButton ? false : true,

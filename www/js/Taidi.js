@@ -21,6 +21,8 @@ TD.PreloadTimeOut = 1750;
     
 TD.ONCE = 003;
 TD.ON = 004;
+    
+TD.LastCardID = 0;
 
 TD.Setup = function(callback)
 {
