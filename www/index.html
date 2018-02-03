@@ -57,17 +57,20 @@
                         </ul>
                       </div>
                       <!-- Automatic refresh -->
-                      <div class="list simple-list">
-                        <ul>
-                            <li>
-                                <span>Auto-refresh</span>
-                                <label class="toggle auto-refresh toggle-init color-blue">
-                                    <input type="checkbox">
-                                    <span class="toggle-icon"></span>
-                                </label>
-                            </li>
-                        </ul>
+                      <div class="row auto-refresh-hidden" style="display: none;">
+                        <div class="list simple-list">
+                          <ul>
+                              <li>
+                                  <span>Auto-refresh</span>
+                                  <label class="toggle auto-refresh toggle-init color-blue">
+                                      <input type="checkbox">
+                                      <span class="toggle-icon"></span>
+                                  </label>
+                              </li>
+                          </ul>
+                        </div>
                       </div>
+
                       <!-- Signup button -->
                       <div class="row connected-row">
                           <div class="col-50" style="margin-left: 25%;">
@@ -180,6 +183,81 @@
                             <div class="ptr-arrow"></div>
                           </div>
                           <!-- Cards go below-->
+                          <div class="data-table data-table-init card">
+                            <!-- Card header -->
+                            <div class="card-header">
+                              <!-- Default table header -->
+                              <div class="data-table-header">
+                                <!-- Default table title -->
+                                <div class="data-table-title">Shopping List</div>
+                                <!-- Default table actions -->
+                                <div class="data-table-actions">
+                                  <a class="link icon-only">
+                                    <i class="icon material-icons md-only">sort</i>
+                                  </a>
+                                </div>
+                              </div>
+                              <!-- Selected table header -->
+                              <div class="data-table-header-selected">
+                                <!-- Selected table title -->
+                                <div class="data-table-title-selected"><span class="data-table-selected-count"></span> items selected</div>
+                                <!-- Selected table actions -->
+                                <div class="data-table-actions">
+                                  <a class="link icon-only" id="delete-selection">
+                                    <i class="icon material-icons md-only">delete</i>
+                                  </a>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="card-content">
+                              <table>
+                                <thead>
+                                  <tr id="head-checkbox">
+                                    <th class="checkbox-cell">
+                                      <label class="checkbox">
+                                        <input type="checkbox">
+                                        <i class="icon-checkbox"></i>
+                                      </label>
+                                    </th>
+                                    <th class="label-cell">Full list</th>
+                                    <th class="numeric-cell">Quantity</th>
+                                  </tr>
+                                </thead>
+                                <tbody>
+                                  <tr id="item-0">
+                                    <td class="checkbox-cell">
+                                      <label class="checkbox">
+                                        <input type="checkbox">
+                                        <i class="icon-checkbox"></i>
+                                      </label>
+                                    </td>
+                                    <td class="label-cell">Tomates</td>
+                                    <td class="numeric-cell">8</td>
+                                  </tr>
+                                  <tr id="item-0">
+                                    <td class="checkbox-cell">
+                                      <label class="checkbox">
+                                        <input type="checkbox">
+                                        <i class="icon-checkbox"></i>
+                                      </label>
+                                    </td>
+                                    <td class="label-cell">Peras</td>
+                                    <td class="numeric-cell">4</td>
+                                  </tr>
+                                  <tr id="item-0">
+                                    <td class="checkbox-cell">
+                                      <label class="checkbox">
+                                        <input type="checkbox">
+                                        <i class="icon-checkbox"></i>
+                                      </label>
+                                    </td>
+                                    <td class="label-cell">Cereales</td>
+                                    <td class="numeric-cell">2</td>
+                                  </tr>
+                                </tbody>
+                              </table>
+                            </div>
+                          </div>
                           <!-- Cards finish here-->
                           <!-- Extra links -->
                           <div class="list">
@@ -313,7 +391,7 @@
     <!-- Path to Framework7 Library JS-->
     <script type="text/javascript" src="js/framework7.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
-<!--    <script type="text/javascript" src="cordova.js"></script>-->
+    <script type="text/javascript" src="cordova.js"></script>
     <script type="text/javascript" src="js/routes.js"></script>
     <script src="https://www.gstatic.com/firebasejs/4.9.0/firebase.js"></script>
     <script>

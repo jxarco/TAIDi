@@ -16,14 +16,14 @@ var UI = {
             createCard(TD.Task, tasks[i]);
         for(var i = 0; i < items.length; i++)
             createCard(TD.Item, items[i]);
-        
+
 //        UI.refreshMain();
 //        UI.refreshGroups();
     },
-    
+
     refreshGroups: function()
     {
-        
+
     }
 }
 
@@ -31,7 +31,7 @@ function createCard(type, element)
 {
     // console.log("creating card");
     var target, text = "";
-    
+
         var urg_icon = `<div class="chip">
     <div class="chip-media bg-color-red">
       <i class="icon material-icons md-only">alarm</i>
@@ -41,22 +41,22 @@ function createCard(type, element)
 
     element.urgency = JSON.parse(element.urgency);
     var nCard = TD.LastCardID;
-    
+
     if(type === TD.Task){
         target = $$("#tab-1");
-        
+
         text += `
             <div class="card" id="card-` + nCard + `">
-                <div class="card-header align-items-flex-end">` + element.to + 
+                <div class="card-header align-items-flex-end">` + element.to +
                     (element.urgency === true ? urg_icon : "") +
                 `</div>
                 <div class="card-content card-content-padding">
-                <p class="date">`+ element.timestamp + `</p><p>`+ 
+                <p class="date">`+ element.timestamp + `</p><p>`+
                     element.name +
                 `</p></div>
                 <div class="card-footer"><a class="button complete-task" data-target="` +
                     "card-" + nCard +
-                `">Complete</a>` + 
+                `">Complete</a>` +
                 `</div>
             </div>
         `;
@@ -67,7 +67,7 @@ function createCard(type, element)
 
         text += `
             <div class="card" id="card-` + nCard + `">
-                <div class="card-header">` + element.qnt + 
+                <div class="card-header">` + element.qnt +
                     (element.urgency === true ? urg_icon : "") +
                 `</div>
                 <div class="card-content card-content-padding">` +
@@ -75,7 +75,7 @@ function createCard(type, element)
                 `</div>
                 <div class="card-footer"><a class="button complete-item" data-target="` +
                     "card-" + nCard +
-                `">Complete</a>` + 
+                `">Complete</a>` +
                 `</div>
             </div>
         `;
@@ -83,9 +83,8 @@ function createCard(type, element)
 
     target.prepend( text );
     TD.LastCardID += 1;
-    
+
     bindTaskCardEvents();
-    bindListCardEvents();
 }
 
 var bindTaskCardEvents = function()
@@ -100,7 +99,7 @@ var bindTaskCardEvents = function()
 
             var pressed = false;
             var onPressed = function(){ if(!pressed) $("#" + target).remove();}
-            
+
             $("#" + target).slideUp();
             createToast(null, null, null, {
                 text: 'Done! :)',
@@ -114,8 +113,8 @@ var bindTaskCardEvents = function()
                     }
                   }
             });
-            
-            // delete card if no UNDO 
+
+            // delete card if no UNDO
             setTimeout(onPressed, 3000);
         });
     });
@@ -124,31 +123,32 @@ var bindTaskCardEvents = function()
 var bindListCardEvents = function()
 {
     // unbind last events to prevent double bindings
-    $$(".complete-item").prop('onclick',null).off('click');
+    $$("#delete-selection").prop('onclick',null).off('click');
     // bind click event to new buttons
-    $$(".complete-item").on('click', function(e){
+    $$("#delete-selection").on('click', function(e){
 
-        var target = $$(this).data("target");
-        fw7.dialog.confirm("Are you sure?", null, function(){
+      var target = $(".data-table-row-selected");
+      fw7.dialog.confirm("Are you sure?", null, function(){
 
-            var pressed = false;
-            var onPressed = function(){ if(!pressed) $("#" + target).remove();}
-            
-            $("#" + target).slideUp();
-            createToast(null, null, null, {
-                text: 'Got it!',
-                closeTimeout: 3500,
-                closeButton: true,
-                closeButtonText: 'Undo',
-                on: {
-                    closeButtonClick: function() {
-                        pressed = true;
-                        $("#" + target).slideDown();
-                    }
+          var pressed = false;
+          var onPressed = function(){ if(!pressed) target.remove();}
+
+          target.fadeOut();
+          createToast(null, null, null, {
+              text: 'Done! :)',
+              closeTimeout: 3500,
+              closeButton: true,
+              closeButtonText: 'Undo',
+              on: {
+                  closeButtonClick: function() {
+                      pressed = true;
+                      target.fadeIn();
                   }
-            });
-            
-            // delete card if no UNDO 
+                }
+          });
+
+
+            // delete card if no UNDO
             setTimeout(onPressed, 3000);
         });
     });
