@@ -13,9 +13,31 @@ function isInArray(array, element)
     return false;
 }
 
-function writeToDB(params)
-{
+function writeToDB(unit, path, object) {
+	// Get a database reference to our posts
+    var db = firebase.database();
+    var ref = db.ref(unit + "/" + path);
+	if (ref != null) {
+		ref.set(object);
+	}
+}
 
+function addToDB(unit, path, object) {
+	// Get a database reference to our posts
+    var db = firebase.database();
+    var ref = db.ref(unit + "/" + path);
+	if (ref != null) {
+		ref.push(object);
+	}
+}
+
+function deleteToDB(unit, path) {
+	// Get a database reference to our posts
+    var db = firebase.database();
+    var ref = db.ref(unit + "/" + path);
+	if (ref != null) {
+		ref.set(null);
+	}
 }
 
 function getFromDB(read_mode, unit, path, callback, on_error)
@@ -73,7 +95,27 @@ function createToast( text, duration, closeButton, params)
     
     fw7.toast.create({
         closeTimeout: duration,
-        closeButton: closeButton ? false : true,
+        closeButton: closeButton ? closeButton : false,
         text: text,
     }).open();
+}
+
+function getDOMValue(path) {
+	var value = null;
+	try {
+		value = $(path).val();
+	} catch (error) {
+		log(error);
+	}
+	return value
+}
+
+function getDOMText(path) {
+	var text = null;
+	try {
+		text = $(path).text();
+	} catch (error) {
+		log(error);
+	}
+	return text
 }

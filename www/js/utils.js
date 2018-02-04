@@ -13,12 +13,7 @@ function isInArray(array, element)
     return false;
 }
 
-function writeToDB(params)
-{
-
-}
-
-function writeToDB2(unit, path, object) {
+function writeToDB(unit, path, object) {
 	// Get a database reference to our posts
     var db = firebase.database();
     var ref = db.ref(unit + "/" + path);
@@ -100,7 +95,7 @@ function createToast( text, duration, closeButton, params)
     
     fw7.toast.create({
         closeTimeout: duration,
-        closeButton: closeButton ? false : true,
+        closeButton: closeButton ? closeButton : false,
         text: text,
     }).open();
 }

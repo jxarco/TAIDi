@@ -18,7 +18,7 @@ var UI = {
         }
 
         var tasks = globals.user.currentGroup.tasks,
-            items = globals.user.currentGroup.items;
+            items = globals.user.currentGroup.shop_list;
 
         for(var i = 0; i < tasks.length; i++)
             createCard(TD.Task, tasks[i]);

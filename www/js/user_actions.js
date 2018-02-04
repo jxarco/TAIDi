@@ -9,7 +9,7 @@ function setUserCurrentGroup(name)
 
     var gr = globals.user.groups;
     for(var i = 0; i < gr.length; i++)
-        if(gr[i].name === name) globals.user.currentGroup = gr[i];
+        if(gr[i].name === name) globals.user.currentGroup = new TD.Group(gr[i]);
 
     UI.refreshMain();
     createToast( "Connected to: " + globals.user.currentGroup.name, 2500 );
@@ -23,7 +23,7 @@ var onUserLogged = function()
     if(user_name)
     {
       console.warn("Login: " + user_name);
-      createToast( "Welcome " + user_name + "!", 3000, true );
+      createToast( "Welcome " + user_name + "!", 2000, true );
       $$('#myUserName').html( user_name );
     }
     $$(".auto-refresh-hidden").css("display", "block"); 
@@ -59,7 +59,7 @@ var onUserLogged = function()
       if(i === 0)
       {
           setAppTitle( user_groups[0].name );
-          globals.user.currentGroup = user_groups[0];
+          globals.user.currentGroup = new TD.Group(user_groups[0]);
 
           $$("#sfo").html( name );
           $$("#sfo").attr( "value", name );
@@ -131,39 +131,32 @@ var closeSignUpScreen = function(){
 
 var assignTask = function() {
 
-	var task = {
-		from : globals.user.uid,
-		more : getDOMValue('textarea[placeholder="Something to know"]'),
-		name : getDOMValue('input[placeholder="Task name"]'),
-		timestamp : new Date(),
-		to : getDOMValue('input[placeholder="Person name"]'),
-		urgency: $('input[type="checkbox"]').prop('checked')
+	var from = globals.user ? 
+                    ( globals.user.name ? globals.user.name : globals.user.uid )
+                    : "Me",
+		more = getDOMValue('textarea[placeholder="Something to know"]'),
+		name = getDOMValue('input[placeholder="Task name"]'),
+		timestamp = new Date().toDateString(),
+		to = getDOMValue('input[placeholder="Person name"]'),
+		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
+    
+    if(from == "" || name == "" || to == "")
+    {
+        createToast( "Fill necessary gaps!", 2000, true );
+        return;
+    }
+    
+    var toAssign = {
+		from: from, more: more, timestamp: timestamp, to: to, urgency: urgency
 	};
-
-	console.log(task);
-
-	/*if (task.name != "") {
-		if (task.to != "") {*/
-			if (globals.user != null) {
-				if (globals.user.currentGroup != null) {
-					globals.user.currentGroup.tasks.push(task);
-					// No se como llamar a la funcion del grupo todo lo que he provado falla.
-					//globals.user.currentGroup.addTask(params);
-					UI.refreshMain();
-					createToast( "Task assignet: " + task.name + ", to: " + task.to, 2500 );
-				} else {
-					createToast( "Task can not be assigned", 2500 );
-				}
-			} else {
-				throw("Not existent user");
-			}
-		/*} else {
-			createToast( "Need Who do the task", 2500 );
-		}
-	} else {
-		createToast( "Need a Task Name", 2500 );
-	}*/
-	
+    
+    if (globals.user && globals.user.currentGroup) 
+    {
+        globals.user.currentGroup.addTask(toAssign);
+        UI.refreshMain();
+        createToast( "Done!", 2500 );
+    } else
+        console.warn( "No user logged" );
 };
 
 // BUTTON EVENTS
@@ -175,4 +168,3 @@ $$("#logoutButton").on('click', logout);
 $$('#my-login-screen .login-button').on('click', function(){
     login(null, null);
 });
-$$('#assignTask').on('click', function() { assignTask(); }); // No acaba de funcionar en el navegador, no se por que tengo que ejecutar el codigo en el terminal

@@ -9,7 +9,7 @@ function setUserCurrentGroup(name)
 
     var gr = globals.user.groups;
     for(var i = 0; i < gr.length; i++)
-        if(gr[i].name === name) globals.user.currentGroup = gr[i];
+        if(gr[i].name === name) globals.user.currentGroup = new TD.Group(gr[i]);
 
     UI.refreshMain();
     createToast( "Connected to: " + globals.user.currentGroup.name, 2500 );
@@ -23,7 +23,7 @@ var onUserLogged = function()
     if(user_name)
     {
       console.warn("Login: " + user_name);
-      createToast( "Welcome " + user_name + "!", 3000, true );
+      createToast( "Welcome " + user_name + "!", 2000, true );
       $$('#myUserName').html( user_name );
     }
     $$(".auto-refresh-hidden").css("display", "block"); 
@@ -59,7 +59,7 @@ var onUserLogged = function()
       if(i === 0)
       {
           setAppTitle( user_groups[0].name );
-          globals.user.currentGroup = user_groups[0];
+          globals.user.currentGroup = new TD.Group(user_groups[0]);
 
           $$("#sfo").html( name );
           $$("#sfo").attr( "value", name );
@@ -127,6 +127,36 @@ var closeSignInScreen = function(){
 
 var closeSignUpScreen = function(){
     fw7.loginScreen.close('#my-signup-screen');
+};
+
+var assignTask = function() {
+
+	var from = globals.user ? 
+                    ( globals.user.name ? globals.user.name : globals.user.uid )
+                    : "Me",
+		more = getDOMValue('textarea[placeholder="Something to know"]'),
+		name = getDOMValue('input[placeholder="Task name"]'),
+		timestamp = new Date().toDateString(),
+		to = getDOMValue('input[placeholder="Person name"]'),
+		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
+    
+    if(from == "" || name == "" || to == "")
+    {
+        createToast( "Fill necessary gaps!", 2000, true );
+        return;
+    }
+    
+    var toAssign = {
+		from: from, more: more, timestamp: timestamp, to: to, urgency: urgency
+	};
+    
+    if (globals.user && globals.user.currentGroup) 
+    {
+        globals.user.currentGroup.addTask(toAssign);
+        UI.refreshMain();
+        createToast( "Done!", 2500 );
+    } else
+        console.warn( "No user logged" );
 };
 
 // BUTTON EVENTS

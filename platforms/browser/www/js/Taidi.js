@@ -121,9 +121,9 @@ Group.prototype._ctor = function()
     // list of users (only its uid)
     this.members = [];
     // list of tasks
-    this.ht = {};
+    this.tasks = [];
     // shopping list
-    this.sh = {};
+    this.shop_list = [];
 }
 
 Group.prototype.configure = function(o)
@@ -149,9 +149,11 @@ Group.prototype.configure = function(o)
 	}
 }
 
-Group.prototype.addTask = function(params)
+Group.prototype.addTask = function(o)
 {
-
+	this.tasks.push(o);
+	// No se si las rutas son correctas
+	//addToBD("/groups", "./"+ globals.user.currentGroup.uid", task);
 }
 
 Group.prototype.addItem = function(params)
@@ -256,7 +258,7 @@ DataBase.prototype.updateGroups = function()
     var gr = globals.db.groups;
     
     for(var i = 0; i < gr.length; i++)
-        if(gr[i].uid === currentUID) globals.user.currentGroup = gr[i];
+        if(gr[i].uid === currentUID) globals.user.currentGroup = new TD.Group(gr[i]);
 }
 
 DataBase.prototype.refresh = function()
