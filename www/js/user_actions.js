@@ -131,17 +131,39 @@ var closeSignUpScreen = function(){
 
 var assignTask = function() {
 
-	var taskName = getDOMValue('input[placeholder="Task name"]');
-	var who = getDOMValue('input[placeholder="Person name"]');
-	var urgent = $('input[type="checkbox"]').prop('checked'); // Siempre esta devolviendo false
-	var relevant = getDOMValue('textarea[placeholder="Something to know"]');
-	params = [taskName, who, urgent, relevant];
-	console.log(params);
-	if (globals.user.currentGroup != undefined) {
-		globals.user.currentGroup.addTask(params);
-	}
-	UI.refreshMain();
-    createToast( "Task added: " + taskName + ", to: " + who, 2500 );
+	var task = {
+		from : globals.user.uid,
+		more : getDOMValue('textarea[placeholder="Something to know"]'),
+		name : getDOMValue('input[placeholder="Task name"]'),
+		timestamp : new Date(),
+		to : getDOMValue('input[placeholder="Person name"]'),
+		urgency: $('input[type="checkbox"]').prop('checked')
+	};
+
+	console.log(task);
+
+	/*if (task.name != "") {
+		if (task.to != "") {*/
+			if (globals.user != null) {
+				if (globals.user.currentGroup != null) {
+					globals.user.currentGroup.tasks.push(task);
+					// No se como llamar a la funcion del grupo todo lo que he provado falla.
+					//globals.user.currentGroup.addTask(params);
+					UI.refreshMain();
+					createToast( "Task assignet: " + task.name + ", to: " + task.to, 2500 );
+				} else {
+					createToast( "Task can not be assigned", 2500 );
+				}
+			} else {
+				throw("Not existent user");
+			}
+		/*} else {
+			createToast( "Need Who do the task", 2500 );
+		}
+	} else {
+		createToast( "Need a Task Name", 2500 );
+	}*/
+	
 };
 
 // BUTTON EVENTS
@@ -153,4 +175,4 @@ $$("#logoutButton").on('click', logout);
 $$('#my-login-screen .login-button').on('click', function(){
     login(null, null);
 });
-$$('#assignTask').on('click', function() { assignTask(); });
+$$('#assignTask').on('click', function() { assignTask(); }); // No acaba de funcionar en el navegador, no se por que tengo que ejecutar el codigo en el terminal

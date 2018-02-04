@@ -151,14 +151,10 @@ Group.prototype.configure = function(o)
 
 Group.prototype.addTask = function(params)
 {
-	var task = {
-		from : globals.user.uid,
-		more : params[3],
-		name : params[0],
-		timestamp : new Date(),
-		to parmas[1]: 
-	};
-	this.tasks.push(task);
+	console.log(params);
+	this.ht.push(parmas);
+	// No se si las rutas son correctas
+	//addToBD("/groups", "./"+ globals.user.currentGroup.uid", task);
 }
 
 Group.prototype.addItem = function(params)
