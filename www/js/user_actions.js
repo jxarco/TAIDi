@@ -129,6 +129,21 @@ var closeSignUpScreen = function(){
     fw7.loginScreen.close('#my-signup-screen');
 };
 
+var assignTask = function() {
+
+	var taskName = getDOMValue('input[placeholder="Task name"]');
+	var who = getDOMValue('input[placeholder="Person name"]');
+	var urgent = $('input[type="checkbox"]').prop('checked'); // Siempre esta devolviendo false
+	var relevant = getDOMValue('textarea[placeholder="Something to know"]');
+	params = [taskName, who, urgent, relevant];
+	console.log(params);
+	if (globals.user.currentGroup != undefined) {
+		globals.user.currentGroup.addTask(params);
+	}
+	UI.refreshMain();
+    createToast( "Task added: " + taskName + ", to: " + who, 2500 );
+};
+
 // BUTTON EVENTS
 
 $$('#my-login-screen .no-login-button').on('click', closeSignInScreen);
@@ -138,3 +153,4 @@ $$("#logoutButton").on('click', logout);
 $$('#my-login-screen .login-button').on('click', function(){
     login(null, null);
 });
+$$('#assignTask').on('click', function() { assignTask(); });

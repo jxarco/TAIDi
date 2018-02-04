@@ -151,7 +151,14 @@ Group.prototype.configure = function(o)
 
 Group.prototype.addTask = function(params)
 {
-
+	var task = {
+		from : globals.user.uid,
+		more : params[3],
+		name : params[0],
+		timestamp : new Date(),
+		to parmas[1]: 
+	};
+	this.tasks.push(task);
 }
 
 Group.prototype.addItem = function(params)
