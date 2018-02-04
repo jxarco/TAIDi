@@ -26,9 +26,9 @@ cordova run browser
 
 ## Built With
 
-* [Dropwizard](http://www.dropwizard.io/1.0.2/docs/) - The web framework used
-* [Maven](https://maven.apache.org/) - Dependency Management
-* [ROME](https://rometools.github.io/rome/) - Used to generate RSS Feeds
+* [Cordova](http://www.dropwizard.io/1.0.2/docs/) - The framework used
+* [Framework7](https://maven.apache.org/) - Design and JS
+* [jQuery](https://rometools.github.io/rome/) - JS
 
 ## Authors
 
