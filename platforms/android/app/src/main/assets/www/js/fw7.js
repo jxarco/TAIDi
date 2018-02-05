@@ -53,6 +53,7 @@ setTimeout(function loadUI(){
             globals.auto_refresh = e.detail.inputEl.checked;
             fw7.panel.close();
             if(globals.auto_refresh)
+                // globals.db.refresh(); 
                 globals.db.update( function(){
                     globals.db.updateGroups();
                     UI.refreshMain();

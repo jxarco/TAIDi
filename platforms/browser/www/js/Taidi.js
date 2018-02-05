@@ -152,7 +152,26 @@ Group.prototype.configure = function(o)
 Group.prototype.addTask = function(o)
 {
 	this.tasks.push(o);
-	// No se si las rutas son correctas
+    
+    var unit = "groups";
+    // it's the last task added so the identifier
+    // will be: size - 1
+    var taskId = this.tasks.length - 1;
+    var groupId = this.uid.slice(2, this.uid.length);
+    var fullPath = groupId + "/tasks/" + taskId;
+    
+	writeToDB(unit, fullPath, o);
+    globals.db.refresh();
+}
+
+Group.prototype.removeTask = function(o)
+{
+	for(var i in this.tasks)
+    {
+        if(this.tasks[i].name === o.name)
+            // delete task
+            console.log("task deleted (simulation)");
+    }
 	//addToBD("/groups", "./"+ globals.user.currentGroup.uid", task);
 }
 

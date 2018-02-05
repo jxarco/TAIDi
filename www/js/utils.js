@@ -13,31 +13,23 @@ function isInArray(array, element)
     return false;
 }
 
-function writeToDB(unit, path, object) {
+// @content can be anything (number, string, js object, ...)
+// @fullPath has to include the key of the object where content will be added
+function writeToDB(unit, fullPath, content, callback) {
 	// Get a database reference to our posts
     var db = firebase.database();
-    var ref = db.ref(unit + "/" + path);
-	if (ref != null) {
-		ref.set(object);
-	}
+    var ref = db.ref(unit + "/" + fullPath);
+	if (ref) ref.set( content ).then(function(){
+        if(callback)
+            callback();
+    });
 }
 
-function addToDB(unit, path, object) {
+function deleteFromDB(unit, path) {
 	// Get a database reference to our posts
     var db = firebase.database();
     var ref = db.ref(unit + "/" + path);
-	if (ref != null) {
-		ref.push(object);
-	}
-}
-
-function deleteToDB(unit, path) {
-	// Get a database reference to our posts
-    var db = firebase.database();
-    var ref = db.ref(unit + "/" + path);
-	if (ref != null) {
-		ref.set(null);
-	}
+	if (ref) ref.remove();
 }
 
 function getFromDB(read_mode, unit, path, callback, on_error)

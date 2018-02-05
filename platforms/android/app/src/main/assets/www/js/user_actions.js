@@ -26,7 +26,7 @@ var onUserLogged = function()
       createToast( "Welcome " + user_name + "!", 2000, true );
       $$('#myUserName').html( user_name );
     }
-    $$(".auto-refresh-hidden").css("display", "block"); 
+    $$(".auto-refresh-hidden").css("display", "block");
     // enable group selector
     $$("#groupSelector").css("display", "block");
     // display logout button
@@ -131,7 +131,7 @@ var closeSignUpScreen = function(){
 
 var assignTask = function() {
 
-	var from = globals.user ? 
+	var from = globals.user ?
                     ( globals.user.name ? globals.user.name : globals.user.uid )
                     : "Me",
 		more = getDOMValue('textarea[placeholder="Something to know"]'),
@@ -139,18 +139,18 @@ var assignTask = function() {
 		timestamp = new Date().toDateString(),
 		to = getDOMValue('input[placeholder="Person name"]'),
 		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
-    
+
     if(from == "" || name == "" || to == "")
     {
         createToast( "Fill necessary gaps!", 2000, true );
         return;
     }
-    
+
     var toAssign = {
-		from: from, more: more, timestamp: timestamp, to: to, urgency: urgency
+		from: from, more: more, name: name, timestamp: timestamp, to: to, urgency: urgency
 	};
-    
-    if (globals.user && globals.user.currentGroup) 
+
+    if (globals.user && globals.user.currentGroup)
     {
         globals.user.currentGroup.addTask(toAssign);
         UI.refreshMain();
