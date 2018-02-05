@@ -151,8 +151,6 @@ Group.prototype.configure = function(o)
 
 Group.prototype.addTask = function(o)
 {
-	this.tasks.push(o);
-    
     var unit = "groups";
     // it's the last task added so the identifier
     // will be: size - 1
@@ -164,15 +162,16 @@ Group.prototype.addTask = function(o)
     globals.db.refresh();
 }
 
-Group.prototype.removeTask = function(o)
+Group.prototype.removeTask = function( cardNumber )
 {
-	for(var i in this.tasks)
-    {
-        if(this.tasks[i].name === o.name)
-            // delete task
-            console.log("task deleted (simulation)");
-    }
-	//addToBD("/groups", "./"+ globals.user.currentGroup.uid", task);
+	var unit = "groups";
+    var groupId = this.uid.slice(2, this.uid.length);
+    var fullPath = groupId + "/tasks/" + cardNumber;
+    
+    console.log(unit + "/" + fullPath);
+    
+	deleteFromDB(unit, fullPath);
+    globals.db.refresh();
 }
 
 Group.prototype.addItem = function(params)

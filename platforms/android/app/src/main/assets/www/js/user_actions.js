@@ -129,36 +129,6 @@ var closeSignUpScreen = function(){
     fw7.loginScreen.close('#my-signup-screen');
 };
 
-var assignTask = function() {
-
-	var from = globals.user ?
-                    ( globals.user.name ? globals.user.name : globals.user.uid )
-                    : "Me",
-		more = getDOMValue('textarea[placeholder="Something to know"]'),
-		name = getDOMValue('input[placeholder="Task name"]'),
-		timestamp = new Date().toDateString(),
-		to = getDOMValue('input[placeholder="Person name"]'),
-		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
-
-    if(from == "" || name == "" || to == "")
-    {
-        createToast( "Fill necessary gaps!", 2000, true );
-        return;
-    }
-
-    var toAssign = {
-		from: from, more: more, name: name, timestamp: timestamp, to: to, urgency: urgency
-	};
-
-    if (globals.user && globals.user.currentGroup)
-    {
-        globals.user.currentGroup.addTask(toAssign);
-        UI.refreshMain();
-        createToast( "Done!", 2500 );
-    } else
-        console.warn( "No user logged" );
-};
-
 // BUTTON EVENTS
 
 $$('#my-login-screen .no-login-button').on('click', closeSignInScreen);

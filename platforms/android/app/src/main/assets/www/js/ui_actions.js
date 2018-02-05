@@ -85,6 +85,36 @@ function createCard(type, element)
     bindTaskCardEvents();
 }
 
+var assignTask = function() {
+
+	var from = globals.user ?
+                    ( globals.user.name ? globals.user.name : globals.user.uid )
+                    : "Me",
+		more = getDOMValue('textarea[placeholder="Something to know"]'),
+		name = getDOMValue('input[placeholder="Task name"]'),
+		timestamp = new Date().toDateString(),
+		to = getDOMValue('input[placeholder="Person name"]'),
+		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
+
+    if(from == "" || name == "" || to == "")
+    {
+        createToast( "Fill necessary gaps!", 2000, true );
+        return;
+    }
+
+    var toAssign = {
+		from: from, more: more, name: name, timestamp: timestamp, to: to, urgency: urgency
+	};
+
+    if (globals.user && globals.user.currentGroup)
+    {
+        globals.user.currentGroup.addTask(toAssign);
+        UI.refreshMain();
+        createToast( "Done!", 2500 );
+    } else
+        console.warn( "No user logged" );
+};
+
 var bindTaskCardEvents = function()
 {
     // unbind last events to prevent double bindings
@@ -93,10 +123,19 @@ var bindTaskCardEvents = function()
     $$(".complete-task").on('click', function(e){
 
         var target = $$(this).data("target");
+        var targetNumber = target.slice(5, target.length);
         fw7.dialog.confirm("Are you sure?", null, function(){
 
             var pressed = false;
-            var onPressed = function(){ if(!pressed) $("#" + target).remove();}
+            var onPressed = function(){ 
+                if(!pressed){
+                    $("#" + target).remove();
+                    if(globals.user.currentGroup) 
+                        globals.user.currentGroup.removeTask( targetNumber );
+                    else
+                        createToast( "No group selected!", 2500);
+                }
+            }
 
             $("#" + target).slideUp();
             createToast(null, null, null, {

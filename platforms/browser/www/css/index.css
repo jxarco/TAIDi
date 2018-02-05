@@ -149,6 +149,22 @@ h1 {
   color: #8e8e93;
 }
 
+.md .chip{
+    font-size: 11px !important;
+    height: 25px !important;
+    line-height: 25px !important;
+    margin-bottom: 7px;
+}
+
+.md .chip-media{
+    height: 25px !important;
+    width: 25px !important;
+}
+
+.md .chip-media .material-icons{
+    font-size: 18px !important;
+}
+
 /* COLORS */
 .dodger{ background-color: red !important; }
 .taidi{ background-color: #37cc9a !important; }
