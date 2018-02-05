@@ -154,7 +154,7 @@ Group.prototype.addTask = function(o)
     var unit = "groups";
     // it's the last task added so the identifier
     // will be: size - 1
-    var taskId = this.tasks.length - 1;
+    var taskId = this.tasks.length;
     var groupId = this.uid.slice(2, this.uid.length);
     var fullPath = groupId + "/tasks/" + taskId;
     
