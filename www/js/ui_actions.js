@@ -18,7 +18,7 @@ var UI = {
         }
 
         var tasks = globals.user.currentGroup.tasks,
-            items = globals.user.currentGroup.shop_list;
+            items = globals.user.currentGroup.shop_list; // NO se recoge este valor, no tengo ni idea del porque.
 
         for(var i = 0; i < tasks.length; i++)
             createCard(TD.Task, tasks[i]);
@@ -109,6 +109,35 @@ var assignTask = function() {
     if (globals.user && globals.user.currentGroup)
     {
         globals.user.currentGroup.addTask(toAssign);
+        UI.refreshMain();
+        createToast( "Done!", 2500 );
+    } else
+        console.warn( "No user logged" );
+};
+
+var addItemToList = function() {
+
+	var from = globals.user ?
+                    ( globals.user.name ? globals.user.name : globals.user.uid )
+                    : "Me",
+		more = getDOMValue('textarea[placeholder="Something more?"]'),
+		name = getDOMValue('input[placeholder="Item name"]'),
+		qnt = getDOMValue('input[placeholder="How many?"]'),
+		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
+
+    if(from == "" || name == "")
+    {
+        createToast( "Fill necessary gaps!", 2000, true );
+        return;
+    }
+
+    var toAssign = {
+		from: from, more: more, name: name, urgency: urgency
+	};
+
+    if (globals.user && globals.user.currentGroup)
+    {
+        globals.user.currentGroup.addItem(toAssign);
         UI.refreshMain();
         createToast( "Done!", 2500 );
     } else

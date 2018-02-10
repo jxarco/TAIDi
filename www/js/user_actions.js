@@ -110,7 +110,7 @@ var login = function()
 var sign_up = function()
 {
     // UI EVENTS
-    closeSignInScreen();
+    closeSignUpScreen();
     createToast( "User created successfully", 2000, false );
     //
 
