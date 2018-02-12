@@ -123,7 +123,7 @@ Group.prototype._ctor = function()
     // list of tasks
     this.tasks = [];
     // shopping list
-    this.shop_list = [];
+    this.items = [];
 }
 
 Group.prototype.configure = function(o)
@@ -153,7 +153,7 @@ Group.prototype.addTask = function(o)
 {
     var unit = "groups";
     // it's the last task added so the identifier
-    // will be: size - 1
+    // will be: tasks size
     var taskId = this.tasks.length;
     var groupId = this.uid.slice(2, this.uid.length);
     var fullPath = groupId + "/tasks/" + taskId;
@@ -177,9 +177,9 @@ Group.prototype.removeTask = function( cardNumber )
 Group.prototype.addItem = function(item)
 {
 	var unit = "groups";
-    // it's the last task added so the identifier
-    // will be: size - 1
-    var itemId = this.shop_list.length;
+    // it's the last item added so the identifier
+    // will be: list size
+    var itemId = this.items.length;
     var groupId = this.uid.slice(2, this.uid.length);
     var fullPath = groupId + "/items/" + itemId;
     

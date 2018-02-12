@@ -17,7 +17,6 @@ function setUserCurrentGroup(name)
 
 var onUserLogged = function()
 {
-
     var user_name = globals.user.name;
 
     if(user_name)
@@ -33,8 +32,6 @@ var onUserLogged = function()
     $$("#logoutButton-row").css("display", "block");
     // remove login button
     $$(".connected-row").css("display", "none");
-
-
 
     if(!globals.db)
         throw("DB is not available yet");

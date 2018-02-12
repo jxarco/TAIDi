@@ -123,7 +123,7 @@ Group.prototype._ctor = function()
     // list of tasks
     this.tasks = [];
     // shopping list
-    this.shop_list = [];
+    this.items = [];
 }
 
 Group.prototype.configure = function(o)
@@ -153,7 +153,7 @@ Group.prototype.addTask = function(o)
 {
     var unit = "groups";
     // it's the last task added so the identifier
-    // will be: size - 1
+    // will be: tasks size
     var taskId = this.tasks.length;
     var groupId = this.uid.slice(2, this.uid.length);
     var fullPath = groupId + "/tasks/" + taskId;
@@ -174,9 +174,29 @@ Group.prototype.removeTask = function( cardNumber )
     globals.db.refresh();
 }
 
-Group.prototype.addItem = function(params)
+Group.prototype.addItem = function(item)
 {
+	var unit = "groups";
+    // it's the last item added so the identifier
+    // will be: list size
+    var itemId = this.items.length;
+    var groupId = this.uid.slice(2, this.uid.length);
+    var fullPath = groupId + "/items/" + itemId;
+    
+	writeToDB(unit, fullPath, item);
+    globals.db.refresh();
+}
 
+Group.prototype.removeItem = function( cardNumber )
+{
+	var unit = "groups";
+    var groupId = this.uid.slice(2, this.uid.length);
+    var fullPath = groupId + "/items/" + cardNumber;
+    
+    console.log(unit + "/" + fullPath);
+    
+	deleteFromDB(unit, fullPath);
+    globals.db.refresh();
 }
 
 /**
@@ -253,7 +273,7 @@ DataBase.prototype.update = function(callback)
         read_mode = TD.ON;
     
     getFromDB(read_mode, "groups", "/", function(data){
-        that.groups = data;
+        that.groups = data;		
         getFromDB(read_mode, "n_groups", "/", function(data){
             that.n_groups = data;
             // console.log( that );

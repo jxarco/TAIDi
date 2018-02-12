@@ -18,8 +18,8 @@ var UI = {
         }
 
         var tasks = globals.user.currentGroup.tasks,
-            items = globals.user.currentGroup.shop_list; // NO se recoge este valor, no tengo ni idea del porque.
-
+            items = globals.user.currentGroup.items; // NO se recoge este valor, no tengo ni idea del porque.
+        
         for(var i = 0; i < tasks.length; i++)
             createCard(TD.Task, tasks[i]);
         for(var i = 0; i < items.length; i++)
@@ -109,6 +109,7 @@ var assignTask = function() {
     if (globals.user && globals.user.currentGroup)
     {
         globals.user.currentGroup.addTask(toAssign);
+        globals.URGENT_TASK = null;
         UI.refreshMain();
         createToast( "Done!", 2500 );
     } else
@@ -122,6 +123,7 @@ var addItemToList = function() {
                     : "Me",
 		more = getDOMValue('textarea[placeholder="Something more?"]'),
 		name = getDOMValue('input[placeholder="Item name"]'),
+        timestamp = new Date().toDateString(),
 		qnt = getDOMValue('input[placeholder="How many?"]'),
 		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
 
@@ -132,12 +134,13 @@ var addItemToList = function() {
     }
 
     var toAssign = {
-		from: from, more: more, name: name, urgency: urgency
+		from: from, more: more, name: name, qnt: qnt, timestamp: timestamp, urgency: urgency
 	};
 
     if (globals.user && globals.user.currentGroup)
     {
         globals.user.currentGroup.addItem(toAssign);
+        globals.URGENT_TASK = null;
         UI.refreshMain();
         createToast( "Done!", 2500 );
     } else

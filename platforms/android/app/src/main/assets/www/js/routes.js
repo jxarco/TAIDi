@@ -30,7 +30,16 @@ var routes = [
   },
   {
     path: '/form-list/',
-    url: './pages/form-list.html'
+    url: './pages/form-list.html',
+    on: {
+        pageAfterIn: function(){
+            fw7.fab.close();
+            var $toggle = $$(".urgent-toggle");
+            $toggle.on("toggle:change", function(e){
+               globals.URGENT_TASK = e.detail.inputEl.checked;
+            });
+        }
+    }
   },
   {
     path: '/swiper-parallax/',
