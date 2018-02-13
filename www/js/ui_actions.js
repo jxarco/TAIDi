@@ -1,8 +1,14 @@
 var UI = {
+    refresh: function()
+    {
+        this.refreshGroups();
+        this.refreshMain();
+    },
+    
     refreshMain: function()
     {
         console.log("Refreshing homepage");
-        
+
         // remove old cards/table
         $(".card").remove();
         $("#tab-2 .ptr-preloader").after(base_table);
@@ -16,22 +22,68 @@ var UI = {
             console.error("No DB or group selected");
             return;
         }
-
-        var tasks = globals.user.currentGroup.tasks,
-            items = globals.user.currentGroup.items; // NO se recoge este valor, no tengo ni idea del porque.
+        
+        // Current group stuff
+        var current_group = globals.user.currentGroup,
+            tasks = globals.user.currentGroup.tasks,
+            items = globals.user.currentGroup.items;
+        
+        setAppTitle( current_group.name );
         
         for(var i = 0; i < tasks.length; i++)
             createCard(TD.Task, tasks[i]);
         for(var i = 0; i < items.length; i++)
             createCard(TD.Item, items[i]);
-
-//        UI.refreshMain();
-//        UI.refreshGroups();
     },
 
-    refreshGroups: function()
+    refreshGroups: function(update_db)
     {
+        var refresh_selector = function()
+        {
+            // limpiar opciones anteriores
+            $$(".added-group").remove();
 
+            var groups = globals.db.groups,
+              n_groups = globals.db.n_groups,
+              user_groups = [],
+              optionsText = "";
+
+            for(var i = 0; i < n_groups; i++)
+              if(isInArray( groups[i].members, globals.user.getUid() ))
+                  user_groups.push( groups[i] );
+
+            globals.user.setGroups( user_groups );
+
+            for(var i = 0; i < user_groups.length; i++)
+            {
+              var text_block, name = user_groups[i].name;
+
+              if(i === 0)
+              {
+                  setAppTitle( user_groups[0].name );
+                  globals.user.currentGroup = new TD.Group(user_groups[0]);
+
+                  $$("#sfo").html( name );
+                  $$("#sfo").attr( "value", name );
+                  globals.smartSelect.valueEl.innerHTML = name;
+              }
+              else
+              {
+                  // importante el added group para resetearlas después
+                  text_block = "<option class='added-group' value='" + name + "'>" + name + "</option>";
+                  optionsText += text_block;
+              }
+            }
+            $$("#connectedGroups").append( optionsText );
+        };
+        
+        if(update_db && globals.db)
+            globals.db.update(function(){
+                globals.db.updateGroups();
+                refresh_selector();
+            });
+        else if(!update_db)
+            refresh_selector();
     }
 }
 

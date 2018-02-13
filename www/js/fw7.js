@@ -26,12 +26,10 @@ setTimeout(function loadUI(){
         globals.mainView = fw7.views.create('.view-main');
         globals.smartSelectView = fw7.views.create('.view-smartie');
         globals.smartSelect = fw7.smartSelect.get();
-        globals.smartSelect.onClose = function(){
-            setUserCurrentGroup( globals.smartSelect.selectEl.value );
-        }
 
         // close smart selector on change current group
         $$(document.body).on('change', 'select[id="connectedGroups"]', function(e){
+            setUserCurrentGroup( globals.smartSelect.selectEl.value );
             globals.smartSelect.close();
             fw7.panel.close();
         });

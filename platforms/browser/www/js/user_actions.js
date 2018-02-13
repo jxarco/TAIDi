@@ -3,28 +3,27 @@ function setAppTitle(text)
     $$('#myAppTitle').html( text );
 }
 
-function setUserCurrentGroup(name)
+function setUserCurrentGroup(name, no_action)
 {
-    setAppTitle( name );
-
+    // abrimos el selector pero no tocamos nada
+    if( no_action ) return;
+    
     var gr = globals.user.groups;
     for(var i = 0; i < gr.length; i++)
         if(gr[i].name === name) globals.user.currentGroup = new TD.Group(gr[i]);
 
     UI.refreshMain();
-    createToast( "Connected to: " + globals.user.currentGroup.name, 2500 );
+    createToast( "Connected to: " + name, 2500, true );
 }
 
 var onUserLogged = function()
 {
-    var user_name = globals.user.name;
+    var user_name = globals.user.name ? globals.user.name : "No name";
 
-    if(user_name)
-    {
-      console.warn("Login: " + user_name);
-      createToast( "Welcome " + user_name + "!", 2000, true );
-      $$('#myUserName').html( user_name );
-    }
+    console.warn("Login: " + user_name);
+    createToast( "Welcome " + user_name + "!", 2000, true );
+    $$('#myUserName').html( user_name );
+    
     $$(".auto-refresh-hidden").css("display", "block");
     // enable group selector
     $$("#groupSelector").css("display", "block");
@@ -38,40 +37,11 @@ var onUserLogged = function()
     else
         console.log("Using DB: ", globals.db);
 
-    var groups = globals.db.groups,
-      n_groups = globals.db.n_groups,
-      user_groups = [],
-      optionsText = "";
-
-    for(var i = 0; i < n_groups; i++)
-      if(isInArray( groups[i].members, globals.user.getUid() ))
-          user_groups.push( groups[i] );
-
-    globals.user.setGroups( user_groups );
-
-    for(var i = 0; i < user_groups.length; i++)
-    {
-      var text_block, name = user_groups[i].name;
-
-      if(i === 0)
-      {
-          setAppTitle( user_groups[0].name );
-          globals.user.currentGroup = new TD.Group(user_groups[0]);
-
-          $$("#sfo").html( name );
-          $$("#sfo").attr( "value", name );
-          globals.smartSelect.valueEl.innerHTML = name;
-      }
-      else
-      {
-          text_block = "<option value='" + name + "'>" + name + "</option>";
-          optionsText += text_block;
-      }
-    }
-
-    $$("#connectedGroups").append( optionsText );
-    UI.refreshMain();
+    // refrescar todo
+    UI.refresh();
+    // remove loading dialog
     fw7.dialog.close();
+    // *****   *****   *****
 }
 
 var logout = function(){
