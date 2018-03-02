@@ -56,13 +56,16 @@ var UI = {
 
             for(var i = 0; i < user_groups.length; i++)
             {
-              var text_block, name = user_groups[i].name;
+              var text_block, 
+                  name = capitalizeFirstLetter( user_groups[i].name );
+              user_groups[i].name = name;
 
               if(i === 0)
               {
-                  setAppTitle( user_groups[0].name );
+                  setAppTitle( name );
                   globals.user.currentGroup = new TD.Group(user_groups[0]);
 
+                  $$('#share-id').val( user_groups[0].share_id );
                   $$("#sfo").html( name );
                   $$("#sfo").attr( "value", name );
                   globals.smartSelect.valueEl.innerHTML = name;
@@ -220,50 +223,6 @@ var bindTaskCardEvents = function()
 					/*
                     if(globals.user.currentGroup) 
                         globals.user.currentGroup.completeTask( targetNumber );
-                    else
-                        createToast( "No group selected!", 2500);
-					*/
-                }
-            }
-
-            $("#" + target).slideUp();
-            createToast(null, null, null, {
-                text: 'Done! :)',
-                closeTimeout: 3500,
-                closeButton: true,
-                closeButtonText: 'Undo',
-                on: {
-                    closeButtonClick: function() {
-                        pressed = true;
-                        $("#" + target).slideDown();
-                    }
-                  }
-            });
-
-            // delete card if no UNDO
-            setTimeout(onPressed, 3000);
-        });
-    });
-};
-
-var bindDeleteTaskCardEvents = function()
-{
-    // unbind last events to prevent double bindings
-    $$(".delete-task").prop('onclick',null).off('click');
-    // bind click event to new buttons
-    $$(".delete-task").on('click', function(e){
-
-        var target = $$(this).data("target");
-        var targetNumber = target.slice(5, target.length);
-        fw7.dialog.confirm("Are you sure?", null, function(){
-
-            var pressed = false;
-            var onPressed = function(){ 
-                if(!pressed){
-                    $("#" + target).remove();
-					deleteTask(targetNumber);
-                    /*if(globals.user.currentGroup)
-                        globals.user.currentGroup.removeTask( targetNumber );
                     else
                         createToast( "No group selected!", 2500);
 					*/
