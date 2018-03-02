@@ -285,7 +285,6 @@ var bindListCardEvents = function()
 bindTaskCardEvents();
 bindListCardEvents();
 
-
 // HTML structures
 
 var urg_icon = `<div class="chip">
@@ -344,38 +343,3 @@ var base_table = `
   </div>
 
 `;
-
-// FUNCIONES QUE ESTAN EN LastMarc.js, Estan aqui pa hacer las pruebas
-var completeTask = function(name) {
-	
-	var pos = searchPosTaskByName(name);
-
-	if (globals.user && globals.user.currentGroup) {
-		globals.user.currentGroup.completeTask(pos);
-		UI.refreshMain();
-		createToast( "Done!", 2500 );
-	} else {
-		console.warn( "No user logged" );
-	}
-};
-
-function searchPosTaskByName(name) {
-	
-	var pos = -1;
-	var founded = false;
-	for (var i = 0; (i < globals.user.currentGroup.tasks.length) && (!founded); i++) {
-		var auxTask = globals.user.currentGroup.tasks[i];
-		if (auxTask.name == name) {
-			pos = i;
-			founded = true;
-		}
-	}
-	
-	return pos;
-	
-}
-
-function getTaskNameOfCard(cardNumber) {
-	var p = $("#card-" + cardNumber + " .card-content > p")[1];
-	return p.innerHTML;
-}
