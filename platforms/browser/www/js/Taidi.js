@@ -117,6 +117,7 @@ TD.Group = Group;
 Group.prototype._ctor = function()
 {
     this.uid = null;
+    this.share_id = null;
     this.name = "Unnamed";
     // list of users (only its uid)
     this.members = [];
