@@ -28,11 +28,11 @@ var UI = {
             tasks = globals.user.currentGroup.tasks,
             items = globals.user.currentGroup.items;
         
-        setAppTitle( current_group.name );
+        setAppTitle( capitalizeFirstLetter( current_group.name ) );
         
-        for(var i = 0; i < tasks.length; i++)
-            createCard(TD.Task, tasks[i]);
-        for(var i = 0; i < items.length; i++)
+        for(var i in tasks)
+            createCard(TD.Task, tasks[i], i);
+        for(var i in items)
             createCard(TD.Item, items[i]);
     },
 
@@ -90,15 +90,17 @@ var UI = {
     }
 }
 
-function createCard(type, element)
+function createCard(type, element, uid)
 {
-    // console.log("creating card");
-    var text = "";
-
     element.urgency = JSON.parse(element.urgency);
-    var nCard = TD.LastCardID;
+    var text = "",
+        nCard = TD.LastCardID,
+        uid = uid || -1;
 
-    if(type === TD.Task){
+    if(type === TD.Task)
+    {
+        if(uid == -1)
+            throw "No task uid";
 
         text += `
             <div class="card" id="card-` + nCard + `">
@@ -111,6 +113,7 @@ function createCard(type, element)
                 `</p></div>
                 <div class="card-footer"><a class="button complete-task" data-target="` +
                     "card-" + nCard +
+                `" data-uid="` + uid +
                 `">Complete</a>` +
                 `</div>
             </div>
@@ -153,7 +156,7 @@ var assignTask = function() {
 
     if(from == "" || name == "" || to == "")
     {
-        createToast( "Fill necessary gaps!", 2000, true );
+        createToast( "Rellena los huecos", 2000, true );
         return;
     }
 
@@ -166,7 +169,7 @@ var assignTask = function() {
         globals.user.currentGroup.addTask(toAssign);
         globals.URGENT_TASK = null;
         UI.refreshMain();
-        createToast( "Done!", 2500 );
+        createToast( "¡Hecho!", 2500 );
     } else
         console.warn( "No user logged" );
 };
@@ -210,31 +213,26 @@ var bindTaskCardEvents = function()
     $$(".complete-task").on('click', function(e){
 
         var target = $$(this).data("target");
-        var targetNumber = target.slice(5, target.length);
-        fw7.dialog.confirm("Are you sure?", null, function(){
+        var task_uid = $$(this).data("uid");
+        fw7.dialog.confirm("¿Estas seguro?", null, function(){
 
             var pressed = false;
             var onPressed = function(){ 
                 if(!pressed){
-					var name = getTaskNameOfCard(targetNumber);
                     $("#" + target).remove();
-					console.log($("#"+target));
-					completeTask(name);
-					/*
-                    if(globals.user.currentGroup) 
-                        globals.user.currentGroup.completeTask( targetNumber );
+					if(globals.user.currentGroup) 
+                        globals.user.currentGroup.completeTask( task_uid );
                     else
                         createToast( "No group selected!", 2500);
-					*/
                 }
             }
 
             $("#" + target).slideUp();
             createToast(null, null, null, {
-                text: 'Done! :)',
+                text: 'Hecho!',
                 closeTimeout: 3500,
                 closeButton: true,
-                closeButtonText: 'Undo',
+                closeButtonText: 'Deshacer',
                 on: {
                     closeButtonClick: function() {
                         pressed = true;
@@ -257,17 +255,17 @@ var bindListCardEvents = function()
     $$("#delete-selection").on('click', function(e){
 
       var target = $(".data-table-row-selected");
-      fw7.dialog.confirm("Are you sure?", null, function(){
+      fw7.dialog.confirm("¿Estas seguro?", null, function(){
 
           var pressed = false;
           var onPressed = function(){ if(!pressed) target.remove();}
 
           target.fadeOut();
           createToast(null, null, null, {
-              text: 'Done! :)',
+              text: 'Hecho!',
               closeTimeout: 3500,
               closeButton: true,
-              closeButtonText: 'Undo',
+              closeButtonText: 'Deshacer',
               on: {
                   closeButtonClick: function() {
                       pressed = true;
@@ -365,7 +363,7 @@ function searchPosTaskByName(name) {
 	
 	var pos = -1;
 	var founded = false;
-	for (var i = 0; (i < globals.user.currentGroup.tasks.length) && (founded == false); i++) {
+	for (var i = 0; (i < globals.user.currentGroup.tasks.length) && (!founded); i++) {
 		var auxTask = globals.user.currentGroup.tasks[i];
 		if (auxTask.name == name) {
 			pos = i;

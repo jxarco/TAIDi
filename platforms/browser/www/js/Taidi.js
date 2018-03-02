@@ -119,12 +119,9 @@ Group.prototype._ctor = function()
     this.uid = null;
     this.share_id = null;
     this.name = "Unnamed";
-    // list of users (only its uid)
-    this.members = [];
-    // list of tasks
-    this.tasks = [];
-    // shopping list
-    this.items = [];
+    this.tasks = {};    // dictionary of tasks
+    this.items = [];    // shopping list -> dictionary later
+    this.members = [];  // list of users (only its uid)
 }
 
 Group.prototype.configure = function(o)
@@ -153,9 +150,8 @@ Group.prototype.configure = function(o)
 Group.prototype.addTask = function(o)
 {
     var unit = "groups";
-    // it's the last task added so the identifier
-    // will be: tasks size
-    var taskId = this.tasks.length;
+    // task ID será un makeId 
+    var taskId = makeid(8);
     var groupId = this.uid.slice(2, this.uid.length);
     var fullPath = groupId + "/tasks/" + taskId;
     
@@ -165,28 +161,27 @@ Group.prototype.addTask = function(o)
 
 Group.prototype.removeTask = function( cardNumber )
 {
-	var unit = "groups";
-    var groupId = this.uid.slice(2, this.uid.length);
-    var fullPath = groupId + "/tasks/" + cardNumber;
-    
-    console.log(unit + "/" + fullPath);
-    
-	deleteFromDB(unit, fullPath);
-    globals.db.refresh();
+//	var unit = "groups";
+//    var groupId = this.uid.slice(2, this.uid.length);
+//    var fullPath = groupId + "/tasks/" + cardNumber;
+//    
+//    console.log(unit + "/" + fullPath);
+//    
+//	deleteFromDB(unit, fullPath);
+//    globals.db.refresh();
 }
 
-Group.prototype.completeTask = function( cardNumber )
+Group.prototype.completeTask = function( task_uid )
 {
 	var unit = "groups";
-	var task = this.tasks[cardNumber];
     var groupId = this.uid.slice(2, this.uid.length);
-    var fullPathToDelete = groupId + "/tasks/" + cardNumber;
-	var fullPathToInsert = groupId + "/log/";
     
-    console.log(unit + "/" + fullPathToDelete);
+    var fullPathToInsert = groupId + "/log/" + task_uid;
+	writeToDB(unit, fullPathToInsert, this.tasks[task_uid]);
     
+    var fullPathToDelete = groupId + "/tasks/" + task_uid;
 	deleteFromDB(unit, fullPathToDelete);
-	writeToDB(unit, fullPathToInsert, task, function() { UI.refreshMain(); })
+    
     globals.db.refresh();
 }
 
