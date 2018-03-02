@@ -1,0 +1,45 @@
+<div class="page" data-name="form">
+  <div class="navbar">
+    <div class="navbar-inner sliding taidi">
+      <div class="left">
+        <a href="#" class="link back">
+          <i class="icon icon-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title">Nuevo grupo</div>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="block-title">Información sobre el grupo</div>
+    <div class="list no-hairlines-md" id="new-group-form">
+      <ul>
+        <li>
+          <div class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-label">Nombre</div>
+              <div class="item-input-wrap">
+                <input type="text" placeholder="Nombre de grupo"/>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-label"><i>Share ID</i></div>
+              <div class="item-input-wrap">
+                <input disabled value="" id="share-id-form"/>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+      
+    <div class="block block-strong" style="margin-top: -29px;">
+      <!-- en el onclick haría un create group, y le pasaría la gente a la que hemos añadido ( si lo hacemos ), para que le llegue la notificación con el Share ID -->
+        <a onclick="createGroup()" href="#" class="col button button-outline back">Crear</a>
+    </div>
+  </div>
+</div>

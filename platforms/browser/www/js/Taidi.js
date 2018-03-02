@@ -174,6 +174,21 @@ Group.prototype.removeTask = function( cardNumber )
     globals.db.refresh();
 }
 
+Group.prototype.completeTask = function( cardNumber )
+{
+	var unit = "groups";
+	var task = this.tasks[cardNumber];
+    var groupId = this.uid.slice(2, this.uid.length);
+    var fullPathToDelete = groupId + "/tasks/" + cardNumber;
+	var fullPathToInsert = groupId + "/log/";
+    
+    console.log(unit + "/" + fullPathToDelete);
+    
+	deleteFromDB(unit, fullPathToDelete);
+	writeToDB(unit, fullPathToInsert, task, function() { UI.refreshMain(); })
+    globals.db.refresh();
+}
+
 Group.prototype.addItem = function(item)
 {
 	var unit = "groups";

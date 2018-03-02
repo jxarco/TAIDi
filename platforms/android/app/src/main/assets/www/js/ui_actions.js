@@ -213,11 +213,60 @@ var bindTaskCardEvents = function()
             var pressed = false;
             var onPressed = function(){ 
                 if(!pressed){
+					var name = getTaskNameOfCard(targetNumber);
                     $("#" + target).remove();
+					console.log($("#"+target));
+					completeTask(name);
+					/*
                     if(globals.user.currentGroup) 
+                        globals.user.currentGroup.completeTask( targetNumber );
+                    else
+                        createToast( "No group selected!", 2500);
+					*/
+                }
+            }
+
+            $("#" + target).slideUp();
+            createToast(null, null, null, {
+                text: 'Done! :)',
+                closeTimeout: 3500,
+                closeButton: true,
+                closeButtonText: 'Undo',
+                on: {
+                    closeButtonClick: function() {
+                        pressed = true;
+                        $("#" + target).slideDown();
+                    }
+                  }
+            });
+
+            // delete card if no UNDO
+            setTimeout(onPressed, 3000);
+        });
+    });
+};
+
+var bindDeleteTaskCardEvents = function()
+{
+    // unbind last events to prevent double bindings
+    $$(".delete-task").prop('onclick',null).off('click');
+    // bind click event to new buttons
+    $$(".delete-task").on('click', function(e){
+
+        var target = $$(this).data("target");
+        var targetNumber = target.slice(5, target.length);
+        fw7.dialog.confirm("Are you sure?", null, function(){
+
+            var pressed = false;
+            var onPressed = function(){ 
+                if(!pressed){
+                    $("#" + target).remove();
+					deleteTask(targetNumber);
+                    /*if(globals.user.currentGroup)
                         globals.user.currentGroup.removeTask( targetNumber );
                     else
                         createToast( "No group selected!", 2500);
+					*/
                 }
             }
 
@@ -338,3 +387,38 @@ var base_table = `
   </div>
 
 `;
+
+// FUNCIONES QUE ESTAN EN LastMarc.js, Estan aqui pa hacer las pruebas
+var completeTask = function(name) {
+	
+	var pos = searchPosTaskByName(name);
+
+	if (globals.user && globals.user.currentGroup) {
+		globals.user.currentGroup.completeTask(pos);
+		UI.refreshMain();
+		createToast( "Done!", 2500 );
+	} else {
+		console.warn( "No user logged" );
+	}
+};
+
+function searchPosTaskByName(name) {
+	
+	var pos = -1;
+	var founded = false;
+	for (var i = 0; (i < globals.user.currentGroup.tasks.length) && (founded == false); i++) {
+		var auxTask = globals.user.currentGroup.tasks[i];
+		if (auxTask.name == name) {
+			pos = i;
+			founded = true;
+		}
+	}
+	
+	return pos;
+	
+}
+
+function getTaskNameOfCard(cardNumber) {
+	var p = $("#card-" + cardNumber + " .card-content > p")[1];
+	return p.innerHTML;
+}
