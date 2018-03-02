@@ -12,8 +12,17 @@ var routes = [
     url: './pages/about.html',
   },
   {
-    path: '/preferences/',
-    url: './pages/preferences.html',
+    path: '/create/',
+    url: './pages/form-group.html',
+    on: {
+        pageAfterIn: function(){
+            var value = makeid(8);
+            globals.tmp = {
+                share_id: value
+            }
+            $$("#share-id-form").val( value );
+        }
+    }
   },
   {
     path: '/form-task/',

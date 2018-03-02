@@ -84,6 +84,18 @@ h1 {
     -webkit-animation:fade 3000ms infinite;
 }
 
+.connected-row{
+    margin-top: 50px;
+}
+
+.auto-refresh-hidden{
+    margin-top: -29px;
+}
+
+#create-group-btn{
+    margin: 5px 0px;
+}
+
 #logo-login-screen, #logo-signup-screen{
     width: 20%;
     margin-left: 40%;

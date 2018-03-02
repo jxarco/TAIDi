@@ -13,6 +13,7 @@ function setUserCurrentGroup(name, no_action)
         if(gr[i].name === name) globals.user.currentGroup = new TD.Group(gr[i]);
 
     UI.refreshMain();
+    $$('#share-id').val( globals.user.currentGroup.share_id );
     createToast( "Connected to: " + name, 2500, true );
 }
 
@@ -24,11 +25,12 @@ var onUserLogged = function()
     createToast( "Welcome " + user_name + "!", 2000, true );
     $$('#myUserName').html( user_name );
     
+    // display stuff
     $$(".auto-refresh-hidden").css("display", "block");
-    // enable group selector
     $$("#groupSelector").css("display", "block");
-    // display logout button
+    $$(".share-id-row").css("display", "block");
     $$("#logoutButton-row").css("display", "block");
+    $$("#right-panel").css("display", "block");
     // remove login button
     $$(".connected-row").css("display", "none");
 
@@ -65,27 +67,34 @@ var login = function()
 {
     // UI EVENTS
     closeSignInScreen();
-    createLoadDialog( "Please wait" );
+    createLoadDialog( "Cargando..." );
     //
 
     var username = $$('#my-login-screen [name="username"]').val();
     var password = $$('#my-login-screen [name="password"]').val();
 
-    signIn_FB(username, password);
+    signIn_FB("Sin nombre", username, password);
 };
 
 var sign_up = function()
 {
-    // UI EVENTS
-    closeSignUpScreen();
-    createToast( "User created successfully", 2000, false );
-    //
-
     var name        = $$('#my-signup-screen [name="name"]').val();
     var username    = $$('#my-signup-screen [name="username"]').val();
     var password    = $$('#my-signup-screen [name="password"]').val();
-
+    
+    // UI EVENTS
+    closeSignUpScreen();
+    createLoadDialog( "Introduciendo datos..." );
+    //
+    
     signUp_FB(username, password);
+    // no sabemos cuándo acaba de el registro!!!
+    setTimeout(function(){
+        signIn_FB(name, username, password);    
+        fw7.dialog.close();
+        createToast( "Hola " + name + ", bienvenido a TAIDi", 2000, false );
+    }, 2000);
+    
 };
 
 var closeSignInScreen = function(){

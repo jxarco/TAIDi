@@ -1,6 +1,6 @@
 // ******** FIREBASE ********
 
-function signIn_FB(mail, password)
+function signIn_FB(name, mail, password)
 {
     firebase.auth().signInWithEmailAndPassword(mail, password).catch(function(error){
         console.error( "Error " + error.code + ": " + error.message );
@@ -11,6 +11,11 @@ function signIn_FB(mail, password)
     {
         if(user){
 
+            if(!user.displayName)
+                user.updateProfile({
+                    displayName: name
+                })
+            
             globals.user = new TD.User({
                 uid: user.uid,
                 name: user.displayName,

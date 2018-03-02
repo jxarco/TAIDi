@@ -34,11 +34,11 @@
                 <div class="page">
                   <div class="navbar taidi">
                     <div class="navbar-inner">
-                      <div class="title">Account</div>
+                      <div class="title">Perfil</div>
                     </div>
                   </div>
                   <div class="page-content">
-                      <div class="block-title" id="myUserName">Not logged</div>
+                      <div class="block-title" id="myUserName">No identificado</div>
                       <!-- Group selector -->
                       <div class="list" id="setSelector">
                         <ul>
@@ -55,6 +55,21 @@
                                   </a>
                             </li>
                         </ul>
+                      </div>
+                      <!-- Group share id -->
+                      <div class="list no-hairlines-md share-id-row" style="display: none;">
+                          <ul>
+                            <li>
+                              <div class="item-content item-input">
+                                <div class="item-inner">
+                                  <div class="item-title item-label" style="margin-top: -12px;">Share ID</div>
+                                  <div class="item-input-wrap">
+                                    <input id="share-id" style="font-size: 11px;" disabled type="text" value="h45dD"/>
+                                  </div>
+                                </div>
+                              </div>
+                            </li>
+                          </ul>
                       </div>
                       <!-- Automatic refresh -->
                       <div class="row auto-refresh-hidden" style="display: none;">
@@ -98,16 +113,49 @@
                 <div class="page">
                   <div class="navbar taidi">
                     <div class="navbar-inner">
-                      <div class="title">Cordova status</div>
+                      <div class="title">COSAS</div>
                     </div>
                   </div>
                   <div class="page-content">
-                    <div class="app">
+                    <div class="app" style="display: none;">
                         <div id="deviceready" class="blink">
                             <p class="event listening">Connecting to Device</p>
                             <p class="event received">Device is Ready</p>
                         </div>
                     </div>
+                    <!-- Create group button -->
+                    <div class="list">
+                        <ul>
+                          <li>
+                            <a href="/create/" class="item-content item-link panel-close">
+                              <div class="item-inner">
+                                <div class="item-title">Crear grupo</div>
+                              </div>
+                            </a>
+                          </li>
+                          <li>
+                            <a class="item-content item-link panel-close" id="join-group">
+                              <div class="item-inner">
+                                <div class="item-title">Unirse a grupo</div>
+                              </div>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="/about/" class="item-content item-link panel-close">
+                              <div class="item-inner">
+                                <div class="item-title">Abandonar grupo</div>
+                              </div>
+                            </a>
+                          </li>
+                          <li>
+                            <a href="/about/" class="item-content item-link panel-close">
+                              <div class="item-inner">
+                                <div class="item-title">Historial</div>
+                              </div>
+                            </a>
+                          </li>
+                        </ul>
+                      </div>
                   </div>
                 </div>
               </div>
@@ -123,9 +171,9 @@
                             </a>
                         </div>
                         <div class="title" id="myAppTitle"></div>
-                        <div class="right">
+                        <div class="right" style="display: none;" id="right-panel">
                             <a href="#" class="link icon-only panel-open" data-panel="right">
-                                <i class="icon material-icons md-only">build</i>
+                                <i class="icon material-icons md-only">supervisor_account</i>
                             </a>
                         </div>
                     </div>
@@ -168,6 +216,17 @@
                                 <a href="/about/" class="item-content item-link">
                                   <div class="item-inner">
                                     <div class="item-title">Help</div>
+                                  </div>
+                                </a>
+                              </li>
+                            </ul>
+                          </div>
+                            <div class="list">
+                            <ul>
+                              <li>
+                                <a class="item-content item-link" id="debug">
+                                  <div class="item-inner">
+                                    <div class="item-title">iniciar sesión (deb)</div>
                                   </div>
                                 </a>
                               </li>
@@ -417,5 +476,6 @@
     <!--  App actions  -->
     <script type="text/javascript" src="js/user_actions.js"></script>
     <script type="text/javascript" src="js/ui_actions.js"></script>
+    <script type="text/javascript" src="js/last.js"></script>
   </body>
 </html>

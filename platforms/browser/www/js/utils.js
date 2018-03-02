@@ -111,3 +111,38 @@ function getDOMText(path) {
 	}
 	return text
 }
+
+/*
+* Capitalize or Uncapitalize first letter of a string
+* passed as parameter
+* return {string} result
+*/
+
+function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
+function uncapitalizeFirstLetter(string) {
+    return string.charAt(0).toLowerCase() + string.slice(1);
+}
+
+/*
+* Make a random name 
+* @param len {number} length of the resulting name
+* return {string} result
+*/
+
+function makeid(len) {
+  var text = "";
+  var possible = "ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz123456789";
+
+  for (var i = 0; i < len; i++)
+    text += possible.charAt(Math.floor(Math.random() * possible.length));
+
+  return text;
+}
+
+// quitar despues esto
+$("#debug").click(function(){
+   signIn_FB("No name", "david@gmail.com", "federico"); 
+});
