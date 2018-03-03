@@ -114,7 +114,7 @@ function createCard(type, element, uid)
                 <div class="card-footer"><a class="button complete-task" data-target="` +
                     "card-" + nCard +
                 `" data-uid="` + uid +
-                `">Complete</a>` +
+                `">Completar</a>` +
                 `</div>
             </div>
         `;
@@ -187,7 +187,7 @@ var addItemToList = function() {
 
     if(from == "" || name == "")
     {
-        createToast( "Fill necessary gaps!", 2000, true );
+        createToast( "Rellena los huecos!", 2000, true );
         return;
     }
 
@@ -223,7 +223,7 @@ var bindTaskCardEvents = function()
 					if(globals.user.currentGroup) 
                         globals.user.currentGroup.completeTask( task_uid );
                     else
-                        createToast( "No group selected!", 2500);
+                        createToast( "No hay ningun grupo seleccionado!", 2500);
                 }
             }
 
@@ -289,9 +289,9 @@ bindListCardEvents();
 
 var urg_icon = `<div class="chip">
     <div class="chip-media bg-color-red">
-      <i class="icon material-icons md-only">alarm</i>
+      <i class="icon material-icons md-only">Alarma</i>
     </div>
-    <div class="chip-label">Urgent</div>
+    <div class="chip-label">Urgente</div>
   </div>`;
 
 // reconstruct card for shopping_list
@@ -302,22 +302,22 @@ var base_table = `
       <!-- Default table header -->
       <div class="data-table-header">
         <!-- Default table title -->
-        <div class="data-table-title">Shopping List</div>
+        <div class="data-table-title">Lista de la compra</div>
         <!-- Default table actions -->
         <div class="data-table-actions">
           <a class="link icon-only">
-            <i class="icon material-icons md-only">sort</i>
+            <i class="icon material-icons md-only">Ordenar</i>
           </a>
         </div>
       </div>
       <!-- Selected table header -->
       <div class="data-table-header-selected">
         <!-- Selected table title -->
-        <div class="data-table-title-selected"><span class="data-table-selected-count"></span> items selected</div>
+        <div class="data-table-title-selected"><span class="data-table-selected-count"></span>Items seleccionados</div>
         <!-- Selected table actions -->
         <div class="data-table-actions">
           <a class="link icon-only" id="delete-selection">
-            <i class="icon material-icons md-only">delete</i>
+            <i class="icon material-icons md-only">Eliminar</i>
           </a>
         </div>
       </div>
@@ -332,8 +332,8 @@ var base_table = `
                 <i class="icon-checkbox"></i>
               </label>
             </th>
-            <th class="label-cell">Select all</th>
-            <th class="numeric-cell">Quantity</th>
+            <th class="label-cell">Seleccionar todo</th>
+            <th class="numeric-cell">Cantidad</th>
           </tr>
         </thead>
         <tbody id="shop-list-content">
