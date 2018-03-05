@@ -48,11 +48,10 @@ TD.User = User;
 User.prototype._ctor = function()
 {
     this.uid = null;
-    this.name = "Unnamed";
+    this.name = "Sin nombre";
     this.email = "No mail";
     // list of connected groups (only its uid)
     this.gs = [];
-
     this.storage = {};
 }
 
@@ -159,18 +158,19 @@ Group.prototype.addTask = function(o)
     globals.db.refresh();
 }
 
-Group.prototype.removeTask = function( cardNumber )
+// Only remove visual card and DB info
+Group.prototype.removeTask = function( task_uid )
 {
-//	var unit = "groups";
-//    var groupId = this.uid.slice(2, this.uid.length);
-//    var fullPath = groupId + "/tasks/" + cardNumber;
-//    
-//    console.log(unit + "/" + fullPath);
-//    
-//	deleteFromDB(unit, fullPath);
-//    globals.db.refresh();
+    var unit = "groups";
+    var groupId = this.uid.slice(2, this.uid.length);
+    
+    var fullPathToDelete = groupId + "/tasks/" + task_uid;
+	deleteFromDB(unit, fullPathToDelete);
+    
+    globals.db.refresh();
 }
 
+// Remove visual card and DB info and also write it in the log!!
 Group.prototype.completeTask = function( task_uid )
 {
 
@@ -201,13 +201,12 @@ Group.prototype.addItem = function(item)
 
 Group.prototype.removeItem = function( cardNumber )
 {
-	var unit = "groups";
+    var unit = "groups";
     var groupId = this.uid.slice(2, this.uid.length);
-    var fullPath = groupId + "/items/" + cardNumber;
     
-    console.log(unit + "/" + fullPath);
+    var fullPathToDelete = groupId + "/items/" + cardNumber;
+	deleteFromDB(unit, fullPathToDelete);
     
-	deleteFromDB(unit, fullPath);
     globals.db.refresh();
 }
 
