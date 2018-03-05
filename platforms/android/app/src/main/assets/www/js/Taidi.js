@@ -173,6 +173,7 @@ Group.prototype.removeTask = function( cardNumber )
 
 Group.prototype.completeTask = function( task_uid )
 {
+
 	var unit = "groups";
     var groupId = this.uid.slice(2, this.uid.length);
     

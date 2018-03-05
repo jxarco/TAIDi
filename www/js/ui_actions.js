@@ -148,10 +148,10 @@ var assignTask = function() {
 	var from = globals.user ?
                     ( globals.user.name ? globals.user.name : globals.user.uid )
                     : "Me",
-		more = getDOMValue('textarea[placeholder="Something to know"]'),
-		name = getDOMValue('input[placeholder="Task name"]'),
+		more = getDOMValue('textarea[placeholder="Notas importantes"]'),
+		name = getDOMValue('input[placeholder="Nombre de la tarea"]'),
 		timestamp = new Date().toDateString(),
-		to = getDOMValue('input[placeholder="Person name"]'),
+		to = getDOMValue('input[placeholder="Persona encargada"]'),
 		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
 
     if(from == "" || name == "" || to == "")
@@ -223,7 +223,7 @@ var bindTaskCardEvents = function()
 					if(globals.user.currentGroup) 
                         globals.user.currentGroup.completeTask( task_uid );
                     else
-                        createToast( "No hay ningun grupo seleccionado!", 2500);
+                        createToast( "Selecciona un grupo antes", 2500);
                 }
             }
 
@@ -289,7 +289,7 @@ bindListCardEvents();
 
 var urg_icon = `<div class="chip">
     <div class="chip-media bg-color-red">
-      <i class="icon material-icons md-only">Alarma</i>
+      <i class="icon material-icons md-only">alarm</i>
     </div>
     <div class="chip-label">Urgente</div>
   </div>`;
@@ -306,18 +306,18 @@ var base_table = `
         <!-- Default table actions -->
         <div class="data-table-actions">
           <a class="link icon-only">
-            <i class="icon material-icons md-only">Ordenar</i>
+            <i class="icon material-icons md-only">sort</i>
           </a>
         </div>
       </div>
       <!-- Selected table header -->
       <div class="data-table-header-selected">
         <!-- Selected table title -->
-        <div class="data-table-title-selected"><span class="data-table-selected-count"></span>Items seleccionados</div>
+        <div class="data-table-title-selected"><span class="data-table-selected-count"></span> items seleccionados</div>
         <!-- Selected table actions -->
         <div class="data-table-actions">
           <a class="link icon-only" id="delete-selection">
-            <i class="icon material-icons md-only">Eliminar</i>
+            <i class="icon material-icons md-only">delete</i>
           </a>
         </div>
       </div>
