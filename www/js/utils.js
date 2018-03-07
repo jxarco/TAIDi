@@ -144,5 +144,5 @@ function makeid(len) {
 
 // quitar despues esto
 $("#debug").click(function(){
-   signIn_FB("No name", "david@gmail.com", "federico"); 
+   signIn_FB("alex@gmail.com", "federico"); 
 });

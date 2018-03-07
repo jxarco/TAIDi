@@ -34,6 +34,17 @@ var routes = [
             $toggle.on("toggle:change", function(e){
                globals.URGENT_TASK = e.detail.inputEl.checked;
             });
+            
+            // auto-complete for who makes the task
+            var autocompleteDropdownAll = fw7.autocomplete.create({
+              inputEl: '#autocomplete-dropdown-all',
+              openIn: 'dropdown',
+              source: function (query, render) {
+                var results = globals.user ? globals.user.currentGroup.members : [];
+                // Render items by passing array with result items
+                render(results);
+              }
+            });
         }
     }
   },

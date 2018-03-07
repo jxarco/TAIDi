@@ -52,7 +52,7 @@ function joinGroup( share_id )
 }
 
 $("#join-group").click(function(){
-   fw7.dialog.prompt( "Inserta share ID", function(id){
+   fw7.dialog.prompt( "Inserta ID", function(id){
        joinGroup( id );
    })
 });

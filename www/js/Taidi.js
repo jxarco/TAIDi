@@ -119,7 +119,7 @@ Group.prototype._ctor = function()
     this.share_id = null;
     this.name = "Unnamed";
     this.tasks = {};    // dictionary of tasks
-    this.items = [];    // shopping list -> dictionary later
+    this.items = {};    // dictionary of items
     this.members = [];  // list of users (only its uid)
 }
 
@@ -191,7 +191,7 @@ Group.prototype.addItem = function(item)
 	var unit = "groups";
     // it's the last item added so the identifier
     // will be: list size
-    var itemId = this.items.length;
+    var itemId = item.name;
     var groupId = this.uid.slice(2, this.uid.length);
     var fullPath = groupId + "/items/" + itemId;
     
@@ -199,13 +199,19 @@ Group.prototype.addItem = function(item)
     globals.db.refresh();
 }
 
-Group.prototype.removeItem = function( cardNumber )
-{
+Group.prototype.removeItem = function( selected_items )
+{    
     var unit = "groups";
     var groupId = this.uid.slice(2, this.uid.length);
     
-    var fullPathToDelete = groupId + "/items/" + cardNumber;
-	deleteFromDB(unit, fullPathToDelete);
+    for(var i = 0; i < selected_items.length; i++)
+    {   
+        var item = selected_items[i],
+            key = item.getAttribute("data-key");
+        
+        var fullPathToDelete = groupId + "/items/" + key;
+        deleteFromDB(unit, fullPathToDelete);
+    }
     
     globals.db.refresh();
 }

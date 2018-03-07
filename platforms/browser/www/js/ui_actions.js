@@ -139,6 +139,7 @@ function createCard(type, element, uid)
             <td class="numeric-cell">` + element.qnt + `</td>
           `;
         table_row.innerHTML = text;
+        table_row.setAttribute("data-key", element.name);
         $$("#shop-list-content").append( table_row );
     }
 
@@ -182,10 +183,10 @@ var addItemToList = function() {
 	var from = globals.user ?
                     ( globals.user.name ? globals.user.name : globals.user.uid )
                     : "Me",
-		more = getDOMValue('textarea[placeholder="Something more?"]'),
-		name = getDOMValue('input[placeholder="Item name"]'),
+		more = getDOMValue('textarea[placeholder="Comentarios"]'),
+		name = getDOMValue('input[placeholder="Nombre del elemento"]'),
         timestamp = new Date().toDateString(),
-		qnt = getDOMValue('input[placeholder="How many?"]'),
+		qnt = getDOMValue('input[placeholder="Cantidad"]'),
 		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
 
     if(from == "" || name == "")
@@ -203,7 +204,7 @@ var addItemToList = function() {
         globals.user.currentGroup.addItem(toAssign);
         globals.URGENT_TASK = null;
         UI.refreshMain();
-        createToast( "Done!", 2500 );
+        createToast( "¡Hecho!", 2500 );
     } else
         console.warn( "No user logged" );
 };
@@ -222,9 +223,10 @@ var bindTaskCardEvents = function()
             var pressed = false;
             var onPressed = function(){ 
                 if(!pressed){
-                    $("#" + target).remove();
-					if(globals.user.currentGroup) 
+					if(globals.user.currentGroup) {
+                        $("#" + target).remove();
                         globals.user.currentGroup.completeTask( task_uid );
+                    }
                     else
                         createToast( "Selecciona un grupo antes", 2500);
                 }
@@ -232,8 +234,8 @@ var bindTaskCardEvents = function()
 
             $("#" + target).slideUp();
             createToast(null, null, null, {
-                text: 'Hecho!',
-                closeTimeout: 3500,
+                text: '¡Hecho!',
+                closeTimeout: 4000,
                 closeButton: true,
                 closeButtonText: 'Deshacer',
                 on: {
@@ -245,7 +247,7 @@ var bindTaskCardEvents = function()
             });
 
             // delete card if no UNDO
-            setTimeout(onPressed, 3000);
+            setTimeout(onPressed, 4000);
         });
     });
 };
@@ -257,30 +259,39 @@ var bindListCardEvents = function()
     // bind click event to new buttons
     $$("#delete-selection").on('click', function(e){
 
-      var target = $(".data-table-row-selected");
-      fw7.dialog.confirm("¿Estas seguro?", null, function(){
-
-          var pressed = false;
-          var onPressed = function(){ if(!pressed) target.remove();}
-
-          target.fadeOut();
-          createToast(null, null, null, {
-              text: 'Hecho!',
-              closeTimeout: 3500,
-              closeButton: true,
-              closeButtonText: 'Deshacer',
-              on: {
-                  closeButtonClick: function() {
-                      pressed = true;
-                      target.fadeIn();
-                  }
+        var target = $(".data-table-row-selected");
+        var pressed = false;
+        var onPressed = function(){ 
+            if(!pressed){
+                if(globals.user.currentGroup) {
+                    target.remove();
+                    // pass entire target, iterate it and remove from DB each item
+                    globals.user.currentGroup.removeItem( target );
                 }
-          });
+                else
+                    createToast( "Selecciona un grupo antes", 2500);
+            }
+        }
 
-
-            // delete card if no UNDO
-            setTimeout(onPressed, 3000);
+        target.fadeOut();
+        $(".data-table.data-table-init.card").removeClass("data-table-has-checked");
+        createToast(null, null, null, {
+          text: '¡Hecho!',
+          closeTimeout: 4000,
+          closeButton: true,
+          closeButtonText: 'Deshacer',
+          on: {
+              closeButtonClick: function() {
+                  pressed = true;
+                  target.fadeIn();
+                  $(".data-table.data-table-init.card").addClass("data-table-has-checked");
+              }
+            }
         });
+
+        // delete card if no UNDO
+        setTimeout(onPressed, 4000);
+        
     });
 };
 
