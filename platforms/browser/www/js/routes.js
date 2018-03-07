@@ -34,12 +34,7 @@ var routes = [
             $toggle.on("toggle:change", function(e){
                globals.URGENT_TASK = e.detail.inputEl.checked;
             });
-            
-            var tasks = [
-                    "Poner lavadora","Poner secadora","Pasar la aspiradora","Fregar los platos","Pasar la mopa","Ordenar la habitación","Barrer la habitación",
-                    "Limpiar el polvo","Lavar las ventadas","Tender la ropa","Hacer el baño","Limpiar cocina"
-                ];
-            
+
             // auto-complete for who makes the task
             globals.autocompleteDropdownAllPeople = fw7.autocomplete.create({
               inputEl: '#autocomplete-dropdown-all-people',
@@ -50,7 +45,7 @@ var routes = [
                 render(results);
               }
             }).open().close();
-            
+
            // auto-complete for who makes the task
             globals.autocompleteDropdownAll = fw7.autocomplete.create({
                 inputEl: '#autocomplete-dropdown-all',
@@ -58,8 +53,8 @@ var routes = [
                 source: function (query, render) {
                     var results = [];
                     // Find matched items
-                    for (var i = 0; i < tasks.length; i++) {
-                      if (tasks[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(tasks[i]);
+                    for (var i = 0; i < globals.default_tasks.length; i++) {
+                      if (globals.default_tasks[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(globals.default_tasks[i]);
                     }
                     // Render items by passing array with result items
                     render(results);
@@ -77,6 +72,26 @@ var routes = [
             var $toggle = $$(".urgent-toggle");
             $toggle.on("toggle:change", function(e){
                globals.URGENT_TASK = e.detail.inputEl.checked;
+            });
+
+            var autocompleteDropdownTypeahead = fw7.autocomplete.create({
+              inputEl: '#autocomplete-dropdown-typeahead',
+              openIn: 'dropdown',
+              dropdownPlaceholderText: 'Escribe para obtener sugerencias',
+              typeahead: true,
+              source: function (query, render) {
+                var results = [];
+                if (query.length === 0) {
+                  render(results);
+                  return;
+                }
+                // Find matched items
+                for (var i = 0; i < globals.default_items.length; i++) {
+                  if (globals.default_items[i].toLowerCase().indexOf(query.toLowerCase()) === 0) results.push(globals.default_items[i]);
+                }
+                // Render items by passing array with result items
+                render(results);
+              }
             });
         }
     }

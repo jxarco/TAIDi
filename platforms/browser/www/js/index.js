@@ -6,7 +6,13 @@ var globals = {
     smartSelect: null,
 
     user: null,
-    db: null
+    db: null,
+
+    default_items: ["Tomates", "Peras", "Huevos", "Kitkat"],
+    default_tasks: [
+            "Poner lavadora","Poner secadora","Pasar la aspiradora","Fregar los platos","Pasar la mopa","Ordenar la habitación","Barrer la habitación",
+            "Limpiar el polvo","Lavar las ventadas","Tender la ropa","Hacer el baño","Limpiar cocina"
+        ]
 }
 
 var app = {
