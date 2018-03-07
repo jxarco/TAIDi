@@ -19,7 +19,7 @@ var UI = {
         });
 
         if(!globals.db || !globals.user.currentGroup){
-            console.error("No DB or group selected");
+            console.warn("No DB or group selected");
             return;
         }
         

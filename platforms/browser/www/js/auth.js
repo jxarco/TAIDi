@@ -1,6 +1,6 @@
 // ******** FIREBASE ********
 
-function signIn_FB(name, mail, password)
+function signIn_FB(mail, password, tmp_name)
 {
     firebase.auth().signInWithEmailAndPassword(mail, password).catch(function(error){
         console.error( "Error " + error.code + ": " + error.message );
@@ -10,15 +10,10 @@ function signIn_FB(name, mail, password)
     firebase.auth().onAuthStateChanged(function(user)
     {
         if(user){
-
-            if(!user.displayName)
-                user.updateProfile({
-                    displayName: name
-                })
             
             globals.user = new TD.User({
                 uid: user.uid,
-                name: user.displayName,
+                name: tmp_name || user.displayName,
                 email: user.email
             });
 
@@ -30,10 +25,25 @@ function signIn_FB(name, mail, password)
     });
 }
 
-function signUp_FB(mail, password)
+function processUser(user, name, mail, password)
 {
-    firebase.auth().createUserWithEmailAndPassword(mail, password).catch(function(error){
+    user.updateProfile({
+        displayName: name
+    });
+    
+    signIn_FB(mail, password, name);    
+}
+
+function signUp_FB(name, mail, password)
+{
+    firebase.auth().createUserWithEmailAndPassword(mail, password).then(function(user) {
+        user = firebase.auth().currentUser || user;
+        processUser(user, name, mail, password);
+    }, function(error) {
+        // Handle Errors here.
         console.error( "Error " + error.code + ": " + error.message );
         throw("registering error!");
     });
+
+    
 }

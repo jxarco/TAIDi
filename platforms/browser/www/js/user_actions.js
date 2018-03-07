@@ -70,13 +70,13 @@ var login = function()
     
     // UI EVENTS
     closeSignInScreen();
-    createLoadDialog( "Cargando..." );
+    createLoadDialog( "Calentando motores..." );
     //
 
     var username = $$('#my-login-screen [name="username"]').val();
     var password = $$('#my-login-screen [name="password"]').val();
 
-    signIn_FB("Sin nombre", username, password);
+    signIn_FB(username, password);
 };
 
 var sign_up = function()
@@ -87,17 +87,10 @@ var sign_up = function()
     
     // UI EVENTS
     closeSignUpScreen();
-    createLoadDialog( "Introduciendo datos..." );
+    createLoadDialog( "Haciendo magia, espere..." );
     //
     
-    signUp_FB(username, password);
-    // no sabemos cuándo acaba de el registro!!!
-    setTimeout(function(){
-        signIn_FB(name, username, password);    
-        fw7.dialog.close();
-        createToast( "Hola " + name + ", bienvenido a TAIDi", 2000, false );
-    }, 2000);
-    
+    signUp_FB(name, username, password);
 };
 
 var logout = function(){
