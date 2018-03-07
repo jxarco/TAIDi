@@ -92,6 +92,9 @@ var UI = {
 
 function createCard(type, element, uid)
 {
+    var NO_UID = -1,
+        EXAMPLE_UID = -2;
+        
     element.urgency = JSON.parse(element.urgency);
     var text = "",
         nCard = TD.LastCardID,
@@ -99,8 +102,8 @@ function createCard(type, element, uid)
 
     if(type === TD.Task)
     {
-        if(uid == -1)
-            throw "No task uid";
+        if(uid === NO_UID)
+            console.error("No task uid");
 
         text += `
             <div class="card" id="card-` + nCard + `">
@@ -110,8 +113,8 @@ function createCard(type, element, uid)
                 <div class="card-content card-content-padding">
                 <p class="date">`+ element.timestamp + `</p><p>`+
                     element.name +
-                `</p></div>
-                <div class="card-footer"><a class="button complete-task" data-target="` +
+                `</p></div>` +
+                (uid === EXAMPLE_UID ? `<div class="card-footer"><a class="button complete-task" data-target="` : `<div class="card-footer"><a class="button" data-target="`) +
                     "card-" + nCard +
                 `" data-uid="` + uid +
                 `">Completar</a>` +

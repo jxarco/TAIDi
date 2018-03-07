@@ -19,10 +19,10 @@ function setUserCurrentGroup(name, no_action)
 
 var onUserLogged = function()
 {
-    var user_name = globals.user.name ? globals.user.name : "No name";
+    var user_name = globals.user.name ? globals.user.name : "usuario";
 
     console.warn("Login: " + user_name);
-    createToast( "Welcome " + user_name + "!", 2000, true );
+    createToast( "Bienvenido " + user_name + "!", 2000, true );
     $$('#myUserName').html( user_name );
     
     // display stuff
@@ -44,27 +44,30 @@ var onUserLogged = function()
     // remove loading dialog
     fw7.dialog.close();
     // *****   *****   *****
-}
-
-var logout = function(){
-
-    firebase.auth().signOut();
-    globals.user = null;
-    globals.db = null;
-
-    $$('#myUserName').html("Not logged");
-    $$('#myAppTitle').html("");
-
-    // Disable group selector
-    $$("#groupSelector").css("display", "none");
-    // display logout button
-    $$("#logoutButton-row").css("display", "none");
-    // display login button
-    $$(".connected-row").css("display", "block");
+    
+    // throw helping card    
+    if(!globals.user.currentGroup)
+    {
+        console.log("Printing helper card");
+        
+        var help_card = {
+            from: "TAIDi",
+            more: "Nada interesante",
+            name: "Puedes unirte a un grupo o crear uno desde 0 en el panel derecho.",
+            timestamp: new Date().toDateString(),
+            to: globals.user.name,
+            urgency: true
+        }
+        createCard(TD.Task, help_card, -2);
+    }
+    
 }
 
 var login = function()
 {
+    // close previous session
+    logout();
+    
     // UI EVENTS
     closeSignInScreen();
     createLoadDialog( "Cargando..." );
@@ -97,6 +100,28 @@ var sign_up = function()
     
 };
 
+var logout = function(){
+
+    firebase.auth().signOut();
+    globals.user = null;
+    globals.db = null;
+
+    // remove previous cards
+    $(".card").remove();
+    
+    $$('#myUserName').html("No identificado");
+    $$('#myAppTitle').html("");
+
+    // display stuff
+    $$(".auto-refresh-hidden").css("display", "none");
+    $$("#groupSelector").css("display", "none");
+    $$(".share-id-row").css("display", "none");
+    $$("#logoutButton-row").css("display", "none");
+    $$("#right-panel").css("display", "none");
+    // remove login button
+    $$(".connected-row").css("display", "block");
+}
+
 var closeSignInScreen = function(){
     fw7.loginScreen.close('#my-login-screen');
 };
@@ -111,6 +136,4 @@ $$('#my-login-screen .no-login-button').on('click', closeSignInScreen);
 $$('#my-signup-screen .no-login-button').on('click', closeSignUpScreen);
 $$('#my-signup-screen .logup-button').on('click', sign_up);
 $$("#logoutButton").on('click', logout);
-$$('#my-login-screen .login-button').on('click', function(){
-    login(null, null);
-});
+$$('#my-login-screen .login-button').on('click', login);
