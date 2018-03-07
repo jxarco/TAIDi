@@ -14,13 +14,11 @@
     <div class="block-title">Información</div>
     <div class="list no-hairlines-md">
       <ul>
-        <li>
-          <div class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-title item-label">¿Qué es?</div>
-              <div class="item-input-wrap">
-                <input type="text" placeholder="Nombre de la tarea"/>
-              </div>
+        <li class="item-content item-input">
+          <div class="item-inner">
+            <div class="item-title item-label">¿Qué es?</div>
+            <div class="item-input-wrap">
+              <input id="autocomplete-dropdown-all" type="text" placeholder="Nombre de la tarea">
             </div>
           </div>
         </li>
@@ -28,17 +26,7 @@
           <div class="item-inner">
             <div class="item-title item-label">¿Quién debe hacerlo?</div>
             <div class="item-input-wrap">
-              <input id="autocomplete-dropdown-all" type="text" placeholder="Persona encargada">
-            </div>
-          </div>
-        </li>
-        <li>
-          <div class="item-content item-input">
-            <div class="item-inner">
-              <div class="item-title item-label">¿Quién debe hacerlo?</div>
-              <div class="item-input-wrap">
-                <input type="text" placeholder="Persona encargada"/>
-              </div>
+                <input id="autocomplete-dropdown-all-people" type="text" placeholder="Persona encargada">
             </div>
           </div>
         </li>
@@ -67,7 +55,7 @@
         </li>
       </ul>
         <div class="block block-strong">
-            <a onclick="assignTask()" href="#" class="col button button-outline back">Assign</a>
+            <a onclick="assignTask()" href="#" class="col button button-outline back">Asignar tarea</a>
         </div>
     </div>
   </div>

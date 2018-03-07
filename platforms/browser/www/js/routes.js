@@ -35,16 +35,36 @@ var routes = [
                globals.URGENT_TASK = e.detail.inputEl.checked;
             });
             
+            var tasks = [
+                    "Poner lavadora","Poner secadora","Pasar la aspiradora","Fregar los platos","Pasar la mopa","Ordenar la habitación","Barrer la habitación",
+                    "Limpiar el polvo","Lavar las ventadas","Tender la ropa","Hacer el baño","Limpiar cocina"
+                ];
+            
             // auto-complete for who makes the task
-            var autocompleteDropdownAll = fw7.autocomplete.create({
-              inputEl: '#autocomplete-dropdown-all',
+            globals.autocompleteDropdownAllPeople = fw7.autocomplete.create({
+              inputEl: '#autocomplete-dropdown-all-people',
               openIn: 'dropdown',
               source: function (query, render) {
                 var results = globals.user ? globals.user.currentGroup.members : [];
                 // Render items by passing array with result items
                 render(results);
               }
-            });
+            }).open().close();
+            
+           // auto-complete for who makes the task
+            globals.autocompleteDropdownAll = fw7.autocomplete.create({
+                inputEl: '#autocomplete-dropdown-all',
+                openIn: 'dropdown',
+                source: function (query, render) {
+                    var results = [];
+                    // Find matched items
+                    for (var i = 0; i < tasks.length; i++) {
+                      if (tasks[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(tasks[i]);
+                    }
+                    // Render items by passing array with result items
+                    render(results);
+                }
+            }).open().close();
         }
     }
   },
