@@ -14,7 +14,7 @@ function setUserCurrentGroup(name, no_action)
 
     UI.refreshMain();
     $$('#share-id').val( globals.user.currentGroup.share_id );
-    createToast( "Connected to: " + name, 2500, true );
+    createToast( "Conectado a: " + capitalizeFirstLetter(name), 3000, true );
 }
 
 var onUserLogged = function()

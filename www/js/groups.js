@@ -45,11 +45,34 @@ function joinGroup( share_id )
     globals.db.groups[groupId].members.push( globals.user.uid );
     // write it to DB
     writeToDB("groups", fullPath, content, function(){
-        // actualizar grupos UI
-        // ...();
-        createToast( "Ahora eres miembro de '" + group.name + "'", 2000 );
+        UI.refresh(true);
+        createToast( "Ahora eres miembro de ' " + capitalizeFirstLetter(group.name) + " '", 3000 );
     });
 }
+
+function leaveGroup( share_id )
+{
+    // search group to leave by share_id
+    var group = GROUPbyShareID(share_id),
+        groupId = group.uid;
+    groupId = groupId.slice(2, groupId.length);
+    
+    var index = group.members.indexOf( globals.user.uid ),
+        fullPath = groupId+"/members/"+index;
+    
+    console.log(fullPath)
+    
+    // delete it from DB
+    deleteFromDB("groups", fullPath);
+    UI.refresh(true);
+    setUserCurrentGroup( globals.user.groups[0].name );
+}
+
+$("#leave-group").click(function(){
+   fw7.dialog.prompt( "Inserta ID", function(id){
+       leaveGroup( id );
+   })
+});
 
 $("#join-group").click(function(){
    fw7.dialog.prompt( "Inserta ID", function(id){

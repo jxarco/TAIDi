@@ -1,7 +1,7 @@
 var UI = {
-    refresh: function()
+    refresh: function(refresh_db_groups)
     {
-        this.refreshGroups();
+        this.refreshGroups(refresh_db_groups);
         this.refreshMain();
     },
     
