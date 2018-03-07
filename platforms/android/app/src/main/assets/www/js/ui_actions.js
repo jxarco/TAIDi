@@ -293,6 +293,45 @@ var bindListCardEvents = function()
         setTimeout(onPressed, 4000);
         
     });
+    
+    $$("#sort-items").prop('onclick',null).off('click');
+    $$("#sort-items").on('click', function(e){
+
+        // remove old cards/table
+        $("#tab-2 .card").remove();
+        $("#tab-2 .ptr-preloader").after(base_table);
+        
+        // inicializar tabla fw7 
+        fw7.dataTable.create({
+            el: ".data-table"
+        });
+
+        if(!globals.db || !globals.user.currentGroup){
+            console.warn("No DB or group selected");
+            return;
+        }
+        
+        // Current group stuff
+        var current_group = globals.user.currentGroup,
+            items = globals.user.currentGroup.items;
+        
+        // reorder elements by urgency
+        var keysSorted = Object.keys(items).sort(function(a,b){
+            return new Date(items[a].timestamp) > new Date(items[b].timestamp)
+        }), itemsSorted = {};
+                
+        for(var i = 0; i< keysSorted.length; i++)
+        {
+            var key = keysSorted[i],
+                value = items[key];
+            itemsSorted[key] = value;
+        }
+        
+        for(var i in itemsSorted)
+            createCard(TD.Item, itemsSorted[i]);
+        
+        createToast( "Ordenado por antigüedad", 2500, true );
+    });
 };
 
 // bind in example cards
@@ -319,7 +358,7 @@ var base_table = `
         <div class="data-table-title">Lista de la compra</div>
         <!-- Default table actions -->
         <div class="data-table-actions">
-          <a class="link icon-only">
+          <a class="link icon-only" id="sort-items">
             <i class="icon material-icons md-only">sort</i>
           </a>
         </div>
