@@ -56,3 +56,29 @@ $("#join-group").click(function(){
        joinGroup( id );
    })
 });
+
+$("#stats").click(function(){
+    
+    // get info from log and insert it
+    var log = globals.user.currentGroup.log;
+    $("#log-tasks").empty();
+    
+    for(var entry in log)
+    {
+        var text = `<li>
+                      <div class="item-content item-input">
+                        <div class="item-inner">
+                            <div class="item-title item-label" style="margin-top: -12px;">Tarea: ` + log[entry].name + `</div><br>
+                            <div class="item-title item-label" style="margin-top: -12px;">Realizada por: ` + log[entry].to + `</div><br>
+                            <div class="item-title item-label" style="margin-top: -12px;">Asignada por: ` + log[entry].from + `</div><br>
+                            <div class="item-title item-label" style="margin-top: -12px;">Comentarios: ` + log[entry].more + `</div><br>
+                            <div class="item-title item-label" style="margin-top: -12px;">Fecha: ` + log[entry].timestamp + `</div><br>
+                          <div class="item-title item-label" style="margin-top: -12px; color: #ddd">` + "__________________" + `</div>
+                        </div>
+                      </div>
+                    </li>`;
+        $("#log-tasks").append( text );
+    }
+    
+   globals.stats_popup.open();
+});

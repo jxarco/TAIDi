@@ -114,7 +114,7 @@ function createCard(type, element, uid)
                 <p class="date">`+ element.timestamp + `</p><p>`+
                     element.name +
                 `</p></div>` +
-                (uid === EXAMPLE_UID ? `<div class="card-footer"><a class="button complete-task" data-target="` : `<div class="card-footer"><a class="button" data-target="`) +
+                (uid === EXAMPLE_UID ? `<div class="card-footer"><a class="button" data-target="` : `<div class="card-footer"><a class="button complete-task" data-target="`) +
                     "card-" + nCard +
                 `" data-uid="` + uid +
                 `">Completar</a>` +

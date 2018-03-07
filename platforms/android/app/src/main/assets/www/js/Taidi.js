@@ -51,7 +51,7 @@ User.prototype._ctor = function()
     this.name = "Sin nombre";
     this.email = "No mail";
     // list of connected groups (only its uid)
-    this.gs = [];
+    this.groups = [];
     this.storage = {};
 }
 
@@ -117,10 +117,13 @@ Group.prototype._ctor = function()
 {
     this.uid = null;
     this.share_id = null;
-    this.name = "Unnamed";
+    this.name = "Sin nombre";
+    
     this.tasks = {};    // dictionary of tasks
     this.items = {};    // dictionary of items
     this.members = [];  // list of users (only its uid)
+    
+    this.log = {};
 }
 
 Group.prototype.configure = function(o)
