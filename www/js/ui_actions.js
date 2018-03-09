@@ -118,6 +118,12 @@ function createCard(type, element, uid)
                     "card-" + nCard +
                 `" data-uid="` + uid +
                 `">Completar</a>` +
+                `</div>` +
+				`<div>` +
+                (uid === EXAMPLE_UID ? `<div class="card-footer"><a class="button" data-target="` : `<div class="card-footer">` +
+				`<a class="button edit-task" href="/edit-task/?uid=`+ uid) +
+                `" data-uid="` + uid +
+                `">Editar</a>` +
                 `</div>
             </div>
         `;
@@ -178,6 +184,37 @@ var assignTask = function() {
         console.warn( "No user logged" );
 };
 
+var editTask = function() {
+
+	var from = globals.user ?
+                    ( globals.user.name ? globals.user.name : globals.user.uid )
+                    : "Me",
+		more = getDOMValue('textarea[placeholder="Notas importantes"]'),
+		name = getDOMValue('input[placeholder="Nombre de la tarea"]'),
+		timestamp = new Date().toDateString(),
+		to = getDOMValue('input[placeholder="Persona encargada"]'),
+		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
+		
+	var task_uid = getDOMValue('#task-uid');
+
+    if(from == "" || name == "" || to == "") {
+        createToast( "Rellena los huecos", 2000, true );
+    } else {
+		var toEdit = {
+			from: from, more: more, name: name, timestamp: timestamp, to: to, urgency: urgency
+		};
+
+		if (globals.user && globals.user.currentGroup)
+		{
+			globals.user.currentGroup.changeTaskInfo(task_uid, toEdit);
+			globals.URGENT_TASK = null;
+			UI.refreshMain();
+			createToast( "¡Hecho!", 2500 );
+		} else
+			console.warn( "No user logged" );
+	}
+};
+
 var addItemToList = function() {
 
 	var from = globals.user ?
@@ -207,6 +244,38 @@ var addItemToList = function() {
         createToast( "¡Hecho!", 2500 );
     } else
         console.warn( "No user logged" );
+};
+
+var editItem = function() {
+
+	var from = globals.user ?
+                    ( globals.user.name ? globals.user.name : globals.user.uid )
+                    : "Me",
+		more = getDOMValue('textarea[placeholder="Comentarios"]'),
+		name = getDOMValue('input[placeholder="Nombre del elemento"]'),
+        timestamp = new Date().toDateString(),
+		qnt = getDOMValue('input[placeholder="Cantidad"]'),
+		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
+		
+	//var itemId = getDOMValue('#item-id');
+
+    if(from == "" || name == "") {
+        createToast( "Rellena los huecos!", 2000, true );
+    } else {
+
+		var toEdit = {
+			from: from, more: more, name: name, qnt: qnt, timestamp: timestamp, urgency: urgency
+		};
+
+		if (globals.user && globals.user.currentGroup)
+		{
+			globals.user.currentGroup.changeItemInfo(itemId, toEdit);
+			globals.URGENT_TASK = null;
+			UI.refreshMain();
+			createToast( "¡Hecho!", 2500 );
+		} else
+			console.warn( "No user logged" );
+	}
 };
 
 var bindTaskCardEvents = function()
