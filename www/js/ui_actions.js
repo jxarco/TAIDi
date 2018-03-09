@@ -118,10 +118,8 @@ function createCard(type, element, uid)
                     "card-" + nCard +
                 `" data-uid="` + uid +
                 `">Completar</a>` +
-                `</div>` +
-				`<div>` +
-                (uid === EXAMPLE_UID ? `<div class="card-footer"><a class="button" data-target="` : `<div class="card-footer">` +
-				`<a class="button edit-task" href="/edit-task/?uid=`+ uid) +
+                (uid === EXAMPLE_UID ? `<a class="button" data-target="` : `<a class="button edit-task" ` +
+				`href="/edit-task/?uid=`+ uid) +
                 `" data-uid="` + uid +
                 `">Editar</a>` +
                 `</div>
@@ -157,7 +155,7 @@ var assignTask = function() {
 
 	var from = globals.user ?
                     ( globals.user.name ? globals.user.name : globals.user.uid )
-                    : "Me",
+                    : "Usuario",
 		more = getDOMValue('textarea[placeholder="Notas importantes"]'),
 		name = getDOMValue('input[placeholder="Nombre de la tarea"]'),
 		timestamp = new Date().toDateString(),
@@ -219,7 +217,7 @@ var addItemToList = function() {
 
 	var from = globals.user ?
                     ( globals.user.name ? globals.user.name : globals.user.uid )
-                    : "Me",
+                    : "Usuario",
 		more = getDOMValue('textarea[placeholder="Comentarios"]'),
 		name = getDOMValue('input[placeholder="Nombre del elemento"]'),
         timestamp = new Date().toDateString(),
