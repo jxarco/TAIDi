@@ -40,13 +40,18 @@ var routes = [
               inputEl: '#autocomplete-dropdown-all-people',
               openIn: 'dropdown',
               source: function (query, render) {
-                var results = globals.user ? globals.user.currentGroup.members : [];
+                  
+                var results = [];
+                  
+                for(var entry in globals.user.currentGroup.namers)
+                    results.push( entry );
+                  
                 // Render items by passing array with result items
                 render(results);
               }
             }).open().close();
 
-           // auto-complete for who makes the task
+           // auto-complete for which task
             globals.autocompleteDropdownAll = fw7.autocomplete.create({
                 inputEl: '#autocomplete-dropdown-all',
                 openIn: 'dropdown',

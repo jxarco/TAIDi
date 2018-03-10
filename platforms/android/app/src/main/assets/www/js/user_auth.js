@@ -125,6 +125,13 @@ var login = function()
 
     var username = $$('#my-login-screen [name="username"]').val();
     var password = $$('#my-login-screen [name="password"]').val();
+    
+    // if remember me checked
+    if(true)
+    {
+        localStorage.setItem("username", username );
+        localStorage.setItem("password", password );
+    }
 
     signIn_FB(username, password);
 };

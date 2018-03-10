@@ -41,17 +41,22 @@ setTimeout(function loadUI(){
         $ptrContent.css("top", "50px");
         // Add 'refresh' listener on it
         $ptrContent.on('ptr:refresh', function (e) {
-            if(globals.db)
-              globals.db.refresh();
-            else {
-                setTimeout( ptr_done, 500 );
-              }
+            if(!globals.user.currentGroup || !globals.db)
+            {
+                fw7.ptr.done();
+                return;
+            }
+            globals.db.refresh();
         });
     
         var $auto_refresh = $$(".toggle");
         $auto_refresh.on('toggle:change', function (e) {
             globals.auto_refresh = e.detail.inputEl.checked;
-            fw7.panel.close();
+//            fw7.panel.close();
+            
+            if(!globals.user.currentGroup || !globals.db)
+                return;
+            
             if(globals.auto_refresh)
                 // globals.db.refresh(); 
                 globals.db.update( function(){
@@ -60,9 +65,15 @@ setTimeout(function loadUI(){
                 });
             else 
                 globals.db.update();
-            
         });
 
         // adjust some css things
         $$("#logo-preloader").css("display", "none");
+    
+        // get localstorage if exists
+        if( localStorage.getItem("username") && localStorage.getItem("password") )
+        {
+            $$('#my-login-screen [name="username"]').val( localStorage.getItem("username") );
+            $$('#my-login-screen [name="password"]').val( localStorage.getItem("password") );    
+        }
 }, tOut);

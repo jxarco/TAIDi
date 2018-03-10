@@ -121,6 +121,7 @@ Group.prototype._ctor = function()
     
     this.tasks = {};    // dictionary of tasks
     this.items = {};    // dictionary of items
+    this.namers = {};  // dictionary of member-name
     this.members = [];  // list of users (only its uid)
     
     this.log = {};

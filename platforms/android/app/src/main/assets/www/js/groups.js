@@ -45,9 +45,14 @@ function joinGroup( share_id )
     globals.db.groups[groupId].members.push( globals.user.uid );
     // write it to DB
     writeToDB("groups", fullPath, content, function(){
-        UI.refresh(true);
+        UI.refresh();
         createToast( "Ahora eres miembro de ' " + capitalizeFirstLetter(group.name) + " '", 3000 );
     });
+    
+    fullPath = groupId+"/namers/"+globals.user.name;
+    var content = globals.user.uid;
+    // write it to DB
+    writeToDB("groups", fullPath, content);
 }
 
 function leaveGroup( share_id )
@@ -60,12 +65,13 @@ function leaveGroup( share_id )
     var index = group.members.indexOf( globals.user.uid ),
         fullPath = groupId+"/members/"+index;
     
-    console.log(fullPath)
-    
     // delete it from DB
     deleteFromDB("groups", fullPath);
     UI.refresh(true);
-    setUserCurrentGroup( globals.user.groups[0].name );
+//    setUserCurrentGroup( globals.user.groups[0].name );
+    
+    fullPath = groupId+"/namers/"+globals.user.name;
+    deleteFromDB("groups", fullPath);
 }
 
 $("#leave-group").click(function(){
