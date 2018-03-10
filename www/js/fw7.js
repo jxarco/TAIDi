@@ -27,6 +27,7 @@ setTimeout(function loadUI(){
         globals.smartSelectView = fw7.views.create('.view-smartie');
         globals.smartSelect = fw7.smartSelect.get();
         globals.stats_popup = fw7.popup.create({el: ".popup-about"});
+        globals.detail_popup = fw7.popup.create({el: ".popup-detail"});
     
         // close smart selector on change current group
         $$(document.body).on('change', 'select[id="connectedGroups"]', function(e){

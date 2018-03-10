@@ -9,6 +9,9 @@
   "installed_plugins": {
     "cordova-plugin-whitelist": {
       "PACKAGE_NAME": "io.cordova.hellocordova"
+    },
+    "com.darktalker.cordova.screenshot": {
+      "PACKAGE_NAME": "io.cordova.taidi"
     }
   },
   "dependent_plugins": {}

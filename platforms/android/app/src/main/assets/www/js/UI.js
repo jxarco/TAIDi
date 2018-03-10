@@ -118,6 +118,9 @@ function createCard(type, element, uid)
                     "card-" + nCard +
                 `" data-uid="` + uid +
                 `">Completar</a>` +
+                (uid === EXAMPLE_UID ? `<a class="button"` : `<a class="button detail"`) +
+                ` data-uid="` + uid +
+                `"><i class="icon material-icons">more_vert</i></a>` +
                 (uid === EXAMPLE_UID ? `<a class="button" data-target="` : `<a class="button edit-task" ` +
 				`href="/edit-task/?uid=`+ uid) +
                 `" data-uid="` + uid +
@@ -191,6 +194,31 @@ function bindTaskCardEvents()
             // delete card if no UNDO
             setTimeout(onPressed, 4000);
         });
+    });
+    
+    // unbind last events to prevent double bindings
+    $$(".detail").prop('onclick',null).off('click');
+    // bind click event to new buttons
+    $$(".detail").on('click', function(e){
+
+        var task_uid = $$(this).data("uid");
+        // put detail info in popup before open!!!
+        var task = globals.user.currentGroup.tasks[task_uid];
+        $("#detail-info").empty();
+        var text = `<li>
+          <div class="item-content item-input">
+            <div class="item-inner" style="font-size: 22px !important;">
+                <div class="item-title item-label" style="margin-top: -12px;">Tarea: ` + task["name"] + `</div><br>
+                <div class="item-title item-label" style="margin-top: -12px;">Realizada por: ` + task["to"] + `</div><br>
+                <div class="item-title item-label" style="margin-top: -12px;">Asignada por: ` + task["from"] + `</div><br>
+                <div class="item-title item-label" style="margin-top: -12px;">Comentarios: ` + task["more"] + `</div><br>
+                <div class="item-title item-label" style="margin-top: -12px;">Fecha: ` + task["timestamp"] + `</div><br>
+              <div class="item-title item-label" style="margin-top: -12px; color: #ddd">` + "__________________" + `</div>
+            </div>
+          </div>
+        </li>`;
+        $("#detail-info").append( text );
+        globals.detail_popup.open();
     });
 };
 
