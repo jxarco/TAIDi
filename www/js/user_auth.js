@@ -116,7 +116,7 @@ var onUserLogged = function()
 var login = function()
 {
     // close previous session
-    logout();
+    logout(true);
     
     // UI EVENTS
     closeSignInScreen();
@@ -143,14 +143,14 @@ var sign_up = function()
     signUp_FB(name, username, password);
 };
 
-var logout = function(){
+var logout = function(keep_cards){
 
     firebase.auth().signOut();
     globals.user = null;
     globals.db = null;
 
-    // remove previous cards
-    $(".card").remove();
+    if(!keep_cards)
+        $(".card").remove();
     
     $$('#myUserName').html("No identificado");
     $$('#myAppTitle').html("TAIDi");
