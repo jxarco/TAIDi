@@ -112,6 +112,40 @@ function getDOMText(path) {
 	return text
 }
 
+function setDOMValue(path, value) {
+	try {
+		
+		if ($(path) != null) { 
+			value = $(path).val(value);
+		} else {
+			value = $(path).val("");
+		}
+
+	} catch (error) {
+		log(error);
+	}
+}
+
+function showTaskInfo(taskUid) {
+	var task = globals.user.currentGroup.tasks[taskUid];
+	if (task != null) {
+		setDOMValue("#task-uid", taskUid);
+		setDOMValue('textarea[placeholder="Notas importantes"]', task.more);
+		setDOMValue('input[placeholder="Nombre de la tarea"]', task.name);
+		setDOMValue('input[placeholder="Persona encargada"]', task.to);
+	}
+}
+
+function showItemInfo(itemId) {
+	var task = globals.user.currentGroup.items[itemId];
+	if (task != null) {
+		//setDOMValue("#item-id", itemId);
+		setDOMValue('textarea[placeholder="Comentarios"]', item.more);
+		setDOMValue('input[placeholder="Nombre del elemento"]', item.name);
+		setDOMValue('input[placeholder="Cantidad"]', item.qnt);
+	}
+}
+
 /*
 * Capitalize or Uncapitalize first letter of a string
 * passed as parameter
@@ -144,5 +178,6 @@ function makeid(len) {
 
 // quitar despues esto
 $("#debug").click(function(){
+    logout();
    signIn_FB("alex@gmail.com", "federico"); 
 });

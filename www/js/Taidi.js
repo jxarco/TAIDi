@@ -233,15 +233,14 @@ Group.prototype.removeItem = function( selected_items )
 }
 
 // Edit DB info of task and reload the DB info!!
-Group.prototype.changeItemInfo = function(itemId, item)
+Group.prototype.changeItemInfo = function(itemId, qnt)
 {
-
 	var unit = "groups";
     var groupId = this.uid.slice(2, this.uid.length);
     
-    var fullPath = groupId + "/items/" + itemId;
-	writeToDB(unit, fullPath, item);
-    
+    // only edit quantity (qnt key)!!!
+    var fullPath = groupId + "/items/" + itemId + "/qnt";
+	writeToDB(unit, fullPath, qnt);
     globals.db.refresh();
 }
 

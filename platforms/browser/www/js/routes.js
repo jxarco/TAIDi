@@ -97,6 +97,49 @@ var routes = [
     }
   },
   {
+    path: '/edit-task/',
+    url: './pages/edit-task.html',
+    on: {
+        pageAfterIn: function(d){
+            fw7.fab.close();
+            var $toggle = $$(".urgent-toggle");
+            $toggle.on("toggle:change", function(e){
+               globals.URGENT_TASK = e.detail.inputEl.checked;
+            });
+
+            // auto-complete for who makes the task
+            globals.autocompleteDropdownAllPeople = fw7.autocomplete.create({
+              inputEl: '#autocomplete-dropdown-all-people',
+              openIn: 'dropdown',
+              source: function (query, render) {
+                var results = globals.user ? globals.user.currentGroup.members : [];
+                // Render items by passing array with result items
+                render(results);
+              }
+            }).open().close();
+
+           // auto-complete for who makes the task
+            globals.autocompleteDropdownAll = fw7.autocomplete.create({
+                inputEl: '#autocomplete-dropdown-all',
+                openIn: 'dropdown',
+                source: function (query, render) {
+                    var results = [];
+                    // Find matched items
+                    for (var i = 0; i < globals.default_tasks.length; i++) {
+                      if (globals.default_tasks[i].toLowerCase().indexOf(query.toLowerCase()) >= 0) results.push(globals.default_tasks[i]);
+                    }
+                    // Render items by passing array with result items
+                    render(results);
+                }
+            }).open().close();
+
+			var taskUid = d.detail.route.query.uid;
+			showTaskInfo(taskUid);
+
+        }
+    }
+  },
+  {
     path: '/swiper-parallax/',
     url: './pages/swiper-parallax.html',
   },

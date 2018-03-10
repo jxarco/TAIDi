@@ -189,6 +189,19 @@ Group.prototype.completeTask = function( task_uid )
     globals.db.refresh();
 }
 
+// Edit DB info of task and reload the DB info!!
+Group.prototype.changeTaskInfo = function(taskId, task)
+{
+
+	var unit = "groups";
+    var groupId = this.uid.slice(2, this.uid.length);
+    
+    var fullPath = groupId + "/tasks/" + taskId;
+	writeToDB(unit, fullPath, task);
+    
+    globals.db.refresh();
+}
+
 Group.prototype.addItem = function(item)
 {
 	var unit = "groups";
@@ -216,6 +229,18 @@ Group.prototype.removeItem = function( selected_items )
         deleteFromDB(unit, fullPathToDelete);
     }
     
+    globals.db.refresh();
+}
+
+// Edit DB info of task and reload the DB info!!
+Group.prototype.changeItemInfo = function(itemId, qnt)
+{
+	var unit = "groups";
+    var groupId = this.uid.slice(2, this.uid.length);
+    
+    // only edit quantity (qnt key)!!!
+    var fullPath = groupId + "/items/" + itemId + "/qnt";
+	writeToDB(unit, fullPath, qnt);
     globals.db.refresh();
 }
 

@@ -1,132 +1,110 @@
-function setAppTitle(text)
+function assignTask()
 {
-    $$('#myAppTitle').html( text );
-}
+	var from = globals.user ?
+                    ( globals.user.name ? globals.user.name : globals.user.uid )
+                    : "Usuario",
+		more = getDOMValue('textarea[placeholder="Notas importantes"]'),
+		name = getDOMValue('input[placeholder="Nombre de la tarea"]'),
+		timestamp = new Date().toDateString(),
+		to = getDOMValue('input[placeholder="Persona encargada"]'),
+		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
 
-function setUserCurrentGroup(name, no_action)
-{
-    // abrimos el selector pero no tocamos nada
-    if( no_action ) return;
-    
-    var gr = globals.user.groups;
-    for(var i = 0; i < gr.length; i++)
-        if(gr[i].name === name) globals.user.currentGroup = new TD.Group(gr[i]);
-
-    UI.refreshMain();
-    $$('#share-id').val( globals.user.currentGroup.share_id );
-    createToast( "Conectado a: " + capitalizeFirstLetter(name), 3000, true );
-}
-
-var onUserLogged = function()
-{
-    var user_name = globals.user.name ? globals.user.name : "usuario";
-
-    console.warn("Login: " + user_name);
-    createToast( "Bienvenido " + user_name + "!", 2000, true );
-    $$('#myUserName').html( user_name );
-    
-    // display stuff
-    $$(".auto-refresh-hidden").css("display", "block");
-    $$("#groupSelector").css("display", "block");
-    $$(".share-id-row").css("display", "block");
-    $$("#logoutButton-row").css("display", "block");
-    $$("#right-panel").css("display", "block");
-    // remove login button
-    $$(".connected-row").css("display", "none");
-
-    if(!globals.db)
-        throw("DB is not available yet");
-    else
-        console.log("Using DB: ", globals.db);
-
-    // refrescar todo
-    UI.refresh();
-    // remove loading dialog
-    fw7.dialog.close();
-    // *****   *****   *****
-    
-    // throw helping card    
-    if(!globals.user.currentGroup)
+    if(from == "" || name == "" || to == "")
     {
-        console.log("Printing helper card");
-        
-        var help_card = {
-            from: "TAIDi",
-            more: "Nada interesante",
-            name: "Puedes unirte a un grupo o crear uno desde 0 en el panel derecho.",
-            timestamp: new Date().toDateString(),
-            to: globals.user.name,
-            urgency: true
-        }
-        createCard(TD.Task, help_card, -2);
+        createToast( "Rellena los huecos", 2000, true );
+        return;
     }
-    
+
+    var toAssign = {
+		from: from, more: more, name: name, timestamp: timestamp, to: to, urgency: urgency
+	};
+
+    if (globals.user && globals.user.currentGroup)
+    {
+        globals.user.currentGroup.addTask(toAssign);
+        globals.URGENT_TASK = null;
+        UI.refreshMain();
+        createToast( "¡Hecho!", 2500 );
+    } else
+        console.warn( "No user logged" );
 }
 
-var login = function()
+function addItemToList()
 {
-    // close previous session
-    logout();
-    
-    // UI EVENTS
-    closeSignInScreen();
-    createLoadDialog( "Calentando motores..." );
-    //
+	var from = globals.user ?
+                    ( globals.user.name ? globals.user.name : globals.user.uid )
+                    : "Usuario",
+		more = getDOMValue('textarea[placeholder="Comentarios"]'),
+		name = getDOMValue('input[placeholder="Nombre del elemento"]'),
+        timestamp = new Date().toDateString(),
+		qnt = getDOMValue('input[placeholder="Cantidad"]'),
+		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
 
-    var username = $$('#my-login-screen [name="username"]').val();
-    var password = $$('#my-login-screen [name="password"]').val();
+    if(from == "" || name == "")
+    {
+        createToast( "Rellena los huecos!", 2000, true );
+        return;
+    }
 
-    signIn_FB(username, password);
-};
+    var toAssign = {
+		from: from, more: more, name: name, qnt: qnt, timestamp: timestamp, urgency: urgency
+	};
 
-var sign_up = function()
-{
-    var name        = $$('#my-signup-screen [name="name"]').val();
-    var username    = $$('#my-signup-screen [name="username"]').val();
-    var password    = $$('#my-signup-screen [name="password"]').val();
-    
-    // UI EVENTS
-    closeSignUpScreen();
-    createLoadDialog( "Haciendo magia, espere..." );
-    //
-    
-    signUp_FB(name, username, password);
-};
-
-var logout = function(){
-
-    firebase.auth().signOut();
-    globals.user = null;
-    globals.db = null;
-
-    // remove previous cards
-    $(".card").remove();
-    
-    $$('#myUserName').html("No identificado");
-    $$('#myAppTitle').html("");
-
-    // display stuff
-    $$(".auto-refresh-hidden").css("display", "none");
-    $$("#groupSelector").css("display", "none");
-    $$(".share-id-row").css("display", "none");
-    $$("#logoutButton-row").css("display", "none");
-    $$("#right-panel").css("display", "none");
-    // remove login button
-    $$(".connected-row").css("display", "block");
+    if (globals.user && globals.user.currentGroup)
+    {
+        globals.user.currentGroup.addItem(toAssign);
+        globals.URGENT_TASK = null;
+        UI.refreshMain();
+        createToast( "¡Hecho!", 2500 );
+    } else
+        console.warn( "No user logged" );
 }
 
-var closeSignInScreen = function(){
-    fw7.loginScreen.close('#my-login-screen');
-};
+function editTask()
+{
+	var from = globals.user ?
+                    ( globals.user.name ? globals.user.name : globals.user.uid )
+                    : "Me",
+		more = getDOMValue('textarea[placeholder="Notas importantes"]'),
+		name = getDOMValue('input[placeholder="Nombre de la tarea"]'),
+		timestamp = new Date().toDateString(),
+		to = getDOMValue('input[placeholder="Persona encargada"]'),
+		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
+		
+	var task_uid = getDOMValue('#task-uid');
 
-var closeSignUpScreen = function(){
-    fw7.loginScreen.close('#my-signup-screen');
-};
+    if(from == "" || name == "" || to == "") {
+        createToast( "Rellena los huecos", 2000, true );
+    } else {
+		var toEdit = {
+			from: from, more: more, name: name, timestamp: timestamp, to: to, urgency: urgency
+		};
 
-// BUTTON EVENTS
+		if (globals.user && globals.user.currentGroup)
+		{
+			globals.user.currentGroup.changeTaskInfo(task_uid, toEdit);
+			globals.URGENT_TASK = null;
+			UI.refreshMain();
+			createToast( "¡Hecho!", 2500 );
+		} else
+			console.warn( "No user logged" );
+	}
+}
 
-$$('#my-login-screen .no-login-button').on('click', closeSignInScreen);
-$$('#my-signup-screen .no-login-button').on('click', closeSignUpScreen);
-$$('#my-signup-screen .logup-button').on('click', sign_up);
-$$("#logoutButton").on('click', logout);
-$$('#my-login-screen .login-button').on('click', login);
+// This only supports editing quantity --> ENOUGH!!
+function editItem(itemName, qnt)
+{
+    if(!qnt)
+        return;
+    
+    // object key
+	var itemId = itemName;
+
+    if (globals.user && globals.user.currentGroup)
+    {
+        globals.user.currentGroup.changeItemInfo(itemId, qnt);
+        UI.refreshMain();
+        createToast( "¡Hecho!", 2500 );
+    } else
+        console.warn( "No user logged" );	
+}

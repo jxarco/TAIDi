@@ -178,5 +178,6 @@ function makeid(len) {
 
 // quitar despues esto
 $("#debug").click(function(){
+    logout();
    signIn_FB("alex@gmail.com", "federico"); 
 });

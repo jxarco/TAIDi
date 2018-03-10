@@ -118,6 +118,10 @@ function createCard(type, element, uid)
                     "card-" + nCard +
                 `" data-uid="` + uid +
                 `">Completar</a>` +
+                (uid === EXAMPLE_UID ? `<a class="button" data-target="` : `<a class="button edit-task" ` +
+				`href="/edit-task/?uid=`+ uid) +
+                `" data-uid="` + uid +
+                `">Editar</a>` +
                 `</div>
             </div>
         `;
@@ -147,69 +151,7 @@ function createCard(type, element, uid)
     bindTaskCardEvents();
 }
 
-var assignTask = function() {
-
-	var from = globals.user ?
-                    ( globals.user.name ? globals.user.name : globals.user.uid )
-                    : "Me",
-		more = getDOMValue('textarea[placeholder="Notas importantes"]'),
-		name = getDOMValue('input[placeholder="Nombre de la tarea"]'),
-		timestamp = new Date().toDateString(),
-		to = getDOMValue('input[placeholder="Persona encargada"]'),
-		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
-
-    if(from == "" || name == "" || to == "")
-    {
-        createToast( "Rellena los huecos", 2000, true );
-        return;
-    }
-
-    var toAssign = {
-		from: from, more: more, name: name, timestamp: timestamp, to: to, urgency: urgency
-	};
-
-    if (globals.user && globals.user.currentGroup)
-    {
-        globals.user.currentGroup.addTask(toAssign);
-        globals.URGENT_TASK = null;
-        UI.refreshMain();
-        createToast( "¡Hecho!", 2500 );
-    } else
-        console.warn( "No user logged" );
-};
-
-var addItemToList = function() {
-
-	var from = globals.user ?
-                    ( globals.user.name ? globals.user.name : globals.user.uid )
-                    : "Me",
-		more = getDOMValue('textarea[placeholder="Comentarios"]'),
-		name = getDOMValue('input[placeholder="Nombre del elemento"]'),
-        timestamp = new Date().toDateString(),
-		qnt = getDOMValue('input[placeholder="Cantidad"]'),
-		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
-
-    if(from == "" || name == "")
-    {
-        createToast( "Rellena los huecos!", 2000, true );
-        return;
-    }
-
-    var toAssign = {
-		from: from, more: more, name: name, qnt: qnt, timestamp: timestamp, urgency: urgency
-	};
-
-    if (globals.user && globals.user.currentGroup)
-    {
-        globals.user.currentGroup.addItem(toAssign);
-        globals.URGENT_TASK = null;
-        UI.refreshMain();
-        createToast( "¡Hecho!", 2500 );
-    } else
-        console.warn( "No user logged" );
-};
-
-var bindTaskCardEvents = function()
+function bindTaskCardEvents()
 {
     // unbind last events to prevent double bindings
     $$(".complete-task").prop('onclick',null).off('click');
@@ -252,7 +194,7 @@ var bindTaskCardEvents = function()
     });
 };
 
-var bindListCardEvents = function()
+function bindListCardEvents()
 {
     // unbind last events to prevent double bindings
     $$("#delete-selection").prop('onclick',null).off('click');
@@ -332,7 +274,24 @@ var bindListCardEvents = function()
         
         createToast( "Ordenado por antigüedad", 2500, true );
     });
-};
+    
+    $$("#edit-selection").prop('onclick',null).off('click');
+    $$("#edit-selection").on('click', function(e){
+        
+        var target = $(".data-table-row-selected");
+        if(target.length > 1)
+        {
+            createToast("No puedes editar más de un ítem a la vez", 2500, true);
+            return;
+        }
+        
+        // extract item name --> UID
+        var itemName = target.children()[1].innerHTML;
+        fw7.dialog.prompt( "Selecciona cantidad para: " + itemName, function(qnt){
+           editItem(itemName, qnt)
+        });
+    });
+}
 
 // bind in example cards
 bindTaskCardEvents();
@@ -369,6 +328,9 @@ var base_table = `
         <div class="data-table-title-selected"><span class="data-table-selected-count"></span> items seleccionados</div>
         <!-- Selected table actions -->
         <div class="data-table-actions">
+          <a class="link icon-only" id="edit-selection">
+            <i class="icon material-icons md-only">mode_edit</i>
+          </a>
           <a class="link icon-only" id="delete-selection">
             <i class="icon material-icons md-only">delete</i>
           </a>
