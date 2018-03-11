@@ -137,12 +137,21 @@ function showTaskInfo(taskUid) {
 }
 
 function showItemInfo(itemId) {
-	var task = globals.user.currentGroup.items[itemId];
-	if (task != null) {
+	var item = globals.user.currentGroup.items[itemId];
+	if (item != null) {
 		//setDOMValue("#item-id", itemId);
 		setDOMValue('textarea[placeholder="Comentarios"]', item.more);
 		setDOMValue('input[placeholder="Nombre del elemento"]', item.name);
 		setDOMValue('input[placeholder="Cantidad"]', item.qnt);
+	}
+}
+
+function showCurrentGroupEditInfo() {
+	var group = globals.user.currentGroup;
+	if (group != null) {
+		//setDOMValue("#item-id", itemId);
+		setDOMValue('#edit-group-form [placeholder="Nombre de grupo"]', group.name);
+		setDOMValue('#edit-group-form [id="members-form"]', "");
 	}
 }
 

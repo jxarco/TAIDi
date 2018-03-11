@@ -1,0 +1,46 @@
+<div class="page" data-name="form">
+  <div class="navbar">
+    <div class="navbar-inner sliding taidi">
+      <div class="left">
+        <a href="#" class="link back">
+          <i class="icon icon-back"></i>
+          <span class="ios-only">Back</span>
+        </a>
+      </div>
+      <div class="title">Editar grupo</div>
+    </div>
+  </div>
+  <div class="page-content">
+    <div class="block-title">Información sobre el grupo</div>
+    <div class="list no-hairlines-md" id="edit-group-form">
+      <ul>
+        <li>
+          <div class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-label">Nombre</div>
+              <div class="item-input-wrap">
+                <input type="text" placeholder="Nombre de grupo"/>
+              </div>
+            </div>
+          </div>
+        </li>
+        <li>
+          <div class="item-content item-input">
+            <div class="item-inner">
+              <div class="item-title item-label"><i>Miembros del grupo</i></div>
+			  <div class="item-title item-label"><i>Para añadir nuevos miembros al grupo, escribe su identificardor separado por comas, en caso de querer añadir más de un miembro</i></div>
+              <div class="item-input-wrap">
+                <input type="text" value="" id="members-form"/>
+              </div>
+            </div>
+          </div>
+        </li>
+      </ul>
+    </div>
+      
+    <div class="block block-strong" style="margin-top: -29px;">
+      <!-- en el onclick haría un create group, y le pasaría la gente a la que hemos añadido ( si lo hacemos ), para que le llegue la notificación con el Share ID -->
+        <a onclick="editGroup()" href="#" class="col button button-outline back">Editar</a>
+    </div>
+  </div>
+</div>

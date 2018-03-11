@@ -145,6 +145,51 @@ var routes = [
     }
   },
   {
+    path: '/edit-group/',
+    url: './pages/edit-group.html',
+    on: {
+        pageAfterIn: function(d){
+            fw7.fab.close();
+            var $toggle = $$(".urgent-toggle");
+            $toggle.on("toggle:change", function(e){
+               globals.URGENT_TASK = e.detail.inputEl.checked;
+            });
+
+            // auto-complete for who makes the task
+            globals.autocompleteDropdownAllPeople = fw7.autocomplete.create({
+              inputEl: '#autocomplete-dropdown-all-people',
+              openIn: 'dropdown',
+              source: function (query, render) {
+                var results = new Array();
+				
+				var groups = globals.db.groups;
+				
+				for (var i = 0; i < groups.length; i++) {
+				
+					for (var j = 0; j < groups[i].members.length; j++) {
+					
+						var member = groups[i].members[j];
+					
+						if (isInArary(results, member) == false) {
+
+							results.push(member);
+						
+						}
+						
+					}
+				
+				}
+
+                render(results);
+              }
+            }).open().close();
+			
+			showCurrentGroupEditInfo();
+
+        }
+    }
+  },
+  {
     path: '/swiper-parallax/',
     url: './pages/swiper-parallax.html',
   },

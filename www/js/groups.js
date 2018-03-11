@@ -24,6 +24,36 @@ function createGroup()
     });
 }
 
+function editGroup()
+{
+    var name        = $$('#edit-group-form [placeholder="Nombre de grupo"]').val();
+    var members    = $$('#edit-group-form [id="members-form"]').val();
+	var membersSplited = null;
+	
+	if (members != "") { membersSplited = members.split(",");}
+	
+    var fullPath = globals.user.currentGroup.uid;
+	
+	// Modificar nombre del grupo.
+    globals.user.currentGroup.name = name;
+	
+	if ((membersSplited != null) && (membersSplited.length > 0)) {
+		
+		// Añadir miembros al grupo;
+		for (var i = 0; i < membersSplited.length; i++) {
+			if (isInArray( globals.user.currentGroup.members, membersSplited[i] == false) {
+				globals.user.currentGroup.members.push(membersSplited[i]);
+			}
+		}
+	}
+	
+    writeToDB("groups", fullPath, globals.user.currentGroup, function(){
+        createToast( "Grupo '" + name + "' editado", 2000 );
+		globals.db.refresh();
+		UI.refreshMain();
+    });
+}
+
 function GROUPbyShareID( id )
 {
     for(var i = 0; i < globals.db.n_groups; i++)
