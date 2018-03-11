@@ -111,7 +111,6 @@ var onUserLogged = function()
         }
         createCard(TD.Task, help_card, -2);
     }
-    
 }
 
 var login = function()

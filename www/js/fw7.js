@@ -71,9 +71,13 @@ setTimeout(function loadUI(){
         $$("#logo-preloader").css("display", "none");
     
         // get localstorage if exists
-        if( localStorage.getItem("username") && localStorage.getItem("password") )
+        var username, pass;
+        if( (username = localStorage.getItem("username")) && (pass = localStorage.getItem("password")) )
         {
-            $$('#my-login-screen [name="username"]').val( localStorage.getItem("username") );
-            $$('#my-login-screen [name="password"]').val( localStorage.getItem("password") );    
+            createLoadDialog( "Recuperando última conexión..." );
+            $$('#my-login-screen [name="username"]').val( username );
+            $$('#my-login-screen [name="password"]').val( pass );    
+            
+            signIn_FB(username, pass);
         }
 }, tOut);
