@@ -146,15 +146,6 @@ function showItemInfo(itemId) {
 	}
 }
 
-function showCurrentGroupEditInfo() {
-	var group = globals.user.currentGroup;
-	if (group != null) {
-		//setDOMValue("#item-id", itemId);
-		setDOMValue('#edit-group-form [placeholder="Nombre de grupo"]', group.name);
-		setDOMValue('#edit-group-form [id="members-form"]', "");
-	}
-}
-
 /*
 * Capitalize or Uncapitalize first letter of a string
 * passed as parameter

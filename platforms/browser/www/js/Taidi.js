@@ -23,6 +23,9 @@ TD.ONCE = 003;
 TD.ON = 004;
     
 TD.LastCardID = 0;
+    
+TD.KEEP_GROUP = true;
+TD.REFRESH_GROUPS = true;
 
 TD.Setup = function(callback)
 {

@@ -1,7 +1,7 @@
 var UI = {
-    refresh: function(refresh_db_groups)
+    refresh: function(refresh_db_groups, keep_current)
     {
-        this.refreshGroups(refresh_db_groups);
+        this.refreshGroups(refresh_db_groups, keep_current);
         this.refreshMain();
     },
     
@@ -36,7 +36,7 @@ var UI = {
             createCard(TD.Item, items[i]);
     },
 
-    refreshGroups: function(update_db)
+    refreshGroups: function(update_db, keep_current)
     {
         var refresh_selector = function()
         {
@@ -62,8 +62,11 @@ var UI = {
 
               if(i === 0)
               {
-                  setAppTitle( name );
-                  globals.user.currentGroup = new TD.Group(user_groups[0]);
+                  if(!keep_current)
+                  {
+                    setAppTitle( name );
+                    globals.user.currentGroup = new TD.Group(user_groups[0]);    
+                  }
 
                   $$('#share-id').val( user_groups[0].share_id );
                   $$("#sfo").html( name );

@@ -41,7 +41,7 @@ setTimeout(function loadUI(){
         $ptrContent.css("top", "50px");
         // Add 'refresh' listener on it
         $ptrContent.on('ptr:refresh', function (e) {
-            if(!globals.user.currentGroup || !globals.db)
+            if(!globals.user || !globals.user.currentGroup || !globals.db)
             {
                 fw7.ptr.done();
                 return;

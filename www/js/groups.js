@@ -26,31 +26,15 @@ function createGroup()
 
 function editGroup()
 {
-    var name        = $$('#edit-group-form [placeholder="Nombre de grupo"]').val();
-    var members    = $$('#edit-group-form [id="members-form"]').val();
-	var membersSplited = null;
+    var name = $$('#edit-group-form [placeholder="Nombre de grupo"]').val();
+    
+    var groupId = globals.user.currentGroup.uid;
+    var fullPath = groupId.slice(2, groupId.length) + "/name/";
 	
-	if (members != "") { membersSplited = members.split(",");}
-	
-    var fullPath = globals.user.currentGroup.uid;
-	
-	// Modificar nombre del grupo.
-    globals.user.currentGroup.name = name;
-	
-	if ((membersSplited != null) && (membersSplited.length > 0)) {
-		
-		// Añadir miembros al grupo;
-		for (var i = 0; i < membersSplited.length; i++) {
-			if (isInArray( globals.user.currentGroup.members, membersSplited[i] == false) {
-				globals.user.currentGroup.members.push(membersSplited[i]);
-			}
-		}
-	}
-	
-    writeToDB("groups", fullPath, globals.user.currentGroup, function(){
-        createToast( "Grupo '" + name + "' editado", 2000 );
-		globals.db.refresh();
-		UI.refreshMain();
+    writeToDB("groups", fullPath, name, function(){
+        createToast( "El nombre ha cambiado", 2000 );
+		UI.refresh(TD.REFRESH_GROUPS, TD.KEEP_GROUP);
+        setAppTitle( name );
     });
 }
 
@@ -105,6 +89,13 @@ function leaveGroup( share_id )
 }
 
 $("#leave-group").click(function(){
+    
+    if(!globals.user.currentGroup)
+    {
+        createToast("No tienes grupo", 2000);
+        return;
+    }
+    
    fw7.dialog.prompt( "Inserta ID", function(id){
        leaveGroup( id );
    })
@@ -117,6 +108,12 @@ $("#join-group").click(function(){
 });
 
 $("#stats").click(function(){
+    
+    if(!globals.user.currentGroup)
+    {
+        createToast("No tienes grupo", 2000);
+        return;
+    }
     
     // get info from log and insert it
     var log = globals.user.currentGroup.log;

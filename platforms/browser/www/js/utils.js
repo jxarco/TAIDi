@@ -137,8 +137,8 @@ function showTaskInfo(taskUid) {
 }
 
 function showItemInfo(itemId) {
-	var task = globals.user.currentGroup.items[itemId];
-	if (task != null) {
+	var item = globals.user.currentGroup.items[itemId];
+	if (item != null) {
 		//setDOMValue("#item-id", itemId);
 		setDOMValue('textarea[placeholder="Comentarios"]', item.more);
 		setDOMValue('input[placeholder="Nombre del elemento"]', item.name);

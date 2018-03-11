@@ -76,6 +76,7 @@ var onUserLogged = function()
     $$('#myUserName').html( user_name );
     
     // display stuff
+    $$(".fab").css("display", "block");
     $$(".auto-refresh-hidden").css("display", "block");
     $$("#groupSelector").css("display", "block");
     $$(".share-id-row").css("display", "block");
@@ -162,7 +163,8 @@ var logout = function(keep_cards){
     $$('#myUserName').html("No identificado");
     $$('#myAppTitle').html("TAIDi");
 
-    // display stuff
+    // hide stuff
+    $$(".fab").css("display", "none");
     $$(".auto-refresh-hidden").css("display", "none");
     $$("#groupSelector").css("display", "none");
     $$(".share-id-row").css("display", "none");

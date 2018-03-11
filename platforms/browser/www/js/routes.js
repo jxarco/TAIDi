@@ -145,6 +145,27 @@ var routes = [
     }
   },
   {
+    path: '/edit-group/',
+    url: './pages/edit-group.html',
+    on: {
+        pageAfterIn: function(d){
+            
+            if(!globals.user.currentGroup)
+            {
+                createToast("No tienes grupo", 2000);        
+                return;
+            }
+            
+            $("#edit-group-btn").show();
+            
+            fw7.fab.close();
+			var group = globals.user.currentGroup;
+            if (group)
+                setDOMValue('#edit-group-form [placeholder="Nombre de grupo"]', group.name);
+        }
+    }
+  },
+  {
     path: '/swiper-parallax/',
     url: './pages/swiper-parallax.html',
   },
