@@ -1,52 +1,52 @@
 {
-  "prepare_queue": {
-    "installed": [],
-    "uninstalled": []
-  },
-  "config_munge": {
-    "files": {}
-  },
-  "installed_plugins": {
-    "cordova-plugin-whitelist": {
-      "PACKAGE_NAME": "io.cordova.hellocordova"
+    "prepare_queue": {
+        "installed": [],
+        "uninstalled": []
     },
-    "com.darktalker.cordova.screenshot": {
-      "PACKAGE_NAME": "io.cordova.taidi"
+    "config_munge": {
+        "files": {}
     },
-    "cordova-plugin-dialogs": {
-      "PACKAGE_NAME": "io.cordova.taidi"
+    "installed_plugins": {
+        "cordova-plugin-whitelist": {
+            "PACKAGE_NAME": "io.cordova.hellocordova"
+        },
+        "com.darktalker.cordova.screenshot": {
+            "PACKAGE_NAME": "io.cordova.taidi"
+        },
+        "cordova-plugin-dialogs": {
+            "PACKAGE_NAME": "io.cordova.taidi"
+        }
+    },
+    "dependent_plugins": {},
+    "modules": [
+        {
+            "file": "plugins/com.darktalker.cordova.screenshot/www/Screenshot.js",
+            "id": "com.darktalker.cordova.screenshot.screenshot",
+            "pluginId": "com.darktalker.cordova.screenshot",
+            "merges": [
+                "navigator.screenshot"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-dialogs/www/notification.js",
+            "id": "cordova-plugin-dialogs.notification",
+            "pluginId": "cordova-plugin-dialogs",
+            "merges": [
+                "navigator.notification"
+            ]
+        },
+        {
+            "file": "plugins/cordova-plugin-dialogs/www/browser/notification.js",
+            "id": "cordova-plugin-dialogs.notification_browser",
+            "pluginId": "cordova-plugin-dialogs",
+            "merges": [
+                "navigator.notification"
+            ]
+        }
+    ],
+    "plugin_metadata": {
+        "cordova-plugin-whitelist": "1.3.3",
+        "com.darktalker.cordova.screenshot": "0.1.5",
+        "cordova-plugin-dialogs": "2.0.1"
     }
-  },
-  "dependent_plugins": {},
-  "modules": [
-    {
-      "file": "plugins/com.darktalker.cordova.screenshot/www/Screenshot.js",
-      "id": "com.darktalker.cordova.screenshot.screenshot",
-      "pluginId": "com.darktalker.cordova.screenshot",
-      "merges": [
-        "navigator.screenshot"
-      ]
-    },
-    {
-      "file": "plugins/cordova-plugin-dialogs/www/notification.js",
-      "id": "cordova-plugin-dialogs.notification",
-      "pluginId": "cordova-plugin-dialogs",
-      "merges": [
-        "navigator.notification"
-      ]
-    },
-    {
-      "file": "plugins/cordova-plugin-dialogs/www/browser/notification.js",
-      "id": "cordova-plugin-dialogs.notification_browser",
-      "pluginId": "cordova-plugin-dialogs",
-      "merges": [
-        "navigator.notification"
-      ]
-    }
-  ],
-  "plugin_metadata": {
-    "cordova-plugin-whitelist": "1.3.3",
-    "com.darktalker.cordova.screenshot": "0.1.5",
-    "cordova-plugin-dialogs": "2.0.1"
-  }
 }
