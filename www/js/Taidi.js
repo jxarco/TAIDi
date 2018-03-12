@@ -17,7 +17,7 @@ var TD = global.TD = {
 
 TD.Task = 001;
 TD.Item = 002;
-TD.PreloadTimeOut = 1750;
+TD.PreloadTimeOut = 1200;
     
 TD.ONCE = 003;
 TD.ON = 004;

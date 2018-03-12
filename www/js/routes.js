@@ -55,6 +55,7 @@ var routes = [
             globals.autocompleteDropdownAll = fw7.autocomplete.create({
                 inputEl: '#autocomplete-dropdown-all',
                 openIn: 'dropdown',
+                dropdownPlaceholderText: 'Escribe para obtener sugerencias',
                 source: function (query, render) {
                     var results = [];
                     // Find matched items
@@ -79,11 +80,11 @@ var routes = [
                globals.URGENT_TASK = e.detail.inputEl.checked;
             });
 
-            var autocompleteDropdownTypeahead = fw7.autocomplete.create({
-              inputEl: '#autocomplete-dropdown-typeahead',
+            globals.autocompleteDropdownItem = fw7.autocomplete.create({
+              inputEl: '#autocomplete-dropdown-item',
               openIn: 'dropdown',
               dropdownPlaceholderText: 'Escribe para obtener sugerencias',
-              typeahead: true,
+//              typeahead: true,
               source: function (query, render) {
                 var results = [];
                 if (query.length === 0) {
@@ -97,7 +98,7 @@ var routes = [
                 // Render items by passing array with result items
                 render(results);
               }
-            });
+            }).open().close();
         }
     }
   },
@@ -145,7 +146,6 @@ var routes = [
 
 			var taskUid = d.detail.route.query.uid;
 			showTaskInfo(taskUid);
-
         }
     }
   },

@@ -5,6 +5,12 @@ function createGroup()
     
     var groupId = globals.db.n_groups;
     var fullPath = groupId;
+    
+    // fix last version
+    var namers = {};
+    namers[globals.user.name] = globals.user.uid;
+    //
+    
     var content = {
         uid: "hg"+groupId,
         items: new Array(),
@@ -12,13 +18,13 @@ function createGroup()
         members: [
             globals.user.uid
         ],
+        namers: namers,
         log: new Array(),
         share_id: share_id,
         name: name
     }
     writeToDB("groups", fullPath, content, function(){
-        // actualizar grupos UI
-        // ...();
+        UI.refresh(TD.REFRESH_GROUPS, TD.KEEP_GROUP);
         createToast( "Grupo '" + name + "' creado", 2000 );
         writeToDB("n_groups", "", ( parseInt( globals.db.n_groups ) + 1 ));
     });
@@ -32,9 +38,9 @@ function editGroup()
     var fullPath = groupId.slice(2, groupId.length) + "/name/";
 	
     writeToDB("groups", fullPath, name, function(){
-        createToast( "El nombre ha cambiado", 2000 );
 		UI.refresh(TD.REFRESH_GROUPS, TD.KEEP_GROUP);
         setAppTitle( name );
+        createToast( "El nombre ha cambiado", 2000 );
     });
 }
 
@@ -59,7 +65,7 @@ function joinGroup( share_id )
     globals.db.groups[groupId].members.push( globals.user.uid );
     // write it to DB
     writeToDB("groups", fullPath, content, function(){
-        UI.refresh();
+        UI.refresh(TD.REFRESH_GROUPS, TD.KEEP_GROUP);
         createToast( "Ahora eres miembro de ' " + capitalizeFirstLetter(group.name) + " '", 3000 );
     });
     
@@ -81,7 +87,7 @@ function leaveGroup( share_id )
     
     // delete it from DB
     deleteFromDB("groups", fullPath);
-    UI.refresh(true);
+    UI.refresh(TD.REFRESH_GROUPS);
 //    setUserCurrentGroup( globals.user.groups[0].name );
     
     fullPath = groupId+"/namers/"+globals.user.name;

@@ -74,7 +74,7 @@ setTimeout(function loadUI(){
         var username, pass;
         if( (username = localStorage.getItem("username")) && (pass = localStorage.getItem("password")) )
         {
-            createLoadDialog( "Recuperando última conexión..." );
+            createLoadDialog( "" );
             $$('#my-login-screen [name="username"]').val( username );
             $$('#my-login-screen [name="password"]').val( pass );    
             

@@ -8,11 +8,14 @@ var globals = {
     user: null,
     db: null,
 
-    default_items: ["Tomates", "Peras", "Huevos", "Kitkat"],
+    default_items: ["Tomates","Peras","Huevos","Kitkat","Papel WC","Naranjas","Mandarinas","Huevos","Fuet","Cacaolat",
+                   "Fanta","Cocacola","Cerveza","Leche","Miel","Galletas","Pizza","Macarrones","Tallarines","Atún",
+                   "Mermelada","Zanahoria","Lechuga","Chorizo","Melón","Sandía","Azúcar","Sal","Yogurts","Queso",
+                   "Calabacin","Cebolla","Champú","Gel de baño","Pastillas LV","Suavizante","Galets","Quinoa","Cus-cus",
+                   "Lentejas","Judías","Carne picada","Lomo","Pinchos","Café","Nesquik","Pan de molde","Tomate frito",
+                   "Patatas","Patatas fritas","Tortitas","Nueces","Garbanzos","Queso burgos","Helados"],
     default_tasks: [
-            "Poner lavadora","Poner secadora","Pasar la aspiradora","Fregar los platos","Pasar la mopa","Ordenar la habitación","Barrer la habitación",
-            "Limpiar el polvo","Lavar las ventadas","Tender la ropa","Hacer el baño","Limpiar cocina"
-        ]
+            "Poner lavadora","Poner secadora","Pasar la aspiradora","Fregar los platos","Pasar la mopa","Ordenar la habitación","Barrer la habitación","Limpiar el polvo","Lavar las ventadas","Tender la ropa","Hacer el baño","Limpiar cocina"]
 }
 
 var app = {

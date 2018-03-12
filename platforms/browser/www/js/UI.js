@@ -34,6 +34,17 @@ var UI = {
             createCard(TD.Task, tasks[i], i);
         for(var i in items)
             createCard(TD.Item, items[i]);
+        
+        // if no tasks, print message card
+        if(!Object.keys(tasks).length)
+            createCard(TD.Task, {
+                from: "TAIDi",
+                more: "Nada interesante",
+                name: "No hay tareas pendientes. ¡Bien hecho!",
+                timestamp: new Date().toDateString(),
+                to: globals.user.currentGroup.name,
+                urgency: false
+            }, -2);
     },
 
     refreshGroups: function(update_db, keep_current)
@@ -93,7 +104,7 @@ var UI = {
     }
 }
 
-function createCard(type, element, uid)
+function createCard(type, element, uid, is_sorted)
 {
     var NO_UID = -1,
         EXAMPLE_UID = -2;
@@ -145,7 +156,7 @@ function createCard(type, element, uid)
                 <i class="icon-checkbox"></i>
               </label>
             </td>
-            <td class="label-cell">` + element.name + `</td>
+            <td class="label-cell">` + element.name + (is_sorted ? (" (<i>" + element.timestamp + "</i>)") : "") + `</td>
             <td class="numeric-cell">` + element.qnt + `</td>
           `;
         table_row.innerHTML = text;
@@ -301,7 +312,7 @@ function bindListCardEvents()
         }
         
         for(var i in itemsSorted)
-            createCard(TD.Item, itemsSorted[i]);
+            createCard(TD.Item, itemsSorted[i], null, true);
         
         createToast( "Ordenado por antigüedad", 2500, true );
     });

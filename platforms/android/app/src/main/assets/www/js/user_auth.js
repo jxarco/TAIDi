@@ -99,8 +99,6 @@ var onUserLogged = function()
     // throw helping card    
     if(!globals.user.currentGroup)
     {
-        console.log("Printing helper card");
-        
         var help_card = {
             from: "TAIDi",
             more: "Nada interesante",
@@ -116,7 +114,7 @@ var onUserLogged = function()
 var login = function()
 {
     // close previous session
-    logout(true);
+    logout();
     
     // UI EVENTS
     closeSignInScreen();
@@ -150,15 +148,26 @@ var sign_up = function()
     signUp_FB(name, username, password);
 };
 
-var logout = function(keep_cards){
+var logout = function(empty_cards){
 
     firebase.auth().signOut();
     globals.user = null;
     globals.db = null;
 
-    if(!keep_cards)
+    if(empty_cards)
+    {
         $(".card").remove();
-    
+        var help_card = {
+            from: "TAIDi",
+            more: "Nada interesante",
+            name: "¡Inicia sesión o registrate para empezar a trabajar!",
+            timestamp: new Date().toDateString(),
+            to: "¡Para ti!",
+            urgency: true
+        }
+        createCard(TD.Task, help_card, -2);
+    }
+        
     $$('#myUserName').html("No identificado");
     $$('#myAppTitle').html("TAIDi");
 
@@ -186,5 +195,7 @@ var closeSignUpScreen = function(){
 $$('#my-login-screen .no-login-button').on('click', closeSignInScreen);
 $$('#my-signup-screen .no-login-button').on('click', closeSignUpScreen);
 $$('#my-signup-screen .logup-button').on('click', sign_up);
-$$("#logoutButton").on('click', logout);
+$$("#logoutButton").on('click', function(){
+    logout(true);
+});
 $$('#my-login-screen .login-button').on('click', login);
