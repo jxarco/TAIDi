@@ -12,6 +12,9 @@
     },
     "com.darktalker.cordova.screenshot": {
       "PACKAGE_NAME": "io.cordova.taidi"
+    },
+    "cordova-plugin-dialogs": {
+      "PACKAGE_NAME": "io.cordova.taidi"
     }
   },
   "dependent_plugins": {}
