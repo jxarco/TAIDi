@@ -15,7 +15,7 @@ var globals = {
                    "Lentejas","Judías","Carne picada","Lomo","Pinchos","Café","Nesquik","Pan de molde","Tomate frito",
                    "Patatas","Patatas fritas","Tortitas","Nueces","Garbanzos","Queso burgos","Helados"],
     default_tasks: [
-            "Poner lavadora","Poner secadora","Pasar la aspiradora","Fregar los platos","Pasar la mopa","Ordenar la habitación","Barrer la habitación","Limpiar el polvo","Lavar las ventadas","Tender la ropa","Hacer el baño","Limpiar cocina"]
+            "Poner lavadora","Poner secadora","Pasar la aspiradora","Fregar los platos","Pasar la mopa","Ordenar la habitación","Barrer la habitación","Limpiar el polvo","Limpiar las ventanas","Tender la ropa","Hacer el baño","Limpiar cocina","Hacer la compra","Lavar el coche","Pasar la ITV","Ir al banco","Sacar dinero"]
 }
 
 var app = {

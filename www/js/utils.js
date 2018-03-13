@@ -92,18 +92,6 @@ function createToast( text, duration, closeButton, params)
     }).open();
 }
 
-function testNotifications()
-{
-    navigator.notification.alert(
-        'You are the winner!',  // message
-        function(){
-            createToast("Probando probando");
-        },         // callback
-        'Game Over',            // title
-        'Done'                  // buttonName
-    );
-}
-
 function getDOMValue(path) {
 	var value = null;
 	try {

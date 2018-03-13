@@ -84,14 +84,16 @@ function leaveGroup( share_id )
     
     var index = group.members.indexOf( globals.user.uid ),
         fullPath = groupId+"/members/"+index;
-    
-    // delete it from DB
+
+    // delete member 
     deleteFromDB("groups", fullPath);
-    UI.refresh(TD.REFRESH_GROUPS);
-//    setUserCurrentGroup( globals.user.groups[0].name );
     
+    // delete namer
     fullPath = groupId+"/namers/"+globals.user.name;
     deleteFromDB("groups", fullPath);
+    
+    // refresh all
+    UI.refresh(TD.REFRESH_GROUPS);
 }
 
 $("#leave-group").click(function(){
