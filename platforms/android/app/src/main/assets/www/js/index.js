@@ -13,9 +13,14 @@ var globals = {
                    "Mermelada","Zanahoria","Lechuga","Chorizo","Melón","Sandía","Azúcar","Sal","Yogurts","Queso",
                    "Calabacin","Cebolla","Champú","Gel de baño","Pastillas LV","Suavizante","Galets","Quinoa","Cus-cus",
                    "Lentejas","Judías","Carne picada","Lomo","Pinchos","Café","Nesquik","Pan de molde","Tomate frito",
-                   "Patatas","Patatas fritas","Tortitas","Nueces","Garbanzos","Queso burgos","Helados"],
+                   "Patatas","Patatas fritas","Tortitas","Nueces","Garbanzos","Queso burgos","Helados"
+   ],
     default_tasks: [
-            "Poner lavadora","Poner secadora","Pasar la aspiradora","Fregar los platos","Pasar la mopa","Ordenar la habitación","Barrer la habitación","Limpiar el polvo","Limpiar las ventanas","Tender la ropa","Hacer el baño","Limpiar cocina","Hacer la compra","Lavar el coche","Pasar la ITV","Ir al banco","Sacar dinero"]
+            "Poner lavadora","Poner secadora","Pasar la aspiradora","Fregar los platos","Pasar la mopa","Ordenar la habitación","Barrer la habitación","Limpiar el polvo","Limpiar las ventanas","Tender la ropa","Hacer el baño","Limpiar cocina","Hacer la compra","Lavar el coche","Pasar la ITV","Ir al banco","Sacar dinero"
+    ],
+    default_units: [
+        "Kgr.","Gr.","Bolsa/s","Cartón","Barra/s","Paquete/s"     
+    ]
 }
 
 var app = {

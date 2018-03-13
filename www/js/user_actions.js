@@ -38,6 +38,7 @@ function addItemToList()
 		name = getDOMValue('input[placeholder="Nombre del elemento"]'),
         timestamp = new Date().toDateString(),
 		qnt = getDOMValue('input[placeholder="Cantidad"]'),
+        units = getDOMValue('input[placeholder="Unidades (Opcional)"]'),
 		urgency = globals.URGENT_TASK ? globals.URGENT_TASK : false;
 
     if(from == "" || name == "")
@@ -45,6 +46,11 @@ function addItemToList()
         createToast( "Rellena los huecos!", 2000, true );
         return;
     }
+    
+    // use units in quantity
+    if(units.length)
+        qnt += " " + units;
+    //
 
     var toAssign = {
 		from: from, more: more, name: name, qnt: qnt, timestamp: timestamp, urgency: urgency

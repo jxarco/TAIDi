@@ -99,6 +99,24 @@ var routes = [
                 render(results);
               }
             }).open().close();
+            
+            globals.autocompleteDropdownUnits = fw7.autocomplete.create({
+              inputEl: '#autocomplete-dropdown-units',
+              openIn: 'dropdown',
+              source: function (query, render) {
+                var results = [];
+                if (query.length === 0) {
+                  render(results);
+                  return;
+                }
+                // Find matched items
+                for (var i = 0; i < globals.default_units.length; i++) {
+                  if (globals.default_units[i].toLowerCase().indexOf(query.toLowerCase()) === 0) results.push(globals.default_units[i]);
+                }
+                // Render items by passing array with result items
+                render(results);
+              }
+            }).open().close();
         }
     }
   },
