@@ -8,7 +8,7 @@ var globals = {
     user: null,
     db: null,
 
-    default_items: ["Tomates","Peras","Huevos","Kitkat","Papel WC","Naranjas","Mandarinas","Huevos","Fuet","Cacaolat",
+    default_items: ["Tomates","Peras","Huevos","Kitkat","Papel WC","Naranjas","Mandarinas","Fuet","Cacaolat",
                    "Fanta","Cocacola","Cerveza","Leche","Miel","Galletas","Pizza","Macarrones","Tallarines","Atún",
                    "Mermelada","Zanahoria","Lechuga","Chorizo","Melón","Sandía","Azúcar","Sal","Yogurts","Queso",
                    "Calabacin","Cebolla","Champú","Gel de baño","Pastillas LV","Suavizante","Galets","Quinoa","Cus-cus",
@@ -19,7 +19,7 @@ var globals = {
             "Poner lavadora","Poner secadora","Pasar la aspiradora","Fregar los platos","Pasar la mopa","Ordenar la habitación","Barrer la habitación","Limpiar el polvo","Limpiar las ventanas","Tender la ropa","Hacer el baño","Limpiar cocina","Hacer la compra","Lavar el coche","Pasar la ITV","Ir al banco","Sacar dinero"
     ],
     default_units: [
-        "Kgr.","Gr.","Bolsa/s","Cartón","Barra/s","Paquete/s"     
+        "L","Kgr.","Gr.","Bolsa/s","Cartón","Barra/s","Paquete/s","Botella/s"     
     ]
 }
 

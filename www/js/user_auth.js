@@ -4,12 +4,21 @@ function signIn_FB(mail, password, tmp_name)
 {
     firebase.auth().signInWithEmailAndPassword(mail, password).catch(function(error){
         console.error( "Error " + error.code + ": " + error.message );
-        throw("login error!");
+        fw7.dialog.close();
+        createToast("Inicio de sesión incorrecto", 2500, true);
+        $$('#my-login-screen [name="password"]').val("");
     });
     
     firebase.auth().onAuthStateChanged(function(user)
     {
         if(user){
+            
+            // if remember me checked (now save it always)
+            if(true)
+            {
+                localStorage.setItem("username", mail );
+                localStorage.setItem("password", password );
+            }
             
             globals.user = new TD.User({
                 uid: user.uid,
@@ -87,8 +96,8 @@ var onUserLogged = function()
 
     if(!globals.db)
         throw("DB is not available yet");
-    else
-        console.log("Using DB: ", globals.db);
+//    else
+//        console.log("Using DB: ", globals.db);
 
     // refrescar todo
     UI.refresh();
@@ -124,13 +133,6 @@ var login = function()
     var username = $$('#my-login-screen [name="username"]').val();
     var password = $$('#my-login-screen [name="password"]').val();
     
-    // if remember me checked
-    if(true)
-    {
-        localStorage.setItem("username", username );
-        localStorage.setItem("password", password );
-    }
-
     signIn_FB(username, password);
 };
 

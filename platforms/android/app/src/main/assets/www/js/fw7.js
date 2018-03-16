@@ -32,6 +32,8 @@ setTimeout(function loadUI(){
         // close smart selector on change current group
         $$(document.body).on('change', 'select[id="connectedGroups"]', function(e){
             setUserCurrentGroup( globals.smartSelect.selectEl.value );
+            if(globals.db)
+                globals.db.update( globals.db.updateGroups );
             globals.smartSelect.close();
             fw7.panel.close();
         });
